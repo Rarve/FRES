@@ -1,8 +1,1 @@
-#:D:\Dropbox\MyProjects\FRES\src\FRES.Service\FRES.Service.xproj
-D:\Dropbox\MyProjects\FRES\src\FRES.Service\FRES.Service.xproj|D:\Dropbox\MyProjects\FRES\src\FRES.Business\FRES.Business.xproj
-D:\Dropbox\MyProjects\FRES\src\FRES.Business\FRES.Business.xproj|D:\Dropbox\MyProjects\FRES\src\FRES.Data\FRES.Data.xproj
-D:\Dropbox\MyProjects\FRES\src\FRES.Business\FRES.Business.xproj|D:\Dropbox\MyProjects\FRES\src\FRES.Source.Extract\FRES.Source.Extract.xproj
-D:\Dropbox\MyProjects\FRES\src\FRES.Business\FRES.Business.xproj|D:\Dropbox\MyProjects\FRES\src\FRES.Structure\FRES.Structure.xproj
-D:\Dropbox\MyProjects\FRES\src\FRES.Data\FRES.Data.xproj|D:\Dropbox\MyProjects\FRES\src\FRES.Structure\FRES.Structure.xproj
-D:\Dropbox\MyProjects\FRES\src\FRES.Source.Extract\FRES.Source.Extract.xproj|D:\Dropbox\MyProjects\FRES\src\FRES.Data\FRES.Data.xproj
-D:\Dropbox\MyProjects\FRES\src\FRES.Source.Extract\FRES.Source.Extract.xproj|D:\Dropbox\MyProjects\FRES\src\FRES.Structure\FRES.Structure.xproj
+#:D:\Dropbox\MyProjects\FRES\src\FRES.Web.Service\FRES.Web.Service.xproj
