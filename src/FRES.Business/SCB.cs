@@ -15,7 +15,7 @@ namespace FRES.Business
 
         public static void Extract()
         {
-            Data.SCB.Extract();
+            FRES.Source.Extract.SCB.Extract();
         }
     }
 }

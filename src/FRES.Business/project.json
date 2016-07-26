@@ -3,6 +3,7 @@
 
   "dependencies": {
     "FRES.Data": "1.0.0-*",
+    "FRES.Source.Extract": "1.0.0-*",
     "FRES.Structure": "1.0.0-*",
     "NETStandard.Library": "1.6.0"
   },
