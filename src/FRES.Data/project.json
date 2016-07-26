@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "FRES.Structure": "1.0.0-*",
+    "HtmlAgilityPack.NetCore": "1.5.0.1",
+    "Microsoft.AspNetCore.WebUtilities": "1.0.0",
+    "NETStandard.Library": "1.6.0",
+    "System.Linq.Parallel": "4.0.1",
+    "System.Threading.Tasks.Parallel": "4.0.1"
+  },
+
+  "frameworks": {
+    "netstandard1.5": {
+      "imports": "dnxcore50"
+    }
+  }
+}
