@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETStandard,Version=v1.5/",
-    "signature": "f5970b98e80ea333452a511b1ee1886458a33db8"
+    "signature": "201deacbf5ed46631d4eef15182446650177b57c"
   },
   "compilationOptions": {},
   "targets": {
@@ -15,6 +15,7 @@
           "Microsoft.AspNetCore.WebUtilities": "1.0.0",
           "NETStandard.Library": "1.6.0",
           "System.Linq.Parallel": "4.0.1",
+          "system.net.http.winhttphandler": "4.0.0-beta-23123",
           "System.Threading.Tasks.Parallel": "4.0.1"
         },
         "runtime": {
@@ -547,6 +548,29 @@
           "System.Text.Encoding": "4.0.11",
           "System.Threading": "4.0.11",
           "System.Threading.Tasks": "4.0.11"
+        }
+      },
+      "system.net.http.winhttphandler/4.0.0-beta-23123": {
+        "dependencies": {
+          "Microsoft.Win32.Primitives": "4.0.1",
+          "System.Diagnostics.Debug": "4.0.11",
+          "System.Globalization": "4.0.11",
+          "System.IO": "4.1.0",
+          "System.IO.Compression": "4.1.0",
+          "System.Net.Http": "4.1.0",
+          "System.Net.Primitives": "4.0.11",
+          "System.Resources.ResourceManager": "4.0.1",
+          "System.Runtime": "4.1.0",
+          "System.Runtime.Extensions": "4.1.0",
+          "System.Runtime.Handles": "4.0.1",
+          "System.Runtime.InteropServices": "4.1.0",
+          "System.Security.Cryptography.X509Certificates": "4.1.0",
+          "System.Text.Encoding": "4.0.11",
+          "System.Threading": "4.0.11",
+          "System.Threading.Tasks": "4.0.11"
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Net.Http.WinHttpHandler.dll": {}
         }
       },
       "System.Net.Primitives/4.0.11": {
@@ -1106,6 +1130,11 @@
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-ULq9g3SOPVuupt+Y3U+A37coXzdNisB1neFCSKzBwo182u0RDddKJF8I5+HfyXqK6OhJPgeoAwWXrbiUXuRDsg=="
+    },
+    "system.net.http.winhttphandler/4.0.0-beta-23123": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-TrDOKU7aKBMM3IqLqr/X5gTeLJsrww4FYxlzJ8G6cxGMAPpMo/K4NLVTJeRfka875mes9FIL9GvPFerkETbyLQ=="
     },
     "System.Net.Primitives/4.0.11": {
       "type": "package",

@@ -15,7 +15,8 @@ namespace FRES.Console
             }
             catch (Exception ex)
             {
-                throw ex;
+                System.Console.WriteLine(ex.StackTrace);
+                System.Console.ReadKey();
             }
             System.Console.WriteLine("Finish");
             System.Console.ReadKey();

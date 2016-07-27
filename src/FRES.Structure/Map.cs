@@ -12,6 +12,7 @@ namespace FRES.Structure
             Images = new List<Image>();
         }
 
+        public string Province { get; set; }
         public double Latt { get; set; }
         public double Long { get; set; }
         public List<Image> Images { get; set; }

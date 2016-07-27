@@ -737,6 +737,33 @@
           }
         }
       },
+      "system.net.http.winhttphandler/4.0.0-beta-23123": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Win32.Primitives": "4.0.0",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.IO": "4.0.10",
+          "System.IO.Compression": "4.0.0",
+          "System.Net.Http": "4.0.0",
+          "System.Net.Primitives": "4.0.10",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Runtime.Handles": "4.0.0",
+          "System.Runtime.InteropServices": "4.0.20",
+          "System.Security.Cryptography.X509Certificates": "4.0.0-beta-23123",
+          "System.Text.Encoding": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Threading.Tasks": "4.0.10"
+        },
+        "compile": {
+          "lib/DNXCore50/System.Net.Http.WinHttpHandler.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Net.Http.WinHttpHandler.dll": {}
+        }
+      },
       "System.Net.Primitives/4.0.11": {
         "type": "package",
         "dependencies": {
@@ -1214,7 +1241,8 @@
           "Microsoft.AspNetCore.WebUtilities": "1.0.0",
           "NETStandard.Library": "1.6.0",
           "System.Linq.Parallel": "4.0.1",
-          "System.Threading.Tasks.Parallel": "4.0.1"
+          "System.Threading.Tasks.Parallel": "4.0.1",
+          "system.net.http.winhttphandler": "4.0.0-beta-23123"
         },
         "compile": {
           "netstandard1.5/FRES.Source.Extract.dll": {}
@@ -2776,6 +2804,16 @@
         "runtimes/win/lib/net46/System.Net.Http.dll",
         "runtimes/win/lib/netcore50/System.Net.Http.dll",
         "runtimes/win/lib/netstandard1.3/System.Net.Http.dll"
+      ]
+    },
+    "system.net.http.winhttphandler/4.0.0-beta-23123": {
+      "sha512": "TrDOKU7aKBMM3IqLqr/X5gTeLJsrww4FYxlzJ8G6cxGMAPpMo/K4NLVTJeRfka875mes9FIL9GvPFerkETbyLQ==",
+      "type": "package",
+      "path": "system.net.http.winhttphandler/4.0.0-beta-23123",
+      "files": [
+        "lib/DNXCore50/System.Net.Http.WinHttpHandler.dll",
+        "system.net.http.winhttphandler.4.0.0-beta-23123.nupkg.sha512",
+        "system.net.http.winhttphandler.nuspec"
       ]
     },
     "System.Net.Primitives/4.0.11": {

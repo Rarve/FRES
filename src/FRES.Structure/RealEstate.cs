@@ -13,15 +13,24 @@ namespace FRES.Structure
         {
             Images = new List<Image>();
             Map = new Map();
+            Contact = new Contact();
         }
 
+        public string Url { get; set; }
+        public bool IsSoldOut { get; set; }
         public string Icon { get; set; }
         public string Name { get; set; }
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
         public string Size { get; set; }
         public string PropertyCode { get; set; }
+        public string PropertyType { get; set; }
         public List<Image> Images { get; set; }
         public Map Map { get; set; }
-        public string Contact { get; set; }
+        public int? NumberOfBathRoom { get; set; }
+        public int? NumberOfBedRoom { get; set; }
+        public string TitleDeed { get; set; }
+        public string TitleDeedNumber { get; set; }
+        public string TitleDeedDetail { get; set; }
+        public Contact Contact { get; set; }
     }
 }
