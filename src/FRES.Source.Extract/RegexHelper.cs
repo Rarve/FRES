@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -23,9 +24,40 @@ namespace FRES.Source.Extract
             return ret;
         }
 
-        public static string StripHTML(string input)
+        //public static string StripHTML(string input)
+        //{
+        //    return Regex.Replace(input, "<.*?>", String.Empty);
+        //}
+
+        internal static string StripHTML(string data)
         {
-            return Regex.Replace(input, "<.*?>", String.Empty);
+            var document = new HtmlDocument();
+            document.LoadHtml(data);
+
+            var acceptableTags = new String[] { "strong", "em", "u" };
+
+            var nodes = new Queue<HtmlNode>(document.DocumentNode.SelectNodes("./*|./text()"));
+            while (nodes.Count > 0)
+            {
+                var node = nodes.Dequeue();
+                var parentNode = node.ParentNode;
+
+                if (!acceptableTags.Contains(node.Name) && node.Name != "#text")
+                {
+                    var childNodes = node.SelectNodes("./*|./text()");
+
+                    if (childNodes != null)
+                    {
+                        foreach (var child in childNodes)
+                        {
+                            nodes.Enqueue(child);
+                            parentNode.InsertBefore(child, node);
+                        }
+                    }
+                    parentNode.RemoveChild(node);
+                }
+            }
+            return document.DocumentNode.InnerHtml;
         }
     }
 }
