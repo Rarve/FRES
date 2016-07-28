@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace FRES.Source.Extract
@@ -26,11 +25,14 @@ namespace FRES.Source.Extract
 
         public RealEstate[] Extract()
         {
-            var totalPages = GetTotalPages(URL_MAIN + URL_PAGE);
-            var urlDetls = GetItemUrls(totalPages).OrderBy(x => x).ToArray();
-            var realEstate = GetDetails(urlDetls);
-            
-            return realEstate;
+            //var totalPages = GetTotalPages(URL_MAIN + URL_PAGE);
+            //var urlDetls = GetItemUrls(totalPages).OrderBy(x => x).ToArray();
+            //var realEstate = GetDetails(urlDetls);
+
+            //return realEstate;
+
+            //var asdf = GetDetails("http://www.buyatsiam.com/APropertyDetail.html?id=23318").Result;
+            return null;
         }
 
         public string[] GetItemUrls(int total)
@@ -146,12 +148,20 @@ namespace FRES.Source.Extract
                                 .Select(x => URL_MAIN + x.Descendants("img").FirstOrDefault()
                                 .GetAttributeValue("src", string.Empty))
                                 .Select(x => new Image() { Url = x }).ToList();
-
                 }
 
-                re.Contact.Desc = doc.DocumentNode.Descendants("div")
+                var contact = new Contact();
+                
+                var contactStr = doc.DocumentNode.Descendants("div")
                             .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("C_label")).FirstOrDefault()
                             .Element("div").InnerHtml.Trim();
+
+                var contactTells = RegexHelper.GetMatchStr(contactStr, RegexHelper.REGEX_TELL_NO);
+
+                contact.TellNo = contactTells.ToArray();
+                contact.Desc = RegexHelper.StripHTML(contactStr);
+
+                re.Contact.Add(contact);
 
                 var loc = doc.DocumentNode.Descendants("div")
                             .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("chromemenu")).FirstOrDefault().InnerHtml.Trim();

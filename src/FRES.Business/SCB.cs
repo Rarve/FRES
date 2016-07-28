@@ -19,7 +19,7 @@ namespace FRES.Business
             ISourceExtractor ex = new Source.Extract.SCB();
 
             var dt1 = DateTime.Now;
-            //var scb = ex.Extract();
+            var scb = ex.Extract();
             var dt2 = DateTime.Now;
             //Console.WriteLine((dt2 - dt1).TotalSeconds);
 

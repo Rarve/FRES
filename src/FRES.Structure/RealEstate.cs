@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace FRES.Structure
 {
@@ -13,7 +10,7 @@ namespace FRES.Structure
         {
             Images = new List<Image>();
             Map = new Map();
-            Contact = new Contact();
+            Contact = new List<Structure.Contact>();
         }
 
         public string Url { get; set; }
@@ -31,6 +28,6 @@ namespace FRES.Structure
         public string TitleDeed { get; set; }
         public string TitleDeedNumber { get; set; }
         public string TitleDeedDetail { get; set; }
-        public Contact Contact { get; set; }
+        public List<Contact> Contact { get; set; }
     }
 }
