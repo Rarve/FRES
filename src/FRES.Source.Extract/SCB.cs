@@ -31,7 +31,7 @@ namespace FRES.Source.Extract
 
             //return realEstate;
 
-            //var asdf = GetDetails("http://www.buyatsiam.com/APropertyDetail.html?id=23318").Result;
+            var asdf = GetDetails("http://www.buyatsiam.com/APropertyDetail.html?id=23318").Result;
             return null;
         }
 
@@ -131,15 +131,31 @@ namespace FRES.Source.Extract
                             .FirstOrDefault().ChildNodes["img"].GetAttributeValue("src", string.Empty);
                 re.Name = doc.DocumentNode.Descendants("div").Where(x => x.Id == "Lname").FirstOrDefault().ChildNodes["h3"].InnerText;
 
+                var detailTitles = doc.DocumentNode.Descendants("div")
+                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("col2"))
+                            .Select(x => RegexHelper.StripHTML(x.PreviousSibling.InnerHtml)).ToList();
 
-                re.PropertyCode = doc.DocumentNode.Descendants("div")
-                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("col2")).ToArray()[0].InnerHtml;
+                var detailDescs = doc.DocumentNode.Descendants("div")
+                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("col2"))
+                            .Select(x => RegexHelper.StripHTML(x.InnerHtml)).ToList();
 
-                re.Size = doc.DocumentNode.Descendants("div")
-                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("col2")).ToArray()[1].InnerHtml;
+                var details = new List<KeyValuePair<string, string>>();
 
-                re.Map.Desc = doc.DocumentNode.Descendants("div")
-                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("col2")).ToArray()[2].InnerHtml;
+                for (int i = 0; i < detailTitles.Count(); i++)
+                {
+                    details.Add(new KeyValuePair<string, string>(detailTitles[i], detailDescs[i]));
+                }
+
+                re.Details = details;
+
+                //re.PropertyCode = doc.DocumentNode.Descendants("div")
+                //            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("col2")).ToArray()[0].InnerHtml;
+
+                //re.Size = doc.DocumentNode.Descendants("div")
+                //            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("col2")).ToArray()[1].InnerHtml;
+
+                //re.Map.Desc = doc.DocumentNode.Descendants("div")
+                //            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("col2")).ToArray()[2].InnerHtml;
 
                 var gallery = doc.DocumentNode.Descendants("ul").Where(x => x.Id == "imageGallery").FirstOrDefault();
                 if (gallery != null)

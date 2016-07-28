@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -31,6 +32,11 @@ namespace FRES.Source.Extract
 
         internal static string StripHTML(string data)
         {
+            if (string.IsNullOrEmpty(data))
+            {
+                return string.Empty;
+            }
+
             var document = new HtmlDocument();
             document.LoadHtml(data);
 
@@ -57,7 +63,7 @@ namespace FRES.Source.Extract
                     parentNode.RemoveChild(node);
                 }
             }
-            return document.DocumentNode.InnerHtml;
+            return WebUtility.HtmlDecode(document.DocumentNode.InnerHtml).Trim();
         }
     }
 }

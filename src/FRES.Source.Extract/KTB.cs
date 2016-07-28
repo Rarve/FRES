@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace FRES.Source.Extract
 {
@@ -30,7 +31,7 @@ namespace FRES.Source.Extract
             //var re = GetDetails(urls);
             //return re;
 
-            var a = GetDetails("http://www.npashowroom.ktb.co.th/WebShowRoom/ViewPropServlet?propID=30832&check=0&p=n").Result;
+            var a = GetDetails("http://www.npashowroom.ktb.co.th/WebShowRoom/ViewPropServlet?propID=74298&check=1&p=r").Result;
             return null;
         }
 
@@ -114,30 +115,43 @@ namespace FRES.Source.Extract
 
                 re.Url = url;
 
-                var details = doc.DocumentNode.Descendants("div")
-                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("property_detail_col2"))
-                            .Select(x => x.FirstChild.InnerHtml).ToList();
+                var detailTitles = doc.DocumentNode.Descendants("div")
+                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("property_detail_col1"))
+                            .Select(x => RegexHelper.StripHTML(x.FirstChild.InnerHtml)).ToList();
 
-                re.PropertyCode = details[0];
-                re.PropertyType = details[1];
-                re.Map.Province = details[2];
-                re.Size = details[3];
-                re.TitleDeed = details[4];
-                re.TitleDeedNumber = details[5];
-                re.TitleDeedDetail = details[6];
+                var detailDescs = doc.DocumentNode.Descendants("div")
+                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("property_detail_col2"))                            
+                            .Select(x => RegexHelper.StripHTML(x.FirstChild.InnerHtml)).ToList();
 
-                bool isSuccess = false;
-                decimal price = 0;
-                isSuccess = decimal.TryParse(details[7], out price);
-                if (isSuccess) { re.Price = price; } else { re.Price = null; }
+                var details = new List<KeyValuePair<string, string>>();
 
-                int number = 0;
-                isSuccess = int.TryParse(details[8], out number);
-                if (isSuccess) { re.NumberOfBedRoom = number; } else { re.NumberOfBedRoom = null; }
-                isSuccess = int.TryParse(details[9], out number);
-                if (isSuccess) { re.NumberOfBedRoom = number; } else { re.NumberOfBedRoom = null; }
+                for (int i = 0; i < detailTitles.Count(); i++)
+                {
+                    details.Add(new KeyValuePair<string, string>(detailTitles[i], detailDescs[i]));
+                }
 
-                re.Map.Desc = details[10];
+                re.Details = details;
+
+                //re.PropertyCode = detailsTitle[0];
+                //re.PropertyType = detailsTitle[1];
+                //re.Map.Province = detailsTitle[2];
+                //re.Size = detailsTitle[3];
+                //re.TitleDeed = detailsTitle[4];
+                //re.TitleDeedNumber = detailsTitle[5];
+                //re.TitleDeedDetail = detailsTitle[6];
+
+                //bool isSuccess = false;
+                //decimal price = 0;
+                //isSuccess = decimal.TryParse(detailsTitle[7], out price);
+                //if (isSuccess) { re.Price = price; } else { re.Price = null; }
+
+                //int number = 0;
+                //isSuccess = int.TryParse(detailsTitle[8], out number);
+                //if (isSuccess) { re.NumberOfBedRoom = number; } else { re.NumberOfBedRoom = null; }
+                //isSuccess = int.TryParse(detailsTitle[9], out number);
+                //if (isSuccess) { re.NumberOfBedRoom = number; } else { re.NumberOfBedRoom = null; }
+
+                re.Map.Desc = detailTitles[10];
 
                 re.Images = doc.DocumentNode.Descendants("img").Where(x => x.Id == "image")
                             .Select(x => x.GetAttributeValue("src", string.Empty))
@@ -152,8 +166,12 @@ namespace FRES.Source.Extract
                             .ToList();
 
 
+                var remark = doc.DocumentNode.Descendants("div")
+                            .Where(x => x.Attributes.Contains("class") && (x.Attributes["class"].Value.Contains("text_contact_detail1")))
+                            .FirstOrDefault().InnerHtml;
 
-
+                re.Remark = RegexHelper.StripHTML(WebUtility.HtmlDecode(remark));
+                
                 re.PropertyCode = doc.DocumentNode.Descendants("div")
                             .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("col2")).ToArray()[0].InnerHtml;
 
