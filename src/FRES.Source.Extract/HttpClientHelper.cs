@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace FRES.Source.Extract
@@ -16,7 +17,7 @@ namespace FRES.Source.Extract
             {
                 if (_client == null)
                 {
-                    var handler = new HttpClientHandler { UseProxy = false };
+                    var handler = new HttpClientHandler { UseProxy = false, AllowAutoRedirect = true };
                     _client = new HttpClient() { Timeout = TimeSpan.FromSeconds(TIMEOUT) };
                     _client.DefaultRequestHeaders.UserAgent.TryParseAdd("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36");
 
@@ -24,8 +25,8 @@ namespace FRES.Source.Extract
                 return _client;
             }
         }
-
-        public async Task<HtmlAgilityPack.HtmlDocument> RetrieveHtmlGet(string url)
+        
+        public async Task<string> RetrieveHtmlStrGet(string url)
         {
             Console.WriteLine("GET  " + url);
             var html = string.Empty;
@@ -35,19 +36,48 @@ namespace FRES.Source.Extract
             {
                 var response = await Client.GetAsync(url);
                 var content = response.Content;
-                html = await content.ReadAsStringAsync();
-
-                var start = html.IndexOf("<html");
-                var end = html.IndexOf("</html>", start);
-                html = html.Substring(start, end - start);
+                var bytearray = await response.Content.ReadAsByteArrayAsync();
+                html = Encoding.UTF8.GetString(bytearray);
             }
-            catch (Exception ex)
+            catch (Exception ex1)
             {
-                throw ex;
+                try
+                {
+                    Console.WriteLine(ex1.Message);
+                    Console.WriteLine(ex1.StackTrace);
+                    Console.ReadKey();
+                    Task.Delay(TimeSpan.FromSeconds(3)).Wait();
+                    var response = await Client.GetAsync(url);
+                    var content = response.Content;
+                    var bytearray = await response.Content.ReadAsByteArrayAsync();
+                    html = Encoding.UTF8.GetString(bytearray);
+                }
+                catch (Exception ex2)
+                {
+                    Console.WriteLine(ex2.Message);
+                    Console.WriteLine(ex2.StackTrace);
+                    Console.ReadKey();
+                    Task.Delay(TimeSpan.FromSeconds(3)).Wait();
+                    var response = await Client.GetAsync(url);
+                    var content = response.Content;
+                    var bytearray = await response.Content.ReadAsByteArrayAsync();
+                    html = Encoding.UTF8.GetString(bytearray);
+                    throw ex2;
+                }
             }
 
-            htmlDoc.LoadHtml(html);
+            var start = html.IndexOf("<html");
+            var end = html.IndexOf("</html>", start);
+            html = html.Substring(start, end - start);
 
+            return html;
+        }
+
+        public async Task<HtmlAgilityPack.HtmlDocument> RetrieveHtmlGet(string url)
+        {
+            var html = await RetrieveHtmlStrGet(url);
+            var htmlDoc = new HtmlAgilityPack.HtmlDocument();
+            htmlDoc.LoadHtml(html);
             return htmlDoc;
         }
 

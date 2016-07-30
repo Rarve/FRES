@@ -1,6 +1,8 @@
 ﻿using FRES.Source.Extract;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,20 +19,33 @@ namespace FRES.Business
         public static void Extract()
         {
             ISourceExtractor ex = new Source.Extract.SCB();
-
-            var dt1 = DateTime.Now;
+            
             var scb = ex.Extract();
-            var dt2 = DateTime.Now;
-            //Console.WriteLine((dt2 - dt1).TotalSeconds);
 
+            using (FileStream fs = new FileStream(@"D:\scb.txt", FileMode.Append, FileAccess.Write))
+            using (StreamWriter sw = new StreamWriter(fs))
+            {
+                foreach (var item in scb)
+                {
+                    var json = JsonConvert.SerializeObject(scb);
+                    sw.WriteLine(string.Format("{0},{1}", item.Url, json));
+                    sw.Flush();
+                }
+            }
 
             ex = new Source.Extract.KTB();
-            dt1 = DateTime.Now;
             var ktb = ex.Extract();
-            dt2 = DateTime.Now;
-            Console.WriteLine((dt2 - dt1).TotalSeconds);
-            //extractor = new Source.Extract.KTB();
-            //var ktb = extractor.Extract();
+
+            using (FileStream fs = new FileStream(@"D:\ktb.txt", FileMode.Append, FileAccess.Write))
+            using (StreamWriter sw = new StreamWriter(fs))
+            {
+                foreach (var item in ktb)
+                {
+                    var json = JsonConvert.SerializeObject(scb);
+                    sw.WriteLine(string.Format("{0},{1}", item.Url, json));
+                    sw.Flush();
+                }
+            }
         }
     }
 }

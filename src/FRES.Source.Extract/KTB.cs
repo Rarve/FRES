@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace FRES.Source.Extract
 {
@@ -11,9 +12,9 @@ namespace FRES.Source.Extract
     // To enable this option, right-click on the project and select the Properties menu item. In the Build tab select "Produce outputs on build".
     public class KTB : ISourceExtractor
     {
-        public const string URL_MAIN = "http://www.npashowroom.ktb.co.th/";
-        public const string URL_LIST = "WebShowRoom/SearchServlet";
-        public const string URL_DTLS = "WebShowRoom/";
+        public const string URL_LIST = "http://www.npashowroom.ktb.co.th/WebShowRoom/SearchServlet";
+        public const string URL_DTLS = "http://www.npashowroom.ktb.co.th/WebShowRoom/";
+        public const string URL_MAPS = "http://www.npashowroom.ktb.co.th/WebShowRoom/quickview_properties.jsp?coll_id=121876&id=";
         public const int PARALLELISM_DEGREE = 10;
         public const int TIMEOUT = 60;
 
@@ -26,27 +27,26 @@ namespace FRES.Source.Extract
 
         public RealEstate[] Extract()
         {
-            //var total = GetTotalPages(URL_MAIN + URL_LIST);
-            //var urls = GetItemUrls(total);
-            //var re = GetDetails(urls);
-            //return re;
+            var total = GetTotalPages(URL_LIST);
+            var urls = GetItemUrls(total);
+            var re = GetDetails(urls);
+            return re;
 
-            var a = GetDetails("http://www.npashowroom.ktb.co.th/WebShowRoom/ViewPropServlet?propID=74298&check=1&p=r").Result;
-            return null;
+            //var a = GetDetails("http://www.npashowroom.ktb.co.th/WebShowRoom/ViewPropServlet?propID=74298&check=1&p=r").Result;
+            //var b = GetDetails("http://www.npashowroom.ktb.co.th/WebShowRoom/ViewPropServlet?propID=30832&check=0&p=n").Result;
+            //return null;
         }
 
         public string[] GetItemUrls(int totalPages)
         {
             var arr = new List<string>();
             var sync = new object();
-            var url = URL_MAIN + URL_LIST;
-
             var pages = Enumerable.Range(1, totalPages).ToArray();
 
             pages.AsParallel().WithDegreeOfParallelism(PARALLELISM_DEGREE).ForAll((page) =>
             {
-                Console.WriteLine(page + "   " + url);
-                var items = GetItemUrls(url, page.ToString()).Result;
+                Console.WriteLine(page + "   " + URL_LIST);
+                var items = GetItemUrls(URL_LIST, page.ToString()).Result;
                 lock (sync) { arr.AddRange(items); }
             });
 
@@ -61,7 +61,7 @@ namespace FRES.Source.Extract
                 Console.WriteLine(url);
                 var nvc = new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("numPage", pageNumber) };
                 var htmlDoc = await Client.RetrieveHtmlPost(url, nvc);
-                items = htmlDoc.DocumentNode.Descendants("a").Where(x => x.Attributes.Contains("href") && x.Attributes["href"].Value.Contains("ViewPropServlet") && x.Attributes["href"].Value.Contains("&check=0&p=n")).Select(x => URL_MAIN + URL_DTLS + x.GetAttributeValue("href", string.Empty)).ToList();
+                items = htmlDoc.DocumentNode.Descendants("a").Where(x => x.Attributes.Contains("href") && x.Attributes["href"].Value.Contains("ViewPropServlet") && x.Attributes["href"].Value.Contains("&check=0&p=n")).Select(x => URL_DTLS + x.GetAttributeValue("href", string.Empty)).ToList();
             }
             catch (Exception ex)
             {
@@ -120,7 +120,7 @@ namespace FRES.Source.Extract
                             .Select(x => RegexHelper.StripHTML(x.FirstChild.InnerHtml)).ToList();
 
                 var detailDescs = doc.DocumentNode.Descendants("div")
-                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("property_detail_col2"))                            
+                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("property_detail_col2"))
                             .Select(x => RegexHelper.StripHTML(x.FirstChild.InnerHtml)).ToList();
 
                 var details = new List<KeyValuePair<string, string>>();
@@ -132,78 +132,61 @@ namespace FRES.Source.Extract
 
                 re.Details = details;
 
-                //re.PropertyCode = detailsTitle[0];
-                //re.PropertyType = detailsTitle[1];
-                //re.Map.Province = detailsTitle[2];
-                //re.Size = detailsTitle[3];
-                //re.TitleDeed = detailsTitle[4];
-                //re.TitleDeedNumber = detailsTitle[5];
-                //re.TitleDeedDetail = detailsTitle[6];
+                re.BedRooom = details.Where(x => x.Key.Contains("ห้องนอน")).Count() > 0 ? string.Empty : details.Where(x => x.Key == "ห้องนอน").FirstOrDefault().Value;
+                re.BathRoom = details.Where(x => x.Key.Contains("ห้องน้ำ")).Count() > 0 ? string.Empty : details.Where(x => x.Key == "ห้องน้ำ").FirstOrDefault().Value;
+                re.ParkingSpace = details.Where(x => x.Key.Contains("ที่จอดรถ")).Count() > 0 ? string.Empty : details.Where(x => x.Key == "ที่จอดรถ").FirstOrDefault().Value;
+                re.Price = details.Where(x => x.Key == "ราคาพิเศษ").Count() > 0 ? string.Empty : details.Where(x => x.Key == "ราคาพิเศษ").FirstOrDefault().Value;
+                re.PropertyType = details.Where(x => x.Key == "ประเภททรัพย์").Count() > 0 ? string.Empty : details.Where(x => x.Key == "ประเภททรัพย์").FirstOrDefault().Value;
 
-                //bool isSuccess = false;
-                //decimal price = 0;
-                //isSuccess = decimal.TryParse(detailsTitle[7], out price);
-                //if (isSuccess) { re.Price = price; } else { re.Price = null; }
+                var contactNames = doc.DocumentNode.Descendants("div")
+                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("box_contact_col2"))
+                            .Select(x => RegexHelper.StripHTML(x.FirstChild.InnerHtml)).ToList();
 
-                //int number = 0;
-                //isSuccess = int.TryParse(detailsTitle[8], out number);
-                //if (isSuccess) { re.NumberOfBedRoom = number; } else { re.NumberOfBedRoom = null; }
-                //isSuccess = int.TryParse(detailsTitle[9], out number);
-                //if (isSuccess) { re.NumberOfBedRoom = number; } else { re.NumberOfBedRoom = null; }
+                var contactTells = doc.DocumentNode.Descendants("div")
+                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("box_contact_col3"))
+                            .Select(x => RegexHelper.StripHTML(x.FirstChild.InnerHtml)).ToList();
 
-                re.Map.Desc = detailTitles[10];
+                var contactEmails = doc.DocumentNode.Descendants("div")
+                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("box_contact_col4"))
+                            .Select(x => RegexHelper.StripHTML(x.InnerHtml).Replace("คลิกที่นี่เพื่อติดต่อเจ้าหน้าที่", string.Empty)).ToList();
+
+                var contacts = new List<Contact>();
+
+                for (int i = 0; i < contactNames.Count(); i++)
+                {
+                    contacts.Add(new Contact() { Name = contactNames[i], TellNo = contactTells[i], Email = contactEmails[i] });
+                }
+
+                re.Contacts = contacts;
 
                 re.Images = doc.DocumentNode.Descendants("img").Where(x => x.Id == "image")
                             .Select(x => x.GetAttributeValue("src", string.Empty))
                             .Distinct().Select(x => new Image() { Url = x }).ToList();
-
-                var asdf = doc.DocumentNode.Descendants("div")
-                            .Where(x => x.Attributes.Contains("class") 
-                                && (x.Attributes["class"].Value.Contains("box_contact_col2")
-                                || x.Attributes["class"].Value.Contains("box_contact_col3")
-                                || x.Attributes["class"].Value.Contains("box_contact_col4")))
-                            //.Select(x => x.FirstChild.InnerHtml)
-                            .ToList();
-
 
                 var remark = doc.DocumentNode.Descendants("div")
                             .Where(x => x.Attributes.Contains("class") && (x.Attributes["class"].Value.Contains("text_contact_detail1")))
                             .FirstOrDefault().InnerHtml;
 
                 re.Remark = RegexHelper.StripHTML(WebUtility.HtmlDecode(remark));
-                
-                re.PropertyCode = doc.DocumentNode.Descendants("div")
-                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("col2")).ToArray()[0].InnerHtml;
 
-                re.Size = doc.DocumentNode.Descendants("div")
-                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("col2")).ToArray()[1].InnerHtml;
+                string mapImage = doc.DocumentNode
+                            .Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("map_detail_col1")).FirstOrDefault()
+                            .Descendants("a").FirstOrDefault().GetAttributeValue("href", string.Empty);
 
-                re.Map.Desc = doc.DocumentNode.Descendants("div")
-                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("col2")).ToArray()[2].InnerHtml;
+                re.Map.Images.Add(new Image() { Url = mapImage });
 
-                var gallery = doc.DocumentNode.Descendants("ul").Where(x => x.Id == "imageGallery").FirstOrDefault();
-                if (gallery != null)
-                {
-                    re.Images = gallery.Elements("li")
-                                .Select(x => URL_MAIN + x.Descendants("img").FirstOrDefault()
-                                .GetAttributeValue("src", string.Empty))
-                                .Select(x => new Image() { Url = x }).ToList();
 
-                }
-                
-                var loc = doc.DocumentNode.Descendants("div")
-                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("chromemenu")).FirstOrDefault().InnerHtml.Trim();
+                var propId = QueryHelpers.ParseQuery(url.Split('?')[1])["propId"];
+                var mapUrl = URL_MAPS + propId;
 
-                if (loc.Contains("พิกัด Latitude(X):"))
-                {
-                    var arr = loc.Replace("พิกัด Latitude(X):", string.Empty).Replace("Longitude(Y):", string.Empty).Substring(0, loc.IndexOf("<br>")).Replace("<br>", string.Empty).Trim().Split(',');
-                    re.Map.Latt = double.Parse(arr[0].Trim());
-                    re.Map.Long = double.Parse(arr[1].Trim());
-                }
+                var map = await Client.RetrieveHtmlStrGet(mapUrl);
 
-                var mapImg = URL_MAIN + doc.DocumentNode.Descendants("div").Where(x => x.Id == "imagetab").FirstOrDefault().Element("img").GetAttributeValue("src", string.Empty);
+                var tmp = map.Split(new string[] { "Math.round(" }, StringSplitOptions.RemoveEmptyEntries);
+                var lat = tmp[1].Split(new string[] { "*" }, StringSplitOptions.RemoveEmptyEntries)[0];
+                var lng = tmp[2].Split(new string[] { "*" }, StringSplitOptions.RemoveEmptyEntries)[0];
 
-                re.Map.Images.Add(new Image() { Url = mapImg });
+                re.Map.Lat = double.Parse(lat);
+                re.Map.Long = double.Parse(lng);
             }
             catch (Exception ex)
             {

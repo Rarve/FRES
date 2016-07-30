@@ -30,7 +30,12 @@ namespace FRES.Source.Extract
         //    return Regex.Replace(input, "<.*?>", String.Empty);
         //}
 
-        internal static string StripHTML(string data)
+        public static string[] SplitTag(string input)
+        {
+            return Regex.Split(input, "<.*?>").Select(x => RegexHelper.StripHTML(x)).Where(x => !string.IsNullOrEmpty(x)).ToArray();
+        }
+
+        public static string StripHTML(string data)
         {
             if (string.IsNullOrEmpty(data))
             {
@@ -64,6 +69,13 @@ namespace FRES.Source.Extract
                 }
             }
             return WebUtility.HtmlDecode(document.DocumentNode.InnerHtml).Trim();
+        }
+        
+        public static string GetStrBtw(string str, string start, string end)
+        {
+            var idx = str.IndexOf(start);
+            var length = str.IndexOf(end, idx) - idx;
+            return str.Substring(idx, length);
         }
     }
 }

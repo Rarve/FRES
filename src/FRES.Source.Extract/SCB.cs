@@ -1,5 +1,6 @@
 ﻿using FRES.Structure;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,14 +26,15 @@ namespace FRES.Source.Extract
 
         public RealEstate[] Extract()
         {
-            //var totalPages = GetTotalPages(URL_MAIN + URL_PAGE);
-            //var urlDetls = GetItemUrls(totalPages).OrderBy(x => x).ToArray();
-            //var realEstate = GetDetails(urlDetls);
+            var totalPages = GetTotalPages(URL_MAIN + URL_PAGE);
+            var urlDetls = GetItemUrls(totalPages).Take(100).OrderBy(x => x).ToArray();
+            var realEstate = GetDetails(urlDetls);
 
-            //return realEstate;
+            return realEstate;
 
-            var asdf = GetDetails("http://www.buyatsiam.com/APropertyDetail.html?id=23318").Result;
-            return null;
+            //var asdf = GetDetails("http://www.buyatsiam.com/APropertyDetail.html?id=30842").Result;
+            //var asdf2 = GetDetails("http://www.buyatsiam.com/APropertyDetail.html?id=34230").Result;
+            //return null;
         }
 
         public string[] GetItemUrls(int total)
@@ -126,10 +128,31 @@ namespace FRES.Source.Extract
                 }
 
                 re.Url = url;
+
                 re.Icon = URL_MAIN + doc.DocumentNode.Descendants("p")
                             .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("Thumb-s"))
                             .FirstOrDefault().ChildNodes["img"].GetAttributeValue("src", string.Empty);
-                re.Name = doc.DocumentNode.Descendants("div").Where(x => x.Id == "Lname").FirstOrDefault().ChildNodes["h3"].InnerText;
+
+                //re.Name = doc.DocumentNode.Descendants("div").Where(x => x.Id == "Lname").FirstOrDefault().ChildNodes["h3"].InnerText;
+
+                var html = doc.DocumentNode.Descendants("div").Where(x => x.Id == "Lname").FirstOrDefault().ParentNode.ParentNode.InnerHtml;
+                var titleDetails = RegexHelper.SplitTag(html);
+                
+                re.Name = titleDetails[0];
+                re.Size = titleDetails[1];
+
+                if (titleDetails.Length > 3)
+                {
+                    re.BedRooom = titleDetails[2];
+                    re.BathRoom = titleDetails[4];
+                    re.ParkingSpace = titleDetails[6];
+                    re.Price = titleDetails[8];
+                }
+                else
+                {
+                    re.Price = titleDetails[2];
+                }
+
 
                 var detailTitles = doc.DocumentNode.Descendants("div")
                             .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("col2"))
@@ -146,18 +169,15 @@ namespace FRES.Source.Extract
                     details.Add(new KeyValuePair<string, string>(detailTitles[i], detailDescs[i]));
                 }
 
+                var price = doc.DocumentNode.Descendants("div")
+                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("price")).FirstOrDefault().InnerHtml;
+
+                details.Add(new KeyValuePair<string, string>("price", RegexHelper.StripHTML(price)));
+                
                 re.Details = details;
-
-                //re.PropertyCode = doc.DocumentNode.Descendants("div")
-                //            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("col2")).ToArray()[0].InnerHtml;
-
-                //re.Size = doc.DocumentNode.Descendants("div")
-                //            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("col2")).ToArray()[1].InnerHtml;
-
-                //re.Map.Desc = doc.DocumentNode.Descendants("div")
-                //            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("col2")).ToArray()[2].InnerHtml;
-
+                
                 var gallery = doc.DocumentNode.Descendants("ul").Where(x => x.Id == "imageGallery").FirstOrDefault();
+
                 if (gallery != null)
                 {
                     re.Images = gallery.Elements("li")
@@ -173,11 +193,10 @@ namespace FRES.Source.Extract
                             .Element("div").InnerHtml.Trim();
 
                 var contactTells = RegexHelper.GetMatchStr(contactStr, RegexHelper.REGEX_TELL_NO);
+                
+                contact.TellNo = string.Join(",", contactTells);
 
-                contact.TellNo = contactTells.ToArray();
-                contact.Desc = RegexHelper.StripHTML(contactStr);
-
-                re.Contact.Add(contact);
+                re.Contacts.Add(contact);
 
                 var loc = doc.DocumentNode.Descendants("div")
                             .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("chromemenu")).FirstOrDefault().InnerHtml.Trim();
@@ -185,7 +204,7 @@ namespace FRES.Source.Extract
                 if (loc.Contains("พิกัด Latitude(X):"))
                 {
                     var arr = loc.Replace("พิกัด Latitude(X):", string.Empty).Replace("Longitude(Y):", string.Empty).Substring(0, loc.IndexOf("<br>")).Replace("<br>", string.Empty).Trim().Split(',');
-                    re.Map.Latt = double.Parse(arr[0].Trim());
+                    re.Map.Lat = double.Parse(arr[0].Trim());
                     re.Map.Long = double.Parse(arr[1].Trim());
                 }
 

@@ -13,7 +13,7 @@ namespace FRES.Structure
         }
 
         public string Province { get; set; }
-        public double Latt { get; set; }
+        public double Lat { get; set; }
         public double Long { get; set; }
         public List<Image> Images { get; set; }
         public string Name { get; set; }
