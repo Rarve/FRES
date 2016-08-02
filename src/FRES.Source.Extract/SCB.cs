@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,7 +16,7 @@ namespace FRES.Source.Extract
         private const string URL_MAIN = "http://www.buyatsiam.com/";
         private const string URL_PAGE = "APropertyHome.html?page=";
         private const string URL_DTLS = "APropertyDetail.html?id=";
-        private const int PARALLELISM_DEGREE = 10;
+        private const int PARALLELISM_DEGREE = 5;
 
         private HttpClientHelper Client;
 
@@ -27,7 +28,7 @@ namespace FRES.Source.Extract
         public RealEstate[] Extract()
         {
             var totalPages = GetTotalPages(URL_MAIN + URL_PAGE);
-            var urlDetls = GetItemUrls(totalPages).Take(100).OrderBy(x => x).ToArray();
+            var urlDetls = GetItemUrls(totalPages).ToArray();
             var realEstate = GetDetails(urlDetls);
 
             return realEstate;
@@ -62,7 +63,7 @@ namespace FRES.Source.Extract
             var ret = new string[0];
             try
             {
-                Console.WriteLine(url);
+                //Console.WriteLine(url);
                 var pageHtml = await Client.RetrieveHtmlGet(url);
                 ret = pageHtml.DocumentNode.Descendants("div")
                     .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("MainColumn"))
@@ -182,8 +183,7 @@ namespace FRES.Source.Extract
                 {
                     re.Images = gallery.Elements("li")
                                 .Select(x => URL_MAIN + x.Descendants("img").FirstOrDefault()
-                                .GetAttributeValue("src", string.Empty))
-                                .Select(x => new Image() { Url = x }).ToList();
+                                .GetAttributeValue("src", string.Empty)).ToList();
                 }
 
                 var contact = new Contact();
@@ -205,19 +205,17 @@ namespace FRES.Source.Extract
                 {
                     var arr = loc.Replace("พิกัด Latitude(X):", string.Empty).Replace("Longitude(Y):", string.Empty).Substring(0, loc.IndexOf("<br>")).Replace("<br>", string.Empty).Trim().Split(',');
                     re.Map.Lat = double.Parse(arr[0].Trim());
-                    re.Map.Long = double.Parse(arr[1].Trim());
+                    re.Map.Lon = double.Parse(arr[1].Trim());
                 }
 
                 var mapImg = URL_MAIN + doc.DocumentNode.Descendants("div").Where(x => x.Id == "imagetab").FirstOrDefault().Element("img").GetAttributeValue("src", string.Empty);
 
-                re.Map.Images.Add(new Image() { Url = mapImg });
+                re.Map.Images.Add(mapImg);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-                Console.ReadKey();
-                throw;
+                File.AppendAllText("D:/SCBLog.txt", ex.GetBaseException().Message);
+                File.AppendAllText("D:/SCBLog.txt", "\r\n" + url + "\r\n");
             }
             return re;
         }

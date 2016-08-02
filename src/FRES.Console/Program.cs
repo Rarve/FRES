@@ -11,7 +11,7 @@ namespace FRES.Console
         {
             try
             {
-                Business.SCB.Extract();
+                Business.Extracor.Extract();
             }
             catch (Exception ex)
             {

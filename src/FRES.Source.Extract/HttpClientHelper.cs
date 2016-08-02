@@ -17,10 +17,12 @@ namespace FRES.Source.Extract
             {
                 if (_client == null)
                 {
+                    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                    Encoding.GetEncoding(874);
+
                     var handler = new HttpClientHandler { UseProxy = false, AllowAutoRedirect = true };
                     _client = new HttpClient() { Timeout = TimeSpan.FromSeconds(TIMEOUT) };
                     _client.DefaultRequestHeaders.UserAgent.TryParseAdd("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36");
-
                 }
                 return _client;
             }
@@ -34,42 +36,21 @@ namespace FRES.Source.Extract
 
             try
             {
-                var response = await Client.GetAsync(url);
-                var content = response.Content;
-                var bytearray = await response.Content.ReadAsByteArrayAsync();
-                html = Encoding.UTF8.GetString(bytearray);
+                using (var req = new HttpRequestMessage(HttpMethod.Get, url))
+                using (var res = await Client.SendAsync(req))
+                {
+                    html = res.Content.ReadAsStringAsync().Result;
+                }
             }
-            catch (Exception ex1)
+            catch (Exception ex)
             {
-                try
-                {
-                    Console.WriteLine(ex1.Message);
-                    Console.WriteLine(ex1.StackTrace);
-                    Console.ReadKey();
-                    Task.Delay(TimeSpan.FromSeconds(3)).Wait();
-                    var response = await Client.GetAsync(url);
-                    var content = response.Content;
-                    var bytearray = await response.Content.ReadAsByteArrayAsync();
-                    html = Encoding.UTF8.GetString(bytearray);
-                }
-                catch (Exception ex2)
-                {
-                    Console.WriteLine(ex2.Message);
-                    Console.WriteLine(ex2.StackTrace);
-                    Console.ReadKey();
-                    Task.Delay(TimeSpan.FromSeconds(3)).Wait();
-                    var response = await Client.GetAsync(url);
-                    var content = response.Content;
-                    var bytearray = await response.Content.ReadAsByteArrayAsync();
-                    html = Encoding.UTF8.GetString(bytearray);
-                    throw ex2;
-                }
+                //Console.WriteLine(url);
+                //Console.WriteLine(ex.Message);
+                //Console.WriteLine(ex.StackTrace);
+                //Console.ReadKey();
+                throw ex;
             }
-
-            var start = html.IndexOf("<html");
-            var end = html.IndexOf("</html>", start);
-            html = html.Substring(start, end - start);
-
+            
             return html;
         }
 
@@ -81,11 +62,10 @@ namespace FRES.Source.Extract
             return htmlDoc;
         }
 
-        public async Task<HtmlAgilityPack.HtmlDocument> RetrieveHtmlPost(string url, IEnumerable<KeyValuePair<string, string>> kvp)
+        public async Task<string> RetrieveHtmlStrPost(string url, IEnumerable<KeyValuePair<string, string>> kvp)
         {
-            Console.WriteLine("POST  " + url);
+            Console.WriteLine("POST  " + url + " " + kvp.GetEnumerator().Current.Value);
             var html = string.Empty;
-            var htmlDoc = new HtmlAgilityPack.HtmlDocument();
 
             try
             {
@@ -95,11 +75,20 @@ namespace FRES.Source.Extract
             }
             catch (Exception ex)
             {
+                //Console.WriteLine(ex.Message);
+                //Console.WriteLine(ex.StackTrace);
+                //Console.ReadKey();
                 throw ex;
             }
 
-            htmlDoc.LoadHtml(html);
+            return html;
+        }
 
+        public async Task<HtmlAgilityPack.HtmlDocument> RetrieveHtmlPost(string url, IEnumerable<KeyValuePair<string, string>> kvp)
+        {
+            var html = await RetrieveHtmlStrPost(url, kvp);
+            var htmlDoc = new HtmlAgilityPack.HtmlDocument();
+            htmlDoc.LoadHtml(html);
             return htmlDoc;
         }
     }

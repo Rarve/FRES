@@ -73,6 +73,7 @@
 --reference:C:\Users\rkrungkaew\.nuget\packages\System.Security.Cryptography.Primitives\4.0.0\ref\netstandard1.3\System.Security.Cryptography.Primitives.dll
 --reference:C:\Users\rkrungkaew\.nuget\packages\System.Security.Cryptography.X509Certificates\4.1.0\ref\netstandard1.4\System.Security.Cryptography.X509Certificates.dll
 --reference:C:\Users\rkrungkaew\.nuget\packages\System.Text.Encoding\4.0.11\ref\netstandard1.3\System.Text.Encoding.dll
+--reference:C:\Users\rkrungkaew\.nuget\packages\System.Text.Encoding.CodePages\4.0.1\ref\netstandard1.3\System.Text.Encoding.CodePages.dll
 --reference:C:\Users\rkrungkaew\.nuget\packages\System.Text.Encoding.Extensions\4.0.11\ref\netstandard1.3\System.Text.Encoding.Extensions.dll
 --reference:C:\Users\rkrungkaew\.nuget\packages\System.Text.Encodings.Web\4.0.0\lib\netstandard1.0\System.Text.Encodings.Web.dll
 --reference:C:\Users\rkrungkaew\.nuget\packages\System.Text.RegularExpressions\4.1.0\ref\netstandard1.3\System.Text.RegularExpressions.dll
@@ -86,5 +87,5 @@
 --reference:D:\Dropbox\MyProjects\FRES\src\FRES.Data\bin\Debug\netstandard1.5\FRES.Data.dll
 --reference:D:\Dropbox\MyProjects\FRES\src\FRES.Source.Extract\bin\Debug\netstandard1.5\FRES.Source.Extract.dll
 --reference:D:\Dropbox\MyProjects\FRES\src\FRES.Structure\bin\Debug\netstandard1.5\FRES.Structure.dll
-D:\Dropbox\MyProjects\FRES\src\FRES.Business\SCB.cs
+D:\Dropbox\MyProjects\FRES\src\FRES.Business\Extracor.cs
 D:\Dropbox\MyProjects\FRES\src\FRES.Business\Properties\AssemblyInfo.cs

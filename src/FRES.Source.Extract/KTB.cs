@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using Microsoft.AspNetCore.WebUtilities;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace FRES.Source.Extract
 {
@@ -14,8 +16,9 @@ namespace FRES.Source.Extract
     {
         public const string URL_LIST = "http://www.npashowroom.ktb.co.th/WebShowRoom/SearchServlet";
         public const string URL_DTLS = "http://www.npashowroom.ktb.co.th/WebShowRoom/";
-        public const string URL_MAPS = "http://www.npashowroom.ktb.co.th/WebShowRoom/quickview_properties.jsp?coll_id=121876&id=";
-        public const int PARALLELISM_DEGREE = 10;
+        public const string USL_MAPS = "http://www.npashowroom.ktb.co.th/WebShowRoom/AjaxSearchGIS?collgrp=";
+
+        public const int PARALLELISM_DEGREE = 5;
         public const int TIMEOUT = 60;
 
         public HttpClientHelper Client;
@@ -27,13 +30,18 @@ namespace FRES.Source.Extract
 
         public RealEstate[] Extract()
         {
-            var total = GetTotalPages(URL_LIST);
-            var urls = GetItemUrls(total);
+            //var total = GetTotalPages(URL_LIST);
+            //var urls = GetItemUrls(total);
+            //File.WriteAllText("D:/KTBUrlList.txt", JsonConvert.SerializeObject(urls));
+
+            var str = File.ReadAllText("D:/KTBUrlList.txt");
+            var urls = JsonConvert.DeserializeObject<string[]>(str);
             var re = GetDetails(urls);
             return re;
 
-            //var a = GetDetails("http://www.npashowroom.ktb.co.th/WebShowRoom/ViewPropServlet?propID=74298&check=1&p=r").Result;
-            //var b = GetDetails("http://www.npashowroom.ktb.co.th/WebShowRoom/ViewPropServlet?propID=30832&check=0&p=n").Result;
+            //var asdf = GetItemUrls(URL_LIST, "50").Result;
+            //var a = GetDetails("http://www.npashowroom.ktb.co.th/WebShowRoom/ViewPropServlet?propID=144240&check=0&p=n").Result;
+            //var b = GetDetails("http://www.npashowroom.ktb.co.th/WebShowRoom/ViewPropServlet?propID=23890&check=1&p=n").Result;
             //return null;
         }
 
@@ -45,7 +53,7 @@ namespace FRES.Source.Extract
 
             pages.AsParallel().WithDegreeOfParallelism(PARALLELISM_DEGREE).ForAll((page) =>
             {
-                Console.WriteLine(page + "   " + URL_LIST);
+                //Console.WriteLine(page + "   " + URL_LIST);
                 var items = GetItemUrls(URL_LIST, page.ToString()).Result;
                 lock (sync) { arr.AddRange(items); }
             });
@@ -58,10 +66,10 @@ namespace FRES.Source.Extract
             var items = new List<string>();
             try
             {
-                Console.WriteLine(url);
+                //Console.WriteLine(url);
                 var nvc = new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("numPage", pageNumber) };
                 var htmlDoc = await Client.RetrieveHtmlPost(url, nvc);
-                items = htmlDoc.DocumentNode.Descendants("a").Where(x => x.Attributes.Contains("href") && x.Attributes["href"].Value.Contains("ViewPropServlet") && x.Attributes["href"].Value.Contains("&check=0&p=n")).Select(x => URL_DTLS + x.GetAttributeValue("href", string.Empty)).ToList();
+                items = htmlDoc.DocumentNode.Descendants("a").Where(x => x.Attributes.Contains("href") && x.Attributes["href"].Value.Contains("ViewPropServlet") && x.Attributes["href"].Value.Contains("&check=")).Select(x => URL_DTLS + x.GetAttributeValue("href", string.Empty)).ToList();
             }
             catch (Exception ex)
             {
@@ -99,15 +107,15 @@ namespace FRES.Source.Extract
 
         public RealEstate[] GetDetails(string[] urls)
         {
-            var ret = urls.AsParallel()
-                        .WithDegreeOfParallelism(PARALLELISM_DEGREE)
+            var ret = urls
+                        .AsParallel().WithDegreeOfParallelism(PARALLELISM_DEGREE)
                         .Select(urlDetail => GetDetails(urlDetail).Result);
             return ret.ToArray();
         }
 
         private async Task<RealEstate> GetDetails(string url)
         {
-            Console.WriteLine(url);
+            //Console.WriteLine(url);
             var re = new RealEstate();
             try
             {
@@ -161,39 +169,39 @@ namespace FRES.Source.Extract
 
                 re.Images = doc.DocumentNode.Descendants("img").Where(x => x.Id == "image")
                             .Select(x => x.GetAttributeValue("src", string.Empty))
-                            .Distinct().Select(x => new Image() { Url = x }).ToList();
+                            .Distinct().ToList();
 
-                var remark = doc.DocumentNode.Descendants("div")
-                            .Where(x => x.Attributes.Contains("class") && (x.Attributes["class"].Value.Contains("text_contact_detail1")))
-                            .FirstOrDefault().InnerHtml;
+                //var remark = doc.DocumentNode.Descendants("div")
+                //            .Where(x => x.Attributes.Contains("class") && (x.Attributes["class"].Value.Contains("text_contact_detail1")))
+                //            .FirstOrDefault().InnerHtml;
 
-                re.Remark = RegexHelper.StripHTML(WebUtility.HtmlDecode(remark));
+                //re.Remark = RegexHelper.StripHTML(WebUtility.HtmlDecode(remark));
 
-                string mapImage = doc.DocumentNode
+                var mapImage = doc.DocumentNode
                             .Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("map_detail_col1")).FirstOrDefault()
-                            .Descendants("a").FirstOrDefault().GetAttributeValue("href", string.Empty);
+                            .Descendants("a").FirstOrDefault();
 
-                re.Map.Images.Add(new Image() { Url = mapImage });
-
+                if (mapImage != null)
+                {
+                    re.Map.Images.Add(mapImage.GetAttributeValue("href", string.Empty));
+                }
 
                 var propId = QueryHelpers.ParseQuery(url.Split('?')[1])["propId"];
-                var mapUrl = URL_MAPS + propId;
+                var mapUrl = USL_MAPS + propId;
+                var nvc = new List<KeyValuePair<string, string>>();
+                var mapStr = await Client.RetrieveHtmlStrPost(mapUrl, nvc);
+                var mapObj = JsonConvert.DeserializeObject<KTBMap>(mapStr);
 
-                var map = await Client.RetrieveHtmlStrGet(mapUrl);
-
-                var tmp = map.Split(new string[] { "Math.round(" }, StringSplitOptions.RemoveEmptyEntries);
-                var lat = tmp[1].Split(new string[] { "*" }, StringSplitOptions.RemoveEmptyEntries)[0];
-                var lng = tmp[2].Split(new string[] { "*" }, StringSplitOptions.RemoveEmptyEntries)[0];
-
-                re.Map.Lat = double.Parse(lat);
-                re.Map.Long = double.Parse(lng);
+                if (mapObj.poi.Count > 0 && !string.IsNullOrEmpty(mapObj.poi[0].lat) && !string.IsNullOrEmpty(mapObj.poi[0].lon))
+                {
+                    re.Map.Lat = double.Parse(mapObj.poi[0].lat);
+                    re.Map.Lon = double.Parse(mapObj.poi[0].lon);
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-                Console.ReadKey();
-                throw;
+                File.AppendAllText("D:/KTBLog.txt", ex.GetBaseException().Message);
+                File.AppendAllText("D:/KTBLog.txt", "\r\n" + url + "\r\n");
             }
             return re;
         }
@@ -231,5 +239,26 @@ namespace FRES.Source.Extract
 
         //loResponseStream.Close();
         //return "value";
+    }
+
+    public class KTBMap
+    {
+        public List<Poi> poi { get; set; }
+    }
+
+    public class Poi
+    {
+        public int poiType { get; set; }
+        public string lon { get; set; }
+        public string insertById { get; set; }
+        public string poiActiveFlag { get; set; }
+        public string name { get; set; }
+        public string refGrp { get; set; }
+        public string refId { get; set; }
+        public int poiNpaId { get; set; }
+        public string url { get; set; }
+        public string lat { get; set; }
+        public string updateById { get; set; }
+        public string poiSubType { get; set; }
     }
 }

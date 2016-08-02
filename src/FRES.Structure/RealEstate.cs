@@ -8,7 +8,7 @@ namespace FRES.Structure
     {
         public RealEstate()
         {
-            Images = new List<Image>();
+            Images = new List<string>();
             Map = new Map();
             Contacts = new List<Structure.Contact>();
         }
@@ -17,7 +17,7 @@ namespace FRES.Structure
         public bool IsSoldOut { get; set; }
         public string Icon { get; set; }
         public string Name { get; set; }
-        public List<Image> Images { get; set; }
+        public List<string> Images { get; set; }
         public Map Map { get; set; }
         public List<Contact> Contacts { get; set; }
         public string Remark { get; set; }
