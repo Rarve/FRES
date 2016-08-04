@@ -12,11 +12,13 @@ namespace FRES.Structure
             Images = new List<string>();
         }
 
-        public string Province { get; set; }
         public double Lat { get; set; }
         public double Lon { get; set; }
         public List<string> Images { get; set; }
-        public string Name { get; set; }
-        public string Desc { get; set; }
+        public string Province { get; set; }
+        public string Amphur { get; set; }
+        public string[] ParcelNumber { get; set; }
+        //public string Name { get; set; }
+        //public string Desc { get; set; }
     }
 }

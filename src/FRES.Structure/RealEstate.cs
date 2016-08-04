@@ -2,8 +2,6 @@
 
 namespace FRES.Structure
 {
-    // This project can output the Class library as a NuGet Package.
-    // To enable this option, right-click on the project and select the Properties menu item. In the Build tab select "Produce outputs on build".
     public class RealEstate
     {
         public RealEstate()
@@ -29,14 +27,6 @@ namespace FRES.Structure
         public string ParkingSpace { get; set; }
         public string PropertyType { get; set; }
 
-        public List<KeyValuePair<string, string>> Details { get; set; }
-        //public string PropertyCode { get; set; }
-        //public string PropertyType { get; set; }
-        //public string Size { get; set; }
-        //public string TitleDeed { get; set; }
-        //public string TitleDeedNumber { get; set; }
-        //public string TitleDeedDetail { get; set; }
-        //public int? NumberOfBathRoom { get; set; }
-        //public int? NumberOfBedRoom { get; set; }
+        public Dictionary<string, string> Details { get; set; }
     }
 }

@@ -1,0 +1,16 @@
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\IEDriverServer.exe
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\Interop.SHDocVw.dll
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\Ionic.Zip.dll
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\Newtonsoft.Json.dll
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\nunit.framework.dll
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\WatiN.Core.dll
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\WebDriver.dll
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\WebDriver.Support.dll
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\nunit.framework.xml
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\WatiN.Core.xml
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\WebDriver.xml
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\WebDriver.Support.xml
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\obj\Debug\FRES.Source.M.exe
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\obj\Debug\FRES.Source.M.pdb
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\FRES.Source.M.exe.config
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\obj\Debug\FRES.Source.M.csprojResolveAssemblyReference.cache

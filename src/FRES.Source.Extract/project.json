@@ -2,7 +2,6 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "FRES.Data": "1.0.0-*",
     "FRES.Structure": "1.0.0-*",
     "HtmlAgilityPack.NetCore": "1.5.0.1",
     "Microsoft.AspNetCore.WebUtilities": "1.0.0",
