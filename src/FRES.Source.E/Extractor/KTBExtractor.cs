@@ -1,78 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.IO;
-using FRES.Common;
-using FRES.Structure;
+using FRES.Data;
+using FRES.Data.Models;
 
 namespace FRES.Source.E
 {
-    public class KTBExtractor : ISourceExtractor
+    public class KTBExtractor : AbsExtractor
     {
-        public const string URL_LIST = "http://www.npashowroom.ktb.co.th/WebShowRoom/SearchServlet";
         public const string URL_DTLS = "http://www.npashowroom.ktb.co.th/WebShowRoom/";
         public const string USL_MAPS = "http://www.npashowroom.ktb.co.th/WebShowRoom/AjaxSearchGIS?collgrp=";
-
-        public const int PARALLELISM_DEGREE = 3;
-
-        public HttpClientHelper Client;
-
-        public KTBExtractor()
+        
+        public KTBExtractor(string sourceName, string totalPageUrl, int parallelismDegree) : base(sourceName, totalPageUrl, parallelismDegree)
         {
-            Client = new HttpClientHelper();
         }
-
-        public RealEstateExtrctObj[] Extract()
-        {
-            var total = GetTotalPages(URL_LIST);
-            var urls = GetItemUrls(total);
-            File.WriteAllText("D:/RE/A_KTB.txt", JsonHelper.Serialize(urls, true)));
-
-            var str = File.ReadAllText("D:/RE/A_KTB.txt");
-            urls = JsonHelper.Deserialize<string[]>(str);
-            var re = GetDetails(urls.ToArray());
-
-            File.WriteAllText("D:/RE/E_KTB.txt", JsonHelper.Serialize(re, true)));
-
-            return re;
-        }
-
-        object sync = new object();
-        public string[] GetItemUrls(int totalPages)
+        
+        protected override List<string> GetUrls(int totalPages)
         {
             var arr = new List<string>();
             var pages = Enumerable.Range(1, totalPages).ToArray();
 
-            pages.AsParallel().WithDegreeOfParallelism(PARALLELISM_DEGREE).ForAll((page) =>
+            pages.AsParallel().WithDegreeOfParallelism(ParallismDegree).ForAll((page) =>
             {
-                var items = GetItemUrls(URL_LIST, page.ToString()).Result;
+                var items = GetUrlsFromPage(MainPageUrl, page.ToString());
                 lock (sync) { arr.AddRange(items); }
             });
 
-            return arr.ToArray();
+            return arr;
         }
 
-        private async Task<List<string>> GetItemUrls(string url, string pageNumber)
+        protected object sync = new object();
+        protected List<string> GetUrlsFromPage(string pageUrl, string pageNumber)
         {
-            var items = new List<string>();
+            var urls = new List<string>();
             try
             {
                 var nvc = new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("numPage", pageNumber) };
-                var htmlDoc = await Client.RetrieveHtmlPost(url, nvc);
-                items = htmlDoc.DocumentNode.Descendants("a").Where(x => x.Attributes.Contains("href") && x.Attributes["href"].Value.Contains("ViewPropServlet") && x.Attributes["href"].Value.Contains("&check=")).Select(x => URL_DTLS + x.GetAttributeValue("href", string.Empty)).ToList();
+                var htmlDoc = Client.RetrieveHtmlPost(pageUrl, nvc).Result;
+                urls = htmlDoc.DocumentNode.Descendants("a").Where(x => x.Attributes.Contains("href") && x.Attributes["href"].Value.Contains("ViewPropServlet") && x.Attributes["href"].Value.Contains("&check=")).Select(x => URL_DTLS + x.GetAttributeValue("href", string.Empty)).ToList();
             }
             catch (Exception ex)
             {
                 lock (sync)
                 {
-                    File.AppendAllText("D:/RE/A_KTB.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + url + "," + ex.GetBaseException().Message + "\r\n");
+                    File.AppendAllText("D:/RE/A_" + this.GetType().Name + ".log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + pageUrl + "," + ex.GetBaseException().Message + "\r\n");
                 }
             }
-            return items;
+            return urls;
         }
 
-        public int GetTotalPages(string url)
+        protected override int GetTotalPages(string url)
         {
             int totalPages = 0;
 
@@ -94,30 +72,6 @@ namespace FRES.Source.E
             }
 
             return totalPages;
-        }
-
-        public RealEstateExtrctObj[] GetDetails(string[] urls)
-        {
-            var ret = urls
-                        .AsParallel().WithDegreeOfParallelism(PARALLELISM_DEGREE)
-                        .Select(url => GetDetails(url));
-            return ret.ToArray();
-        }
-        
-        public RealEstateExtrctObj GetDetails(string url)
-        {
-            var res = default(RealEstateExtrctObj);
-            var html = string.Empty;
-            try
-            {
-                html = Client.RetrieveHtmlStrGet(url).Result;
-                res = new RealEstateExtrctObj(url, html);
-            }
-            catch (Exception ex)
-            {
-                File.AppendAllText("D:/RE/E_KTB.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + url + "," + ex.GetBaseException().Message + "\r\n");
-            }
-            return res;
         }
     }
 }

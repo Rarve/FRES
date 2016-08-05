@@ -18,10 +18,10 @@ namespace FRES.Source.T
         {
         }
 
-        public RealEstate[] Transform()
+        public RealEstate_T[] Transform()
         {
             var str = File.ReadAllText("D:/RE/E_SCB.txt");
-            var objs = JsonHelper.Deserialize<RealEstateExtrctObj[]>(str);
+            var objs = JsonHelper.Deserialize<SourceObj[]>(str);
             var res = GetDetails(objs.ToArray());
 
             File.WriteAllText("D:/RE/T_SCB.txt", JsonHelper.Serialize(res, true));
@@ -29,7 +29,7 @@ namespace FRES.Source.T
             return res;
         }
 
-        private RealEstate[] GetDetails(RealEstateExtrctObj[] urls)
+        private RealEstate_T[] GetDetails(SourceObj[] urls)
         {
             var ret = urls.AsParallel()
                         .WithDegreeOfParallelism(PARALLELISM_DEGREE)
@@ -37,10 +37,10 @@ namespace FRES.Source.T
             return ret.ToArray();
         }
 
-        private RealEstate GetDetails(RealEstateExtrctObj htmlObj)
+        private RealEstate_T GetDetails(SourceObj htmlObj)
         {
             Console.WriteLine(htmlObj.URL);
-            var re = new RealEstate();
+            var re = new RealEstate_T();
             var doc = new HtmlAgilityPack.HtmlDocument();
             try
             {

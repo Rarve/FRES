@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace FRES.Common
 {
     public class HttpClientHelper
     {
-        public const int TIMEOUT = 120;
+        public const int TIMEOUT = 300;
 
         private HttpClient _client;
         public HttpClient Client
@@ -68,7 +69,16 @@ namespace FRES.Common
 
         public async Task<string> RetrieveHtmlStrPost(string url, IEnumerable<KeyValuePair<string, string>> kvp)
         {
-            Console.WriteLine("POST  " + url + " " + kvp.GetEnumerator().Current.Value);
+            if (kvp.Count() > 0)
+            {
+                var lst = kvp.ToList();
+                Console.WriteLine("POST " + url + " " + lst[0].Key + ":" + lst[0].Value);
+            }
+            else
+            {
+                Console.WriteLine("POST " + url);
+            }
+
             var html = string.Empty;
 
             try

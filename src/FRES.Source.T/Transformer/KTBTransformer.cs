@@ -22,10 +22,10 @@ namespace FRES.Source.T
             Client = new HttpClientHelper();
         }
 
-        public RealEstate[] Transform()
+        public RealEstate_T[] Transform()
         {
             var str = File.ReadAllText("D:/RE/E_KTB.txt");
-            var objs = JsonHelper.Deserialize<RealEstateExtrctObj[]>(str);
+            var objs = JsonHelper.Deserialize<SourceObj[]>(str);
             var res = GetDetails(objs.ToArray());
 
             File.WriteAllText("D:/RE/T_KTB.txt", JsonHelper.Serialize(res, true));
@@ -33,7 +33,7 @@ namespace FRES.Source.T
             return res;
         }
         
-        private RealEstate[] GetDetails(RealEstateExtrctObj[] htmls)
+        private RealEstate_T[] GetDetails(SourceObj[] htmls)
         {
             var ret = htmls
                         .AsParallel().WithDegreeOfParallelism(PARALLELISM_DEGREE)
@@ -41,16 +41,16 @@ namespace FRES.Source.T
             return ret.ToArray();
         }
 
-        private RealEstate GetDetails(string url)
+        private RealEstate_T GetDetails(string url)
         {
             var html = Client.RetrieveHtmlStrGet(url).Result;
-            var obj = new RealEstateExtrctObj(url, html);
+            var obj = new SourceObj(url, html);
             return GetDetails(obj);
         }
 
-        private RealEstate GetDetails(RealEstateExtrctObj htmlObj)
+        private RealEstate_T GetDetails(SourceObj htmlObj)
         {
-            var re = new RealEstate();
+            var re = new RealEstate_T();
             var doc = new HtmlAgilityPack.HtmlDocument();
             try
             {

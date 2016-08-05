@@ -1,46 +1,26 @@
 ﻿using FRES.Common;
-using FRES.Structure;
+using FRES.Data;
+using FRES.Data.Models;
 using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace FRES.Source.E
 {
-    public class SCBExtractor : ISourceExtractor
+    public class SCBExtractor : AbsExtractor
     {
         private const string URL_MAIN = "http://www.buyatsiam.com/";
         private const string URL_PAGE = "APropertyHome.html?page=";
         private const string URL_DTLS = "APropertyDetail.html?id=";
-        private const int PARALLELISM_DEGREE = 10;
 
-        private HttpClientHelper Client;
-
-        public SCBExtractor()
+        public SCBExtractor(string sourceName, string totalPageUrl, int parallelismDegree) : base(sourceName, totalPageUrl, parallelismDegree)
         {
-            Client = new HttpClientHelper();
         }
 
-        public RealEstateExtrctObj[] Extract()
-        {
-            var total = GetTotalPages(URL_MAIN + URL_PAGE);
-            var urls = GetItemUrls(total).ToArray();
-            File.WriteAllText("D:/RE/A_SCB.txt", JsonHelper.Serialize(urls, true)));
-
-            var str = File.ReadAllText("D:/RE/A_SCB.txt");
-            urls = JsonConvert.DeserializeObject<string[]>(str);
-            var res = GetDetails(urls);
-
-            File.WriteAllText("D:/RE/E_SCB.txt", JsonHelper.Serialize(res, true)));
-
-            return res;
-        }
-
-        public string[] GetItemUrls(int total)
+        protected override List<string> GetUrls(int total)
         {
             var arr = new List<string>();
             var sync = new object();
@@ -48,35 +28,35 @@ namespace FRES.Source.E
             var baseUrl = URL_MAIN + URL_PAGE;
             var pages = Enumerable.Range(1, total).Select(x => baseUrl + x).ToArray();
 
-            pages.AsParallel().WithDegreeOfParallelism(PARALLELISM_DEGREE).ForAll((page) =>
+            pages.AsParallel().WithDegreeOfParallelism(2).ForAll((page) =>
             {
-                var detailUrls = GetItemUrls(page);
-                lock (sync)
-                {
-                    arr.AddRange(detailUrls);
-                }
+                var items = GetUrlsFromPage(page);
+                lock (sync) { arr.AddRange(items); }
             });
 
-            return arr.ToArray();
+            return arr;
         }
 
-        private string[] GetItemUrls(string url)
+        protected object sync = new object();
+        protected List<string> GetUrlsFromPage(string url)
         {
-            var ret = new string[0];
+            var urls = new List<string>();
             try
             {
                 var html = Client.RetrieveHtmlStrGet(url).Result;
-                var urls = RegexHelper.GetMatchStr(html, @"(APropertyDetail.html\?id=[0-9]{0,20})").Distinct().Select(x => URL_MAIN + x).ToArray();
-                return urls;
+                urls = RegexHelper.GetMatchStr(html, @"(APropertyDetail.html\?id=[0-9]{0,20})").Distinct().Select(x => URL_MAIN + x).ToList();
             }
             catch (Exception ex)
             {
-                File.AppendAllText("D:/RE/A_SCB.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + url + "," + ex.GetBaseException().Message + "\r\n");
+                lock (sync)
+                {
+                    File.AppendAllText("D:/RE/A_" + this.GetType().Name + ".log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + url + "," + ex.GetBaseException().Message + "\r\n");
+                }
             }
-            return ret;
+            return urls;
         }
 
-        public int GetTotalPages(string url)
+        protected override int GetTotalPages(string url)
         {
             var pages = new string[0];
             var htmlDoc = Client.RetrieveHtmlGet(url).Result;
@@ -86,30 +66,6 @@ namespace FRES.Source.E
             var totalPages = int.Parse(QueryHelpers.ParseQuery(pageUrls.LastOrDefault())["page"].FirstOrDefault());
 
             return totalPages;
-        }
-
-        public RealEstateExtrctObj[] GetDetails(string[] urls)
-        {
-            var ret = urls.AsParallel()
-                        .AsParallel().WithDegreeOfParallelism(PARALLELISM_DEGREE)
-                        .Select(url => GetDetails(url));
-            return ret.ToArray();
-        }
-
-        public RealEstateExtrctObj GetDetails(string url)
-        {
-            var res = default(RealEstateExtrctObj);
-            var html = string.Empty;
-            try
-            {
-                html = Client.RetrieveHtmlStrGet(url).Result;
-                res = new RealEstateExtrctObj(url, html);
-            }
-            catch (Exception ex)
-            {
-                File.AppendAllText("D:/RE/E_SCB.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + url + "," + ex.GetBaseException().Message + "\r\n");
-            }
-            return res;
         }
     }
 }

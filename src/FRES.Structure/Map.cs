@@ -18,7 +18,5 @@ namespace FRES.Structure
         public string Province { get; set; }
         public string Amphur { get; set; }
         public string[] ParcelNumber { get; set; }
-        //public string Name { get; set; }
-        //public string Desc { get; set; }
     }
 }

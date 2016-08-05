@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FRES.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,17 @@ namespace FRES.Source.E
     {
         static void Main(string[] args)
         {
+            string urlSCB = "http://www.buyatsiam.com/APropertyHome.html";
+            string urlKTB = "http://www.npashowroom.ktb.co.th/WebShowRoom/SearchServlet";
+            string urlGHB = "http://www.ghbhomecenter.com/ghb";
             try
             {
-                ISourceExtractor[] extractors = new ISourceExtractor[] { new KTBExtractor(), new SCBExtractor(), new GHBExtractor() };
+                int parallismDegree = 10;
+                AbsExtractor[] extractors = new AbsExtractor[] {
+                    //new SCBExtractor("SCB", urlSCB, parallismDegree),
+                    //new KTBExtractor("KTB", urlKTB, parallismDegree),
+                    new GHBExtractor("GHB", urlGHB, parallismDegree)
+                };
 
                 foreach (var extractor in extractors)
                 {

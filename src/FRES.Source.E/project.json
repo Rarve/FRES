@@ -1,4 +1,9 @@
 {
+  "Data": {
+    "DefaultConnection": {
+      "ConnectionString": "Server=SQLSERVERNAME;Database=StudentsDB;user id=SQLUSERID;password=SQLPASSWORD;Trusted_Connection=True;MultipleActiveResultSets=true;"
+    }
+  },
   "version": "1.0.0-*",
   "buildOptions": {
     "emitEntryPoint": true
@@ -6,6 +11,7 @@
 
   "dependencies": {
     "FRES.Common": "1.0.0-*",
+    "FRES.Data": "1.0.0-*",
     "FRES.Structure": "1.0.0-*",
     "Microsoft.NETCore.App": {
       "type": "platform",
