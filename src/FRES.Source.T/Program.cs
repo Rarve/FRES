@@ -9,18 +9,25 @@ namespace FRES.Source.T
     {
         public static void Main(string[] args)
         {
-            //var ghb = new GHBTransformer();
-            //ghb.Transform();
+            try
+            {
+                var ghb = new GHBTransformer();
+                ghb.Transform();
 
-            var scb = new SCBTransformer();
-            scb.Transform();
+                var scb = new SCBTransformer();
+                scb.Transform();
 
-            var ktb = new KTBTransformer();
-            ktb.Transform();
+                var ktb = new KTBTransformer();
+                ktb.Transform();
 
-            var tnb = new TNBTransformer();
-            tnb.Transform();
-
+                var tnb = new TNBTransformer();
+                tnb.Transform();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.GetBaseException().Message);
+                Console.ReadKey();
+            }
         }
     }
 }

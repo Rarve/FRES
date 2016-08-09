@@ -26,7 +26,7 @@ namespace FRES.Source.T
 
         public List<RealEstateT> Transform()
         {
-            var objs = DataHelper.GetRealEstateE("KTB").Take(10);
+            var objs = DataHelper.GetRealEstateE("KTB");
             var jsons = GetDetails(objs.ToArray());
 
             var reObjs = jsons.Select(x => new RealEstateT
