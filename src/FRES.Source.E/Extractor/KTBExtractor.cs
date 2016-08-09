@@ -39,6 +39,18 @@ namespace FRES.Source.E
                 var nvc = new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("numPage", pageNumber) };
                 var htmlDoc = Client.RetrieveHtmlPost(pageUrl, nvc).Result;
                 urls = htmlDoc.DocumentNode.Descendants("a").Where(x => x.Attributes.Contains("href") && x.Attributes["href"].Value.Contains("ViewPropServlet") && x.Attributes["href"].Value.Contains("&check=")).Select(x => URL_DTLS + x.GetAttributeValue("href", string.Empty)).ToList();
+
+                var res = urls.AsParallel().WithDegreeOfParallelism(ParallismDegree).Select(x =>
+                    new RealEstateE()
+                    {
+                        Url = x.Trim(),
+                        State = 0,
+                        RecordStatus = 1,
+                        Source = SourceName
+                    }
+                ).ToList();
+
+                DataHelper.InsertRealEstateE(res);
             }
             catch (Exception ex)
             {

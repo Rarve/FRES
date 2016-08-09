@@ -1,0 +1,1 @@
+start "C:\Program Files\dotnet" dotnet.exe "D:\Dropbox\MyProjects\FRES\src\FRES.Source.T\bin\Debug\netcoreapp1.0\FRES.Source.T.dll"

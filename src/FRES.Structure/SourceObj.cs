@@ -9,15 +9,15 @@ namespace FRES.Structure
 {
     public class SourceObj
     {
-        public SourceObj(string url, string html)
+        public SourceObj(string url, string data)
         {
-            this.URL = url;
-            this.HTML = html;
+            this.Url = url;
+            this.Data = data;
         }
 
         public SourceObj() { }
 
-        public string URL { get; set; }
-        public string HTML { get; set; }
+        public string Url { get; set; }
+        public string Data { get; set; }
     }
 }

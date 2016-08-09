@@ -2231,7 +2231,7 @@
           "System.Threading": "4.0.11"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {}
+          "ref/netstandard1.3/System.Text.Encoding.CodePages.dll": {}
         },
         "runtimeTargets": {
           "runtimes/unix/lib/netstandard1.3/System.Text.Encoding.CodePages.dll": {
@@ -2545,7 +2545,8 @@
           "HtmlAgilityPack.NetCore": "1.5.0.1",
           "Microsoft.AspNetCore.WebUtilities": "1.0.0",
           "NETStandard.Library": "1.6.0",
-          "Newtonsoft.Json": "9.0.1"
+          "Newtonsoft.Json": "9.0.1",
+          "System.Text.Encoding.CodePages": "4.0.1"
         },
         "compile": {
           "netstandard1.6/FRES.Common.dll": {}
@@ -2558,6 +2559,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
+          "FRES.Common": "1.0.0",
           "FRES.Structure": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer.Design": "1.0.0",

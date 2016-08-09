@@ -27,45 +27,34 @@ namespace FRES.Source.E
             ParallismDegree = parallelismDegree;
         }
         
-        public List<RealEstateE> Extract()
+        public void Extract()
         {
             var total = GetTotalPages(MainPageUrl);
-            var urls = GetUrls(total).ToArray();
-            var res = GetDetails(urls);
-            DataHelper.InsertRealEstateE(res);
-            return res;
+            GetUrls(total).ToArray();
+
+            var toProcessItems = DataHelper.GetRealEstateE_NoHTML(SourceName);
+            GetHtmls(toProcessItems);
         }
 
-        protected List<RealEstateE> GetDetails(string[] urls)
+        protected void GetHtmls(List<RealEstateE> toProcessItems)
         {
-            var ret = urls.AsParallel()
+            toProcessItems.AsParallel()
                         .AsParallel().WithDegreeOfParallelism(ParallismDegree)
-                        .Select(url => GetDetails(url));
-            return ret.ToList();
+                        .ForAll(toProcessItem => GetHtml(toProcessItem));
         }
 
-        protected RealEstateE GetDetails(string url)
+        protected void GetHtml(RealEstateE toProcessItem)
         {
-            var re = default(Data.Models.RealEstateE);
             var html = string.Empty;
             try
             {
-                html = Client.RetrieveHtmlStrGet(url).Result;
-
-                re = new RealEstateE
-                {
-                    HTML = html.Trim(),
-                    URL = url.Trim(),
-                    State = 0,
-                    RecordStatus = 1,
-                    Source = SourceName
-                };
+                toProcessItem.Data = Client.RetrieveHtmlStrGet(toProcessItem.Url).Result;
+                DataHelper.UpdateRealEstateE(toProcessItem);
             }
             catch (Exception ex)
             {
-                File.AppendAllText("D:/RE/E_" + GetType().Name + ".log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + url + "," + ex.GetBaseException().Message + "\r\n");
+                File.AppendAllText("D:/RE/E_" + GetType().Name + ".log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + toProcessItem.Url + "," + ex.GetBaseException().Message + "\r\n");
             }
-            return re;
         }
     }
 }

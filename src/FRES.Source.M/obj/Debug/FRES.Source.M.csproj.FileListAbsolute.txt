@@ -19,4 +19,8 @@ D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\WebDriver.dll
 D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\WebDriver.xml
 D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\obj\Debug\FRES.Source.M.exe
 D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\obj\Debug\FRES.Source.M.pdb
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\EntityFramework.dll
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\EntityFramework.SqlServer.dll
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\EntityFramework.xml
+D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\bin\Debug\EntityFramework.SqlServer.xml
 D:\Dropbox\MyProjects\FRES\src\FRES.Source.M\obj\Debug\FRES.Source.M.csprojResolveAssemblyReference.cache

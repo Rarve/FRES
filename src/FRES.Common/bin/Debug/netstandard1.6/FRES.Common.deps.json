@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETStandard,Version=v1.6/",
-    "signature": "25a6183f563946f8f49baffbf941f3654b10a7f8"
+    "signature": "2aadc193fbc7759b5d55f359f996e7833df211e2"
   },
   "compilationOptions": {},
   "targets": {
@@ -12,7 +12,8 @@
           "HtmlAgilityPack.NetCore": "1.5.0.1",
           "Microsoft.AspNetCore.WebUtilities": "1.0.0",
           "NETStandard.Library": "1.6.0",
-          "Newtonsoft.Json": "9.0.1"
+          "Newtonsoft.Json": "9.0.1",
+          "System.Text.Encoding.CodePages": "4.0.1"
         },
         "runtime": {
           "FRES.Common.dll": {}
@@ -752,6 +753,22 @@
           "System.Runtime": "4.1.0"
         }
       },
+      "System.Text.Encoding.CodePages/4.0.1": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "1.0.1",
+          "System.Collections": "4.0.11",
+          "System.Globalization": "4.0.11",
+          "System.IO": "4.1.0",
+          "System.Reflection": "4.1.0",
+          "System.Resources.ResourceManager": "4.0.1",
+          "System.Runtime": "4.1.0",
+          "System.Runtime.Extensions": "4.1.0",
+          "System.Runtime.Handles": "4.0.1",
+          "System.Runtime.InteropServices": "4.1.0",
+          "System.Text.Encoding": "4.0.11",
+          "System.Threading": "4.0.11"
+        }
+      },
       "System.Text.Encoding.Extensions/4.0.11": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.0.1",
@@ -1184,6 +1201,11 @@
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-U3gGeMlDZXxCEiY4DwVLSacg+DFWCvoiX+JThA/rvw37Sqrku7sEFeVBBBMBnfB6FeZHsyDx85HlKL19x0HtZA=="
+    },
+    "System.Text.Encoding.CodePages/4.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-h4z6rrA/hxWf4655D18IIZ0eaLRa3tQC/j+e26W+VinIHY0l07iEXaAvO0YSYq3MvCjMYy8Zs5AdC1sxNQOB7Q=="
     },
     "System.Text.Encoding.Extensions/4.0.11": {
       "type": "package",

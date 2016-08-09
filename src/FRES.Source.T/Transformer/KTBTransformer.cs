@@ -5,6 +5,8 @@ using System.Linq;
 using Microsoft.AspNetCore.WebUtilities;
 using System.IO;
 using FRES.Common;
+using FRES.Data;
+using FRES.Data.Models;
 
 namespace FRES.Source.T
 {
@@ -13,7 +15,7 @@ namespace FRES.Source.T
         private const string URL_LIST = "http://www.npashowroom.ktb.co.th/WebShowRoom/SearchServlet";
         private const string URL_DTLS = "http://www.npashowroom.ktb.co.th/WebShowRoom/";
         private const string USL_MAPS = "http://www.npashowroom.ktb.co.th/WebShowRoom/AjaxSearchGIS?collgrp=";
-        private const int PARALLELISM_DEGREE = 2;
+        private const int PARALLELISM_DEGREE = 10;
 
         private HttpClientHelper Client;
         
@@ -22,18 +24,28 @@ namespace FRES.Source.T
             Client = new HttpClientHelper();
         }
 
-        public RealEstate_T[] Transform()
+        public List<RealEstateT> Transform()
         {
-            var str = File.ReadAllText("D:/RE/E_KTB.txt");
-            var objs = JsonHelper.Deserialize<SourceObj[]>(str);
-            var res = GetDetails(objs.ToArray());
+            var objs = DataHelper.GetRealEstateE("KTB").Take(10);
+            var jsons = GetDetails(objs.ToArray());
 
-            File.WriteAllText("D:/RE/T_KTB.txt", JsonHelper.Serialize(res, true));
+            var reObjs = jsons.Select(x => new RealEstateT
+            {
+                Data = JsonHelper.Serialize(x, true),
+                Lat = x.Map.Lat,
+                Lon = x.Map.Lon,
+                Url = x.Url.Trim(),
+                State = 0,
+                RecordStatus = 1,
+                Source = "KTB"
+            }).ToList();
 
-            return res;
+            DataHelper.InsertRealEstateT(reObjs);
+
+            return reObjs;
         }
         
-        private RealEstate_T[] GetDetails(SourceObj[] htmls)
+        private RealEstateObj[] GetDetails(SourceObj[] htmls)
         {
             var ret = htmls
                         .AsParallel().WithDegreeOfParallelism(PARALLELISM_DEGREE)
@@ -41,22 +53,22 @@ namespace FRES.Source.T
             return ret.ToArray();
         }
 
-        private RealEstate_T GetDetails(string url)
+        private RealEstateObj GetDetails(string url)
         {
             var html = Client.RetrieveHtmlStrGet(url).Result;
             var obj = new SourceObj(url, html);
             return GetDetails(obj);
         }
 
-        private RealEstate_T GetDetails(SourceObj htmlObj)
+        private RealEstateObj GetDetails(SourceObj htmlObj)
         {
-            var re = new RealEstate_T();
+            var re = new RealEstateObj();
             var doc = new HtmlAgilityPack.HtmlDocument();
             try
             {
-                doc.LoadHtml(htmlObj.HTML);
+                doc.LoadHtml(htmlObj.Data);
 
-                re.Url = htmlObj.URL;
+                re.Url = htmlObj.Url;
 
                 var detailTitles = doc.DocumentNode.Descendants("div")
                             .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("property_detail_col1"))
@@ -75,11 +87,22 @@ namespace FRES.Source.T
 
                 re.Details = details;
 
-                re.BedRooom = details.Where(x => x.Key.Contains("ห้องนอน")).Count() > 0 ? string.Empty : details.Where(x => x.Key == "ห้องนอน").FirstOrDefault().Value;
-                re.BathRoom = details.Where(x => x.Key.Contains("ห้องน้ำ")).Count() > 0 ? string.Empty : details.Where(x => x.Key == "ห้องน้ำ").FirstOrDefault().Value;
-                re.ParkingSpace = details.Where(x => x.Key.Contains("ที่จอดรถ")).Count() > 0 ? string.Empty : details.Where(x => x.Key == "ที่จอดรถ").FirstOrDefault().Value;
-                re.Price = details.Where(x => x.Key == "ราคาพิเศษ").Count() > 0 ? string.Empty : details.Where(x => x.Key == "ราคาพิเศษ").FirstOrDefault().Value;
-                re.PropertyType = details.Where(x => x.Key == "ประเภททรัพย์").Count() > 0 ? string.Empty : details.Where(x => x.Key == "ประเภททรัพย์").FirstOrDefault().Value;
+                re.Code = details.ContainsKey("รหัสรายการทรัพย์") ? details["รหัสรายการทรัพย์"] : string.Empty;
+                re.PropertyType = details.ContainsKey("ประเภททรัพย์") ? details["ประเภททรัพย์"] : string.Empty;
+                re.Map.Province = details.ContainsKey("จังหวัด") ? details["จังหวัด"] : string.Empty;
+                re.SizeTotal = details.ContainsKey("เนื้อที่(ไร่-งาน-วา)") ? details["เนื้อที่(ไร่-งาน-วา)"] : string.Empty;
+                re.DocumentOfRightType = details.ContainsKey("ประเภทเอกสารสิทธิ์") ? details["ประเภทเอกสารสิทธิ์"] : string.Empty;
+                re.DocumentOfRightDesc = details.ContainsKey("รายละเอียดเลขที่เอกสารสิทธิ์") ? details["รายละเอียดเลขที่เอกสารสิทธิ์"] : string.Empty;
+                re.Price = details.ContainsKey("ราคาพิเศษ") ? details["ราคาพิเศษ"] : string.Empty;
+                re.BedRooom = details.ContainsKey("ห้องนอน") ? details["ห้องนอน"] : string.Empty;
+                re.BathRoom = details.ContainsKey("ห้องน้ำ") ? details["ห้องน้ำ"] : string.Empty;
+                re.Map.Desc = details.ContainsKey("ที่ตั้งรหัสทรัพย์") ? details["ที่ตั้งรหัสทรัพย์"] : string.Empty;
+
+                //re.BedRooom = details.Where(x => x.Key.Contains("ห้องนอน")).Count() > 0 ? string.Empty : details.Where(x => x.Key == "ห้องนอน").FirstOrDefault().Value;
+                //re.BathRoom = details.Where(x => x.Key.Contains("ห้องน้ำ")).Count() > 0 ? string.Empty : details.Where(x => x.Key == "ห้องน้ำ").FirstOrDefault().Value;
+                //re.ParkingSpace = details.Where(x => x.Key.Contains("ที่จอดรถ")).Count() > 0 ? string.Empty : details.Where(x => x.Key == "ที่จอดรถ").FirstOrDefault().Value;
+                //re.Price = details.Where(x => x.Key == "ราคาพิเศษ").Count() > 0 ? string.Empty : details.Where(x => x.Key == "ราคาพิเศษ").FirstOrDefault().Value;
+                //re.PropertyType = details.Where(x => x.Key == "ประเภททรัพย์").Count() > 0 ? string.Empty : details.Where(x => x.Key == "ประเภททรัพย์").FirstOrDefault().Value;
 
                 var contactNames = doc.DocumentNode.Descendants("div")
                             .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("box_contact_col2"))
@@ -97,7 +120,7 @@ namespace FRES.Source.T
 
                 for (int i = 0; i < contactNames.Count(); i++)
                 {
-                    contacts.Add(new Contact() { Name = contactNames[i], TellNo = contactTells[i], Email = contactEmails[i] });
+                    contacts.Add(new Contact() { Name = contactNames[i], TellNo = contactTells.ToList(), Email = contactEmails.ToList() });
                 }
 
                 re.Contacts = contacts;
@@ -109,7 +132,6 @@ namespace FRES.Source.T
                 //var remark = doc.DocumentNode.Descendants("div")
                 //            .Where(x => x.Attributes.Contains("class") && (x.Attributes["class"].Value.Contains("text_contact_detail1")))
                 //            .FirstOrDefault().InnerHtml;
-
                 //re.Remark = RegexHelper.StripHTML(WebUtility.HtmlDecode(remark));
 
                 var mapImage = doc.DocumentNode
@@ -121,7 +143,7 @@ namespace FRES.Source.T
                     re.Map.Images.Add(mapImage.GetAttributeValue("href", string.Empty));
                 }
 
-                var propId = QueryHelpers.ParseQuery(htmlObj.URL.Split('?')[1])["propId"];
+                var propId = QueryHelpers.ParseQuery(htmlObj.Url.Split('?')[1])["propId"];
                 var mapUrl = USL_MAPS + propId;
                 var nvc = new List<KeyValuePair<string, string>>();
                 var mapStr = Client.RetrieveHtmlStrPost(mapUrl, nvc).Result;
@@ -132,21 +154,18 @@ namespace FRES.Source.T
                     re.Map.Lat = double.Parse(mapObj.poi[0].lat);
                     re.Map.Lon = double.Parse(mapObj.poi[0].lon);
                 }
-
-                var province = RegexHelper.GetMatchStr(htmlObj.HTML, RegexHelper.REGEX_PROVINCE);
-                var amphur = RegexHelper.GetMatchStr(htmlObj.HTML, RegexHelper.REGEX_AMPHUR);
                 
-                re.Map.Province = details["จังหวัด"];
+                var amphur = RegexHelper.GetMatchStr(htmlObj.Data, RegexHelper.REGEX_DISTRICT);                
                 re.Map.ParcelNumber = details["เลขที่เอกสารสิทธิ์"].Split(new char[] { ',' }, StringSplitOptions.None); ;
 
                 if (details.Count > 0)
                 {
-                    re.Map.Amphur = amphur[0].Replace("อำเภอ", string.Empty).Trim();
+                    re.Map.District = amphur[0].Replace("อำเภอ", string.Empty).Trim();
                 }
             }
             catch (Exception ex)
             {
-                File.AppendAllText("D:/RE/T_KTB.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + htmlObj.URL + "," + ex.GetBaseException().Message + "\r\n");
+                File.AppendAllText("D:/RE/T_KTB.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + htmlObj.Url + "," + ex.GetBaseException().Message + "\r\n");
             }
             return re;
         }

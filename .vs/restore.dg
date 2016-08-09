@@ -1,7 +1,1 @@
-#:D:\Dropbox\MyProjects\FRES\src\FRES.Data\FRES.Data.xproj
-D:\Dropbox\MyProjects\FRES\src\FRES.Data\FRES.Data.xproj|D:\Dropbox\MyProjects\FRES\src\FRES.Structure\FRES.Structure.xproj
-#:D:\Dropbox\MyProjects\FRES\src\FRES.Source.E\FRES.Source.E.xproj
-D:\Dropbox\MyProjects\FRES\src\FRES.Source.E\FRES.Source.E.xproj|D:\Dropbox\MyProjects\FRES\src\FRES.Common\FRES.Common.xproj
-D:\Dropbox\MyProjects\FRES\src\FRES.Source.E\FRES.Source.E.xproj|D:\Dropbox\MyProjects\FRES\src\FRES.Data\FRES.Data.xproj
-D:\Dropbox\MyProjects\FRES\src\FRES.Source.E\FRES.Source.E.xproj|D:\Dropbox\MyProjects\FRES\src\FRES.Structure\FRES.Structure.xproj
-D:\Dropbox\MyProjects\FRES\src\FRES.Data\FRES.Data.xproj|D:\Dropbox\MyProjects\FRES\src\FRES.Structure\FRES.Structure.xproj
+#:D:\Dropbox\MyProjects\FRES\src\FRES.Source.L\FRES.Source.L.xproj

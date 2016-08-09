@@ -18,8 +18,8 @@ namespace FRES.Common
             {
                 if (_client == null)
                 {
-                    //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-                    //Encoding.GetEncoding(874);
+                    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                    Encoding.GetEncoding(874);
                     //Encoding
 
                     var handler = new HttpClientHandler { UseProxy = false, AllowAutoRedirect = true };
@@ -28,9 +28,9 @@ namespace FRES.Common
                 }
                 return _client;
             }
-        }
-        
-        public async Task<string> RetrieveHtmlStrGet(string url)
+        }        
+
+        public async Task<string> RetrieveHtmlStrGet(string url, Encoding enc = null)
         {
             Console.WriteLine("GET  " + url);
             var html = string.Empty;
@@ -41,7 +41,15 @@ namespace FRES.Common
                 using (var req = new HttpRequestMessage(HttpMethod.Get, url))
                 using (var res = await Client.SendAsync(req, HttpCompletionOption.ResponseContentRead))
                 {
-                    html = await res.Content.ReadAsStringAsync();
+                    if (enc == null)
+                    {
+                        html = await res.Content.ReadAsStringAsync();
+                    }
+                    else
+                    {
+                        var bytes = await res.Content.ReadAsByteArrayAsync();
+                        html = enc.GetString(bytes, 0, bytes.Length - 1);
+                    }
                 }
             }
             catch (TaskCanceledException ex)
@@ -55,7 +63,7 @@ namespace FRES.Common
             finally
             {
             }
-            
+
             return html;
         }
 

@@ -10,6 +10,9 @@ namespace FRES.Data
     public class FRESContext : DbContext
     {
         public DbSet<RealEstateE> RealEstateE { get; set; }
+        public DbSet<RealEstateT> RealEstateT { get; set; }
+        public DbSet<RealEstateType> RealEstateType { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -17,8 +20,18 @@ namespace FRES.Data
 
             builder.Entity<RealEstateE>(entity =>
             {
-                entity.Property(e => e.URL).IsRequired();
-                entity.Property(e => e.HTML).IsRequired();
+                entity.Property(e => e.Url).IsRequired();
+                entity.Property(e => e.Data).IsRequired();
+            });
+
+            builder.Entity<RealEstateT>(entity =>
+            {
+                entity.Property(e => e.Url).IsRequired();
+                entity.Property(e => e.Data).IsRequired();
+            });
+
+            builder.Entity<RealEstateType>(entity =>
+            {
             });
         }
 

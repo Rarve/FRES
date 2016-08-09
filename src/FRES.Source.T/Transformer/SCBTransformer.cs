@@ -1,10 +1,13 @@
 ﻿using FRES.Common;
+using FRES.Data;
+using FRES.Data.Models;
 using FRES.Structure;
 using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace FRES.Source.T
@@ -12,24 +15,34 @@ namespace FRES.Source.T
     public class SCBTransformer
     {
         private const string URL_MAIN = "http://www.buyatsiam.com/";
-        private const int PARALLELISM_DEGREE = 5;
+        private const int PARALLELISM_DEGREE = 100;
         
         public SCBTransformer()
         {
         }
 
-        public RealEstate_T[] Transform()
+        public List<RealEstateT> Transform()
         {
-            var str = File.ReadAllText("D:/RE/E_SCB.txt");
-            var objs = JsonHelper.Deserialize<SourceObj[]>(str);
-            var res = GetDetails(objs.ToArray());
+            var objs = DataHelper.GetRealEstateE("SCB");
+            var jsons = GetDetails(objs.ToArray());
 
-            File.WriteAllText("D:/RE/T_SCB.txt", JsonHelper.Serialize(res, true));
+            var reObjs = jsons.Select(x => new RealEstateT
+            {
+                Data = JsonHelper.Serialize(x, true),
+                Url = x.Url.Trim(),
+                Lat = x.Map.Lat,
+                Lon = x.Map.Lon,
+                State = 0,
+                RecordStatus = 1,
+                Source = "SCB"
+            }).ToList();
 
-            return res;
+            DataHelper.InsertRealEstateT(reObjs);
+
+            return reObjs;
         }
 
-        private RealEstate_T[] GetDetails(SourceObj[] urls)
+        private RealEstateObj[] GetDetails(SourceObj[] urls)
         {
             var ret = urls.AsParallel()
                         .WithDegreeOfParallelism(PARALLELISM_DEGREE)
@@ -37,37 +50,38 @@ namespace FRES.Source.T
             return ret.ToArray();
         }
 
-        private RealEstate_T GetDetails(SourceObj htmlObj)
+        private RealEstateObj GetDetails(SourceObj htmlObj)
         {
-            Console.WriteLine(htmlObj.URL);
-            var re = new RealEstate_T();
+            Console.WriteLine(htmlObj.Url);
+            var re = new RealEstateObj();
             var doc = new HtmlAgilityPack.HtmlDocument();
             try
             {
-                doc.LoadHtml(htmlObj.HTML);
+                doc.LoadHtml(htmlObj.Data);
 
-                re.Url = htmlObj.URL;
+                re.Url = htmlObj.Url;
 
                 var isSoldout = doc.DocumentNode.Descendants("a")
                             .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("thumb-label label-sold-s")).FirstOrDefault();
 
-                if (isSoldout == null)
+                if (isSoldout != null)
                 {
                     re.IsSoldOut = true;
                 }
 
-                re.Url = htmlObj.URL;
+                re.Url = htmlObj.Url;
 
                 re.Icon = URL_MAIN + doc.DocumentNode.Descendants("p")
                             .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("Thumb-s"))
                             .FirstOrDefault().ChildNodes["img"].GetAttributeValue("src", string.Empty);
                 
                 var html = doc.DocumentNode.Descendants("div").Where(x => x.Id == "Lname").FirstOrDefault().ParentNode.ParentNode.InnerHtml;
+                html = WebUtility.HtmlDecode(html);
                 var titleDetails = RegexHelper.SplitTag(html);
                 
                 re.Name = titleDetails[0];
-                re.Size = titleDetails[1];
-
+                re.SizeTotal = titleDetails[1];
+                
                 if (titleDetails.Length > 3)
                 {
                     re.BedRooom = titleDetails[2];
@@ -83,11 +97,11 @@ namespace FRES.Source.T
 
                 var detailTitles = doc.DocumentNode.Descendants("div")
                             .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("col2"))
-                            .Select(x => RegexHelper.StripHTML(x.PreviousSibling.InnerHtml)).ToList();
+                            .Select(x => WebUtility.HtmlDecode(RegexHelper.StripHTML(x.PreviousSibling.InnerHtml))).ToList();
 
                 var detailDescs = doc.DocumentNode.Descendants("div")
                             .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("col2"))
-                            .Select(x => RegexHelper.StripHTML(x.InnerHtml)).ToList();
+                            .Select(x => WebUtility.HtmlDecode(RegexHelper.StripHTML(x.InnerHtml))).ToList();
 
                 var details = new Dictionary<string, string>();
 
@@ -96,10 +110,22 @@ namespace FRES.Source.T
                     details.Add(detailTitles[i], detailDescs[i]);
                 }
 
-                var price = doc.DocumentNode.Descendants("div")
-                            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("price")).FirstOrDefault().InnerHtml;
+                //var price = doc.DocumentNode.Descendants("div")
+                //            .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("price")).FirstOrDefault().InnerHtml;
 
-                details.Add("price", RegexHelper.StripHTML(price));
+                re.Code = details.ContainsKey("รหัสทรัพย์:") ? details["รหัสทรัพย์:"] : string.Empty;
+                re.SizeTotal = string.IsNullOrEmpty(re.SizeTotal) ? details.ContainsKey("เนื้อที่:") ? details["เนื้อที่:"] : re.SizeTotal : re.SizeTotal;
+                re.Map.Desc = details.ContainsKey("ที่ตั้งทรัพย์:") ? details["ที่ตั้งทรัพย์:"] : string.Empty;
+                re.Storeys = details.ContainsKey("จำนวนชั้น:") ? details["จำนวนชั้น:"] : string.Empty;
+
+
+                var parcels = details.ContainsKey("โฉนดเลขที่:") ? RegexHelper.GetMatchStr(details["โฉนดเลขที่:"], RegexHelper.REGEX_NUMBER).ToArray() : new string[] { };
+               
+                if (parcels.Count() > 0)
+                {
+                    re.Map.ParcelNumber = parcels.Select(x => x.Trim()).ToArray();
+                }
+                //details.Add("price", RegexHelper.StripHTML(price));
                 
                 re.Details = details;
                 
@@ -109,19 +135,16 @@ namespace FRES.Source.T
                 {
                     re.Images = gallery.Elements("li")
                                 .Select(x => URL_MAIN + x.Descendants("img").FirstOrDefault()
-                                .GetAttributeValue("src", string.Empty)).ToList();
+                                .GetAttributeValue("src", string.Empty)).Where(x => !x.Contains("M0")).ToList();
                 }
 
-                var contact = new Contact();
-                
+                var contact = new Contact();                
                 var contactStr = doc.DocumentNode.Descendants("div")
                             .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("C_label")).FirstOrDefault()
                             .Element("div").InnerHtml.Trim();
-
-                var contactTells = RegexHelper.GetMatchStr(contactStr, RegexHelper.REGEX_TELL_NO);
-                
-                contact.TellNo = string.Join(",", contactTells);
-
+                var contactTells = RegexHelper.GetMatchStr(contactStr, RegexHelper.REGEX_TELL_NO);                
+                contact.TellNo = contactTells.ToList<string>();
+                contact.Name = details.ContainsKey("สอบถามรายละเอียด:") ? details["สอบถามรายละเอียด:"] : string.Empty;
                 re.Contacts.Add(contact);
 
                 var loc = doc.DocumentNode.Descendants("div")
@@ -138,8 +161,8 @@ namespace FRES.Source.T
 
                 re.Map.Images.Add(mapImg);
 
-                var province = RegexHelper.GetMatchStr(htmlObj.HTML, RegexHelper.REGEX_PROVINCE);
-                var amphur = RegexHelper.GetMatchStr(htmlObj.HTML, RegexHelper.REGEX_AMPHUR);
+                var province = RegexHelper.GetMatchStr(htmlObj.Data, RegexHelper.REGEX_PROVINCE);
+                var amphur = RegexHelper.GetMatchStr(htmlObj.Data, RegexHelper.REGEX_DISTRICT);
 
                 if (province.Count > 0)
                 {
@@ -148,23 +171,13 @@ namespace FRES.Source.T
 
                 if (amphur.Count > 0)
                 {
-                    re.Map.Amphur = amphur[0].Replace("อำเภอ", string.Empty).Trim();
+                    re.Map.District = amphur[0].Replace("อำเภอ", string.Empty).Trim();
                 }
-
-                var parcels = new string[] { };
-                if (details.ContainsKey("โฉนดเลขที่:"))
-                {
-                    parcels = RegexHelper.GetMatchStr(details["โฉนดเลขที่:"], RegexHelper.REGEX_NUMBER).ToArray();
-                }
-
-                if (parcels.Count() > 0)
-                {
-                    re.Map.ParcelNumber = parcels.Select(x => x.Trim()).ToArray();
-                }
+                
             }
             catch (Exception ex)
             {
-                File.AppendAllText("D:/RE/T_SCB.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + htmlObj.URL + "," + ex.GetBaseException().Message + "\r\n");
+                File.AppendAllText("D:/RE/T_SCB.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + htmlObj.Url + "," + ex.GetBaseException().Message + "\r\n");
             }
             return re;
         }

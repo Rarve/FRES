@@ -38,19 +38,31 @@ namespace FRES.Source.E
         }
 
         protected object sync = new object();
-        protected List<string> GetUrlsFromPage(string url)
+        protected List<string> GetUrlsFromPage(string pageUrl)
         {
             var urls = new List<string>();
             try
             {
-                var html = Client.RetrieveHtmlStrGet(url).Result;
+                var html = Client.RetrieveHtmlStrGet(pageUrl).Result;
                 urls = RegexHelper.GetMatchStr(html, @"(APropertyDetail.html\?id=[0-9]{0,20})").Distinct().Select(x => URL_MAIN + x).ToList();
+
+                var res = urls.AsParallel().WithDegreeOfParallelism(ParallismDegree).Select(x =>
+                    new RealEstateE()
+                    {
+                        Url = x.Trim(),
+                        State = 0,
+                        RecordStatus = 1,
+                        Source = SourceName
+                    }
+                ).ToList();
+
+                DataHelper.InsertRealEstateE(res);
             }
             catch (Exception ex)
             {
                 lock (sync)
                 {
-                    File.AppendAllText("D:/RE/A_" + this.GetType().Name + ".log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + url + "," + ex.GetBaseException().Message + "\r\n");
+                    File.AppendAllText("D:/RE/A_" + this.GetType().Name + ".log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + pageUrl + "," + ex.GetBaseException().Message + "\r\n");
                 }
             }
             return urls;
