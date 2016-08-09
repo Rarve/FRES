@@ -13,7 +13,7 @@ namespace FRES.Source.M
         {
             Images = new List<string>();
             Map = new Map();
-            Contacts = new List<Structure.Contact>();
+            Contacts = new List<Contact>();
         }
 
         public string Code { get; set; }

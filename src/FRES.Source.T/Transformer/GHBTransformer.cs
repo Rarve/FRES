@@ -16,9 +16,12 @@ namespace FRES.Source.T
     {
         private const string URL_MAIN = "http://www.ghbhomecenter.com/";
         private const int PARALLELISM_DEGREE = 100;
-        
+
+        private HttpClientHelper Client;
+
         public GHBTransformer()
         {
+            Client = new HttpClientHelper();
         }
 
         public void Transform()
@@ -56,6 +59,11 @@ namespace FRES.Source.T
             var doc = new HtmlAgilityPack.HtmlDocument();
             try
             {
+                if (string.IsNullOrEmpty(htmlObj.Data))
+                {
+                    htmlObj.Data = Client.RetrieveHtmlStrGet(htmlObj.Url).Result;
+                }
+
                 doc.LoadHtml(htmlObj.Data);
 
                 re.Url = htmlObj.Url;
