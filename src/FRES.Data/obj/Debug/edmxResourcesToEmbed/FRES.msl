@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="fresdbModelStoreContainer" CdmEntityContainer="fresdbEntities">
+    <EntitySetMapping Name="Location">
+      <EntityTypeMapping TypeName="fresdbModel.Location">
+        <MappingFragment StoreEntitySet="Location">
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+          <ScalarProperty Name="Province" ColumnName="Province" />
+          <ScalarProperty Name="Amphur" ColumnName="Amphur" />
+          <ScalarProperty Name="ParcelCode" ColumnName="ParcelCode" />
+          <ScalarProperty Name="Lat" ColumnName="Lat" />
+          <ScalarProperty Name="Lon" ColumnName="Lon" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RealEstateE">
+      <EntityTypeMapping TypeName="fresdbModel.RealEstateE">
+        <MappingFragment StoreEntitySet="RealEstateE">
+          <ScalarProperty Name="RealEstateEId" ColumnName="RealEstateEId" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Period" ColumnName="Period" />
+          <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RealEstateT">
+      <EntityTypeMapping TypeName="fresdbModel.RealEstateT">
+        <MappingFragment StoreEntitySet="RealEstateT">
+          <ScalarProperty Name="RealEstateTId" ColumnName="RealEstateTId" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="Province" ColumnName="Province" />
+          <ScalarProperty Name="District" ColumnName="District" />
+          <ScalarProperty Name="ParcelNo" ColumnName="ParcelNo" />
+          <ScalarProperty Name="Lat" ColumnName="Lat" />
+          <ScalarProperty Name="Lon" ColumnName="Lon" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Period" ColumnName="Period" />
+          <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RealEstateType">
+      <EntityTypeMapping TypeName="fresdbModel.RealEstateType">
+        <MappingFragment StoreEntitySet="RealEstateType">
+          <ScalarProperty Name="RealEstateTypeId" ColumnName="RealEstateTypeId" />
+          <ScalarProperty Name="Name_TH" ColumnName="Name_TH" />
+          <ScalarProperty Name="Name_ENG" ColumnName="Name_ENG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

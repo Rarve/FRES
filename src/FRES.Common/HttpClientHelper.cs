@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FRES.Common
@@ -18,11 +19,12 @@ namespace FRES.Common
             {
                 if (_client == null)
                 {
-                    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-                    Encoding.GetEncoding(874);
+                    //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                    //Encoding.GetEncoding(874);
                     //Encoding
 
                     var handler = new HttpClientHandler { UseProxy = false, AllowAutoRedirect = true };
+                   // _client = new HttpClient(new RetryHandler(new HttpClientHandler())) { Timeout = TimeSpan.FromSeconds(TIMEOUT) };
                     _client = new HttpClient() { Timeout = TimeSpan.FromSeconds(TIMEOUT) };
                     _client.DefaultRequestHeaders.UserAgent.TryParseAdd("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36");
                 }
@@ -91,8 +93,9 @@ namespace FRES.Common
 
             try
             {
-                var content = new FormUrlEncodedContent(kvp);
-                var httpResponse = await Client.PostAsync(url, content);
+                var reqMessage = new HttpRequestMessage(HttpMethod.Post, url);
+                reqMessage.Content = new FormUrlEncodedContent(kvp);
+                var httpResponse = await Client.SendAsync(reqMessage);
                 html = await httpResponse.Content.ReadAsStringAsync();
             }
             catch (Exception ex)
@@ -109,6 +112,35 @@ namespace FRES.Common
             var htmlDoc = new HtmlAgilityPack.HtmlDocument();
             htmlDoc.LoadHtml(html);
             return htmlDoc;
+        }
+    }
+    
+    public class RetryHandler : DelegatingHandler
+    {
+        // Strongly consider limiting the number of retries - "retry forever" is
+        // probably not the most user friendly way you could respond to "the
+        // network cable got pulled out."
+        private const int MaxRetries = int.MaxValue;
+
+        public RetryHandler(HttpMessageHandler innerHandler)
+            : base(innerHandler)
+        { }
+
+        protected override async Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage req,
+            CancellationToken cancellationToken)
+        {
+            var res = default(HttpResponseMessage);
+            for (int i = 0; i < MaxRetries; i++)
+            {
+                res = await base.SendAsync(req, cancellationToken);
+                if (res.IsSuccessStatusCode)
+                {
+                    return res;
+                }
+            }
+
+            return res;
         }
     }
 }

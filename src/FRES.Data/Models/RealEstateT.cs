@@ -1,21 +1,18 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FRES.Data.Models
 {
-    public class RealEstateT : Structure.SourceObj, IAuditableEntity
+    partial class RealEstateT : IAuditableEntity
     {
-        [Key]
-        public long RealEstateTId { get; set; }
-        public double Lat { get;  set;}
-        public double Lon { get; set; }
-        public string Source { get; set; }
-        public int State { get; set; }
-        public int RecordStatus { get; set; }
-        public int Period { get; set; }
         public int CreatedBy { get; set; }
-        public int ModifiedBy { get; set; }
         public DateTime CreatedDate { get; set; }
+        public int ModifiedBy { get; set; }
         public DateTime ModifiedDate { get; set; }
+        public int Period { get; set; }
+        public int RecordStatus { get; set; }
     }
 }

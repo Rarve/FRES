@@ -12,11 +12,18 @@ namespace FRES.Common
     public static class RegexHelper
     {
         public const string REGEX_TELL_NO = @"(\(\+\d{1,2}[)]\s)?([0-9]{1,9})[\s-.]?([0-9]{1,9})[\s-.]?[\s-.]?([0-9]{1,9})";
-        public const string REGEX_PROVINCE = @"(จังหวัด[ ]{0,3}[ก-๙]{3,})";
-        public const string REGEX_DISTRICT = @"(เขต|อำเภอ){1}([ ]{0,3}[ก-๙]{3,})";
-        public const string REGEX_SUB_DISTRICT = @"(ตำบล|แขวง){1}([ ]{0,3}[ก-๙]{3,})";
-        public const string REGEX_NUMBER = @"([0-9]{1,}[-]?[0-9]{1,})";
-
+        public const string REGEX_PROVINCE = @"(จังหวัด[ ]{0,3}[ก-๙a-zA-z0-9]{3,})";
+        public const string REGEX_DISTRICT = @"(เขต|อำเภอ){1}([ ]{0,3}[ก-๙a-zA-z0-9]{3,})";
+        public const string REGEX_SUB_DISTRICT = @"(ตำบล|แขวง){1}([ ]{0,3}[ก-๙a-zA-z0-9]{3,})";
+        public const string REGEX_VILLAGE = @"(หมู่บ้าน|อาคาร){1}([ ]{0,3}[ก-๙a-zA-z0-9 ]{3,}[ถนน])";
+        public const string REGEX_VILLAGENO = @"(หมู่|หมู่ที่){1}([ ]{1,3}[ก-๙a-zA-z0-9]{1,})";
+        public const string REGEX_ROAD = @"(ถนน|ถ\.){1}([ ]{0,3}[ก-๙a-zA-z0-9]{3,})";
+        public const string REGEX_ALLEY = @"(ตรอก){1}([ ]{0,3}[ก-๙a-zA-z0-9]{3,})";
+        public const string REGEX_LANE = @"(ซอย){1}([ ]{0,3}[ก-๙a-zA-z0-9]{3,})";
+        public const string REGEX_NUMBER = @"([0-9]{1,}[-]?[0-9]{0,})";
+        public const string REGEX_MONEY = @"([\d]{1,3}[,]?[\d]{1,3}[,]?[\d]{1,3}[,]??[\d]{1,3}[,]??[\d]{1,3}[,]??[\d]{1,3}[,]??[\d]{1,3}[,]?)";
+        public const string REGEX_PROPERTYNUMBER = @"^([0-9]{0,10}[/]?[0-9]{0,10})";
+        
         public static List<string> GetMatchStr(this string str, string regex)
         {
             var ret = new List<string>();
@@ -87,6 +94,11 @@ namespace FRES.Common
         public static string CleanNewLineChar(this string str)
         {
             return Regex.Replace(str, @"\t|\n|\r", string.Empty).Trim();
+        }
+
+        public static string CleanNewLine(this string str)
+        {
+            return Regex.Replace(str, @"(\r\n[ ]{0,})", " ").Trim();
         }
 
         public static string CleanInfo(this string str)

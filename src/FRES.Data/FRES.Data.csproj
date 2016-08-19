@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{42C7187D-FB7E-4E83-9423-AAD4C0451A11}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FRES.Data</RootNamespace>
+    <AssemblyName>FRES.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Address.cs">
+      <DependentUpon>FRESDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Address_bak.cs">
+      <DependentUpon>FRESDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataHelper.cs" />
+    <Compile Include="FRESContext.cs" />
+    <Compile Include="FRESDBModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FRESDBModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FRESDBModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FRESDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FRESDBModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FRESDBModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Location.cs">
+      <DependentUpon>FRESDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\RealEstateType.cs" />
+    <Compile Include="Models\RealEstateT.cs" />
+    <Compile Include="Models\RealEstateE.cs" />
+    <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\IAuditableEntity.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RealEstateE.cs">
+      <DependentUpon>FRESDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RealEstateT.cs">
+      <DependentUpon>FRESDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RealEstateType.cs">
+      <DependentUpon>FRESDBModel.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="FRESDBModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>FRESDBModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="FRESDBModel.edmx.diagram">
+      <DependentUpon>FRESDBModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FRES.Common\FRES.Common.csproj">
+      <Project>{dc37f8e1-db57-415f-8aef-e57b2080a25e}</Project>
+      <Name>FRES.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FRES.Structure\FRES.Structure.csproj">
+      <Project>{96f6d461-8a4b-4249-bf88-6d6971e72f37}</Project>
+      <Name>FRES.Structure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FRESDBModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FRESDBModel.edmx</DependentUpon>
+      <LastGenOutput>FRESDBModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="FRESDBModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FRESDBModel.edmx</DependentUpon>
+      <LastGenOutput>FRESDBModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
