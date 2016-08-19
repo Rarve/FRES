@@ -18,6 +18,8 @@ namespace FRES.Structure
         public string[] ParcelNumber { get; set; }
         public string Desc { get; set; }
         public string Number { get; set; }
+        public string Village { get; set; }
+        public string VillageNo { get; set; }
         public string Alley { get; set; }
         public string Lane { get; set; }
         public string Road { get; set; }
