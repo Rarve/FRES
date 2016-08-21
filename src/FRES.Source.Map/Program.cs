@@ -106,7 +106,7 @@ namespace FRES.Source.M
                 return loc;
             }
 
-            string driverPath = @"D:\Dropbox\MyProjects\FRES\src\FRES.Source.Map\Drivers\";
+            string driverPath = @"D:\MyProjects\FRES\src\FRES.Source.Map\Drivers\";
             IWebDriver driver = new OpenQA.Selenium.PhantomJS.PhantomJSDriver(driverPath);
             //IWebDriver driver = new OpenQA.Selenium.Chrome.ChromeDriver(driverPath);
             try
