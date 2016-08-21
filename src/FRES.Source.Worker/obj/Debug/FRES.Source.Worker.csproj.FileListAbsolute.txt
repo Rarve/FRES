@@ -47,3 +47,6 @@ D:\Dropbox\MyProjects\FRES\src\FRES.Source.Worker\obj\Debug\FRES.Source.Worker.c
 D:\Dropbox\MyProjects\FRES\src\FRES.Source.Worker\obj\Debug\FRES.Source.Worker.csproj.FRES.Source.Worker.exe.config
 D:\Dropbox\MyProjects\FRES\src\FRES.Source.Worker\obj\Debug\FRES.Source.Worker.exe
 D:\Dropbox\MyProjects\FRES\src\FRES.Source.Worker\obj\Debug\FRES.Source.Worker.pdb
+D:\MyProjects\FRES\src\FRES.Source.Worker\bin\Debug\FRES.Source.Worker.exe.config
+D:\MyProjects\FRES\src\FRES.Source.Worker\obj\Debug\FRES.Source.Worker.exe
+D:\MyProjects\FRES\src\FRES.Source.Worker\obj\Debug\FRES.Source.Worker.pdb
