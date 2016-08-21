@@ -38,6 +38,7 @@ namespace FRES.Structure
         public string Owner { get; set; }
         public string Project { get; set; }
         public string Timestamp { get; set; }
+        public string ValidUntil { get; set; }
         public string Icon { get; set; }
         public bool IsSoldOut { get; set; }
         public List<string> Images { get; set; }
