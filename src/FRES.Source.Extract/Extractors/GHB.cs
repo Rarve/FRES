@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using FRES.Data.Models;
 
 namespace FRES.Source.Extract
 {
@@ -22,7 +21,7 @@ namespace FRES.Source.Extract
         {
             var total = GetTotalPages(URL_TOTALITEMS);
             GetUrlsFromPages(total).ToArray();
-            var toProcessItems = DataHelper.GetRealEstateE_NoHTML(SourceName);
+            var toProcessItems = DataHelper.GetRealEstateE_NoHTML(SourceName).ToList();
             GetHtmls(toProcessItems);
         }
 

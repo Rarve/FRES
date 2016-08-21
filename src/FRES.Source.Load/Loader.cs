@@ -27,7 +27,7 @@ namespace FRES.Source.Load
 
                 foreach (var item in items)
                 {
-                    await this.CreateFamilyDocumentIfNotExists("fresdb", "frescollection", item);
+                    await this.CreateRealEstate("fresdb", "frescollection", item);
                 }
             }
             catch (DocumentClientException de)
@@ -109,7 +109,7 @@ namespace FRES.Source.Load
                 }
             }
         }
-        
+
         private async Task CreateFamilyDocumentIfNotExists(string databaseName, string collectionName, RealEstateObj realEstateObj)
         {
             try
@@ -128,6 +128,19 @@ namespace FRES.Source.Load
                 {
                     throw;
                 }
+            }
+        }
+
+        private async Task CreateRealEstate(string databaseName, string collectionName, RealEstateObj realEstateObj)
+        {
+            try
+            {
+                await this.client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(databaseName, collectionName), realEstateObj);
+                this.WriteToConsoleAndPromptToContinue("Created RE {0}", realEstateObj.Url);
+            }
+            catch (DocumentClientException de)
+            {
+                throw de;
             }
         }
     }

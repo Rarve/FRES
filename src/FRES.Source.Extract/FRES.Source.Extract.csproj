@@ -65,6 +65,10 @@
       <Project>{42C7187D-FB7E-4E83-9423-AAD4C0451A11}</Project>
       <Name>FRES.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FRES.Structure\FRES.Structure.csproj">
+      <Project>{96f6d461-8a4b-4249-bf88-6d6971e72f37}</Project>
+      <Name>FRES.Structure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

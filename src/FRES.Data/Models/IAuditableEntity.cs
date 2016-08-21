@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FRES.Data.Models
+namespace FRES.Data
 {
     public interface IAuditableEntity
     {

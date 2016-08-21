@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FRESDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="AddressId" />
+    </Key>
+    <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VillageName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="VillageNo" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="SubDistrict" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="District" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Province" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'fresdb.dbo.Address_bak' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Address_bak">
+    <Key>
+      <PropertyRef Name="VillageName" />
+      <PropertyRef Name="VillageNo" />
+      <PropertyRef Name="SubDistrict" />
+      <PropertyRef Name="District" />
+      <PropertyRef Name="Province" />
+    </Key>
+    <Property Name="VillageName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="VillageNo" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="SubDistrict" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="District" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Province" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="LocationId" />
+    </Key>
+    <Property Name="LocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Province" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Amphur" Type="nvarchar" MaxLength="50" />
+    <Property Name="ParcelCode" Type="int" />
+    <Property Name="Lat" Type="float" />
+    <Property Name="Lon" Type="float" />
+  </EntityType>
+  <EntityType Name="RealEstateE">
+    <Key>
+      <PropertyRef Name="RealEstateEId" />
+    </Key>
+    <Property Name="RealEstateEId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Source" Type="nvarchar" MaxLength="3" />
+    <Property Name="Url" Type="nvarchar" MaxLength="4000" />
+    <Property Name="Data" Type="nvarchar(max)" />
+    <Property Name="State" Type="int" />
+    <Property Name="Period" Type="int" />
+    <Property Name="RecordStatus" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
+    <Property Name="RealEstateJson" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="RealEstateT">
+    <Key>
+      <PropertyRef Name="RealEstateTId" />
+    </Key>
+    <Property Name="RealEstateTId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Source" Type="nvarchar" MaxLength="3" />
+    <Property Name="Url" Type="nvarchar" MaxLength="4000" />
+    <Property Name="Data" Type="nvarchar(max)" />
+    <Property Name="Province" Type="nvarchar(max)" />
+    <Property Name="District" Type="nvarchar(max)" />
+    <Property Name="ParcelNo" Type="nvarchar(max)" />
+    <Property Name="Lat" Type="float" />
+    <Property Name="Lon" Type="float" />
+    <Property Name="State" Type="int" />
+    <Property Name="Period" Type="int" />
+    <Property Name="RecordStatus" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="RealEstateType">
+    <Key>
+      <PropertyRef Name="RealEstateTypeId" />
+    </Key>
+    <Property Name="RealEstateTypeId" Type="int" Nullable="false" />
+    <Property Name="Name_TH" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name_ENG" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityContainer Name="FRESDBModelStoreContainer">
+    <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RealEstateE" EntityType="Self.RealEstateE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RealEstateT" EntityType="Self.RealEstateT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RealEstateType" EntityType="Self.RealEstateType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Address_bak" EntityType="Self.Address_bak" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Address_bak].[VillageName] AS [VillageName], 
+    [Address_bak].[VillageNo] AS [VillageNo], 
+    [Address_bak].[SubDistrict] AS [SubDistrict], 
+    [Address_bak].[District] AS [District], 
+    [Address_bak].[Province] AS [Province]
+    FROM [dbo].[Address_bak] AS [Address_bak]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

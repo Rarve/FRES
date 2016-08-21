@@ -20,7 +20,7 @@ namespace FRES.Source.M
         {
             var items = DataHelper.GetRealEstateT_NoLocation().ToList();
 
-            Parallel.ForEach(items, new ParallelOptions { MaxDegreeOfParallelism = 3 }, item =>
+            Parallel.ForEach(items, new ParallelOptions { MaxDegreeOfParallelism = 5 }, item =>
             //foreach (var item in items)
             {
                 try
@@ -76,7 +76,7 @@ namespace FRES.Source.M
 
             return loc;
         }
-
+        public const int DELAY = 100;
         public static Location GetLocation(string urlRe, string province, string district, string pacelNo)
         {
             var result = new Location();
@@ -89,10 +89,15 @@ namespace FRES.Source.M
 
             if (pacelNo.Contains("-"))
             {
-                parcel = int.Parse(pacelNo.Split('-')[0]);
-            }else
+                var stat = int.TryParse(pacelNo.Split('-')[0], out parcel);
+                if (!stat)
+                    return result;
+            }
+            else
             {
-                parcel = int.Parse(pacelNo);
+                var stat = int.TryParse(pacelNo, out parcel);
+                if (!stat)
+                    return result;
             }
             
             var loc = DataHelper.GetLocation(province, district, parcel);
@@ -110,28 +115,28 @@ namespace FRES.Source.M
                 driver.Navigate().GoToUrl(url);
                 var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(TIMEOUT));
 
-                Thread.Sleep(1000);
+                Thread.Sleep(DELAY);
 
                 var ddlProvince = driver.FindSelectElementWhenPopulated(By.Name("ddlProvince"), TIMEOUT);
                 ddlProvince.SelectBySubText(province);
 
-                Thread.Sleep(1000);
+                Thread.Sleep(DELAY);
 
                 var ddlAmphur = driver.FindSelectElementWhenPopulated(By.Name("ddlAmphur"), TIMEOUT);
                 ddlAmphur.SelectBySubText(district);
 
-                Thread.Sleep(1000);
+                Thread.Sleep(DELAY);
 
                 var txtPacelNo = new WebDriverWait(driver, TimeSpan.FromSeconds(TIMEOUT)).Until(ExpectedConditions.ElementExists(By.Name("txtPacelNo")));
                 txtPacelNo.SendKeys(pacelNo);
 
-                Thread.Sleep(1000);
+                Thread.Sleep(DELAY);
 
                 var btnFind = driver.FindElement(By.Name("btnFind"));
                 IJavaScriptExecutor js = driver as IJavaScriptExecutor;
                 js.ExecuteScript("arguments[0].click();", btnFind);
 
-                Thread.Sleep(1000);
+                Thread.Sleep(DELAY);
                 //var element = new WebDriverWait(driver, TimeSpan.FromSeconds(3)).Until(ExpectedConditions.TextToBePresentInElement(driver.FindElement(By.Id("ddlAmphur")), "01"));
                 //wait.Until(ExpectedConditions.ElementExists(By.CssSelector("div[style=\"transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 107; width: 100%;\"]")));
 

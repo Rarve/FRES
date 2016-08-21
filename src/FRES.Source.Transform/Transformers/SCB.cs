@@ -48,6 +48,11 @@ namespace FRES.Source.Transform
 
                 doc.LoadHtml(obj.Data);
 
+                if (string.IsNullOrEmpty(obj.RealEstateJson))
+                    re = new RealEstateObj();
+                else
+                    re = obj.RealEstateJson.Deserialize<RealEstateObj>();
+
                 re.Url = obj.Url;
 
                 var isSoldout = doc.DocumentNode.Descendants("a")
@@ -70,6 +75,7 @@ namespace FRES.Source.Transform
                 var titleDetails = RegexHelper.SplitTag(html);
 
                 re.Name = titleDetails[0];
+                re.PropertyType = titleDetails[0].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
 
                 if (titleDetails[1].Contains("ไร่-งาน-วา"))
                 {
@@ -129,7 +135,7 @@ namespace FRES.Source.Transform
                 re.Code = details.ContainsKey("รหัสทรัพย์:") ? details["รหัสทรัพย์:"] : string.Empty;
                 re.SizeTotal = string.IsNullOrEmpty(re.SizeTotal) ? details.ContainsKey("เนื้อที่:") ? details["เนื้อที่:"].GetMatchStr(RegexHelper.REGEX_NUMBER).FirstOrDefault() : re.SizeTotal : re.SizeTotal;
                 re.Map.Desc = details.ContainsKey("ที่ตั้งทรัพย์:") ? details["ที่ตั้งทรัพย์:"].CleanNewLine() : string.Empty;
-                re.Storeys = details.ContainsKey("จำนวนชั้น:") ? details["จำนวนชั้น:"] : string.Empty;
+                re.Storeys = details.ContainsKey("จำนวนชั้น:") ? details["จำนวนชั้น:"].Replace("ชั้น", string.Empty).Trim() : string.Empty;
 
 
                 var parcels = details.ContainsKey("โฉนดเลขที่:") ? RegexHelper.GetMatchStr(details["โฉนดเลขที่:"], RegexHelper.REGEX_NUMBER).ToArray() : new string[] { };

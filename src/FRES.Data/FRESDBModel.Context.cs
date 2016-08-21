@@ -25,11 +25,11 @@ namespace FRES.Data
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Address> Address { get; set; }
         public virtual DbSet<Location> Location { get; set; }
         public virtual DbSet<RealEstateE> RealEstateE { get; set; }
         public virtual DbSet<RealEstateT> RealEstateT { get; set; }
         public virtual DbSet<RealEstateType> RealEstateType { get; set; }
         public virtual DbSet<Address_bak> Address_bak { get; set; }
-        public virtual DbSet<Address> Address { get; set; }
     }
 }

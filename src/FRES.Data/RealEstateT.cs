@@ -21,14 +21,8 @@ namespace FRES.Data
         public string Province { get; set; }
         public string District { get; set; }
         public string ParcelNo { get; set; }
-        public Nullable<double> Lat { get; set; }
-        public Nullable<double> Lon { get; set; }
+        public double? Lat { get; set; }
+        public double? Lon { get; set; }
         public Nullable<int> State { get; set; }
-        public Nullable<int> Period { get; set; }
-        public Nullable<int> RecordStatus { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> ModifiedBy { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
     }
 }

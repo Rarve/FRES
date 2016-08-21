@@ -1,11 +1,5 @@
 ﻿using FRES.Common;
-using FRES.Data;
-using FRES.Data.Models;
 using FRES.Structure;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace FRES.Source.Transform
 {

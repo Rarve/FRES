@@ -1,0 +1,16 @@
+D:\Dropbox\MyProjects\FRES\src\FRES.Data\bin\Debug\FRES.Data.dll.config
+D:\Dropbox\MyProjects\FRES\src\FRES.Data\bin\Debug\FRES.Data.dll
+D:\Dropbox\MyProjects\FRES\src\FRES.Data\bin\Debug\FRES.Data.pdb
+D:\Dropbox\MyProjects\FRES\src\FRES.Data\bin\Debug\EntityFramework.dll
+D:\Dropbox\MyProjects\FRES\src\FRES.Data\bin\Debug\EntityFramework.SqlServer.dll
+D:\Dropbox\MyProjects\FRES\src\FRES.Data\bin\Debug\FRES.Common.dll
+D:\Dropbox\MyProjects\FRES\src\FRES.Data\bin\Debug\FRES.Structure.dll
+D:\Dropbox\MyProjects\FRES\src\FRES.Data\bin\Debug\HtmlAgilityPack.dll
+D:\Dropbox\MyProjects\FRES\src\FRES.Data\bin\Debug\Newtonsoft.Json.dll
+D:\Dropbox\MyProjects\FRES\src\FRES.Data\bin\Debug\FRES.Common.pdb
+D:\Dropbox\MyProjects\FRES\src\FRES.Data\bin\Debug\FRES.Structure.pdb
+D:\Dropbox\MyProjects\FRES\src\FRES.Data\bin\Debug\EntityFramework.xml
+D:\Dropbox\MyProjects\FRES\src\FRES.Data\bin\Debug\EntityFramework.SqlServer.xml
+D:\Dropbox\MyProjects\FRES\src\FRES.Data\obj\Debug\FRES.Data.csprojResolveAssemblyReference.cache
+D:\Dropbox\MyProjects\FRES\src\FRES.Data\obj\Debug\FRES.Data.dll
+D:\Dropbox\MyProjects\FRES\src\FRES.Data\obj\Debug\FRES.Data.pdb

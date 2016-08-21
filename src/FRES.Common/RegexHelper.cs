@@ -12,10 +12,10 @@ namespace FRES.Common
     public static class RegexHelper
     {
         public const string REGEX_TELL_NO = @"(\(\+\d{1,2}[)]\s)?([0-9]{1,9})[\s-.]?([0-9]{1,9})[\s-.]?[\s-.]?([0-9]{1,9})";
-        public const string REGEX_PROVINCE = @"(จังหวัด[ ]{0,3}[ก-๙a-zA-z0-9]{3,})";
-        public const string REGEX_DISTRICT = @"(เขต|อำเภอ){1}([ ]{0,3}[ก-๙a-zA-z0-9]{3,})";
-        public const string REGEX_SUB_DISTRICT = @"(ตำบล|แขวง){1}([ ]{0,3}[ก-๙a-zA-z0-9]{3,})";
-        public const string REGEX_VILLAGE = @"(หมู่บ้าน|อาคาร){1}([ ]{0,3}[ก-๙a-zA-z0-9 ]{3,}[ถนน])";
+        public const string REGEX_PROVINCE = @"((จังหวัด|จ\.)[ ]{0,3}[ก-๙a-zA-z0-9]{3,})";
+        public const string REGEX_DISTRICT = @"(เขต|อำเภอ|อ\.){1}([ ]{0,3}[ก-๙a-zA-z0-9]{3,})";
+        public const string REGEX_SUB_DISTRICT = @"(ตำบล|แขวง|ต\.){1}([ ]{0,3}[ก-๙a-zA-z0-9]{3,})";
+        public const string REGEX_VILLAGE = @"(หมู่บ้าน|อาคาร){1}([ ]{0,3}[ก-๙a-zA-z0-9 ]{3,}(ถนน|ต.))";
         public const string REGEX_VILLAGENO = @"(หมู่|หมู่ที่){1}([ ]{1,3}[ก-๙a-zA-z0-9]{1,})";
         public const string REGEX_ROAD = @"(ถนน|ถ\.){1}([ ]{0,3}[ก-๙a-zA-z0-9]{3,})";
         public const string REGEX_ALLEY = @"(ตรอก){1}([ ]{0,3}[ก-๙a-zA-z0-9]{3,})";
@@ -93,7 +93,7 @@ namespace FRES.Common
 
         public static string CleanNewLineChar(this string str)
         {
-            return Regex.Replace(str, @"\t|\n|\r", string.Empty).Trim();
+            return Regex.Replace(str, "(\\[trn])", string.Empty).Trim();
         }
 
         public static string CleanNewLine(this string str)
@@ -117,6 +117,56 @@ namespace FRES.Common
             sb.Replace(": ", string.Empty);
             
             return sb.ToString().Trim();
+        }
+
+        public static string RemovePrefix_District(this string str)
+        {
+            return str.Replace("อำเภอ", string.Empty).Replace("อ.", string.Empty).Replace("เขต", string.Empty).Trim();
+        }
+
+        public static string RemovePrefix_SubDistrict(this string str)
+        {
+            return str.Replace("ตำบล", string.Empty).Replace("ต.", string.Empty).Replace("แขวง", string.Empty).Trim();
+        }
+
+        public static string RemovePrefix_Province(this string str)
+        {
+            return str.Replace("จังหวัด", string.Empty).Replace("จ.", string.Empty).Trim();
+        }
+
+        public static string RemovePrefix_Currency(this string str)
+        {
+            return str.Replace("บาท", string.Empty).Trim();
+        }
+
+        public static string RemovePrefix_Village(this string str)
+        {
+            return str.Replace("หมู่บ้าน", string.Empty).Replace("อาคาร", string.Empty).Replace("ชุด", string.Empty).Replace("ถนน", string.Empty).Trim();
+        }
+
+        public static string RemovePrefix_Lane(this string str)
+        {
+            return str.Replace("ซอย", string.Empty).Replace("ซ.", string.Empty).Trim();
+        }
+
+        public static string RemovePrefix_VillageNo(this string str)
+        {
+            return str.Replace("หมู่", string.Empty).Replace("ม.", string.Empty).Trim();
+        }
+
+        public static string RemovePrefix_Road(this string str)
+        {
+            return str.Replace("ถนน", string.Empty).Replace("ถ.", string.Empty).Trim();
+        }
+
+        public static string RemovePrefix_Alley(this string str)
+        {
+            return str.Replace("ตรอก", string.Empty).Trim();
+        }
+
+        public static string[] SplitRemoveEmpty(this string str, string delimeter)
+        {
+            return str.Split(new string[] { delimeter }, StringSplitOptions.RemoveEmptyEntries);
         }
     }
 }

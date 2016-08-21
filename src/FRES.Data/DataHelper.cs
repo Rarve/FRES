@@ -24,7 +24,7 @@ namespace FRES.Data
 
             using (var ctx = new FRESContext())
             {
-                res = ctx.RealEstateE.Where(x => x.Source == sourceName).Select(x => new SourceObj() { Data = x.Data, Url = x.Url }).ToList();
+                res = ctx.RealEstateE.Where(x => x.Source == sourceName).Select(x => new SourceObj() { Data = x.Data, Url = x.Url, RealEstateJson = x.RealEstateJson }).ToList();
             }
             return res;
         }

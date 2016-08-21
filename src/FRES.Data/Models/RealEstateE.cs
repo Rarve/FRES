@@ -1,9 +1,9 @@
 ﻿using FRES.Structure;
 using System;
 
-namespace FRES.Data.Models
+namespace FRES.Data
 {
-    partial class RealEstateE : Structure.SourceObj, IAuditableEntity
+    partial class RealEstateE : SourceObj, IAuditableEntity
     {
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }

@@ -34,20 +34,25 @@ namespace FRES.Source.Transform
                  .ForAll(html => GetDetails(html));
         }
 
-        public override void GetDetails(SourceObj objs)
+        public override void GetDetails(SourceObj obj)
         {
             var re = new RealEstateObj();
             var doc = new HtmlAgilityPack.HtmlDocument();
             try
             {
-                if (string.IsNullOrEmpty(objs.Data))
+                if (string.IsNullOrEmpty(obj.Data))
                 {
-                    objs.Data = Client.RetrieveHtmlStrGet(objs.Url).Result;
+                    obj.Data = Client.RetrieveHtmlStrGet(obj.Url).Result;
                 }
 
-                doc.LoadHtml(objs.Data);
+                doc.LoadHtml(obj.Data);
 
-                re.Url = objs.Url;
+                if (string.IsNullOrEmpty(obj.RealEstateJson))
+                    re = new RealEstateObj();
+                else
+                    re = obj.RealEstateJson.Deserialize<RealEstateObj>();
+
+                re.Url = obj.Url;
                 re.Source = SourceName;
 
                 var detailTitles = doc.DocumentNode.Descendants("div")
@@ -65,13 +70,14 @@ namespace FRES.Source.Transform
                     details.Add(detailTitles[i], detailDescs[i]);
                 }
                 
-                re.Code = details.ContainsKey("รหัสรายการทรัพย์") ? details["รหัสรายการทรัพย์"] : string.Empty;
-                re.PropertyType = details.ContainsKey("ประเภททรัพย์") ? details["ประเภททรัพย์"] : string.Empty;
-                re.Map.Province = details.ContainsKey("จังหวัด") ? details["จังหวัด"] : string.Empty;
+                //re.Code = details.ContainsKey("รหัสรายการทรัพย์") ? details["รหัสรายการทรัพย์"] : string.Empty;
+                //re.PropertyType = details.ContainsKey("ประเภททรัพย์") ? details["ประเภททรัพย์"] : string.Empty;
+                //re.Map.Province = details.ContainsKey("จังหวัด") ? details["จังหวัด"] : string.Empty;
 
                 if (details.ContainsKey("เนื้อที่(ไร่-งาน-วา)"))
                 {
-                    var tmp = details["เนื้อที่(ไร่-งาน-วา)"].Split('-');
+                    var tmp = re.SizeTotalText.Split('-'); ;
+                    //var tmp = details["เนื้อที่(ไร่-งาน-วา)"].Split('-');
                     if (tmp.Length == 3)
                     {
                         var rai = decimal.Parse(tmp[0]) * 400;
@@ -86,7 +92,7 @@ namespace FRES.Source.Transform
 
                 re.DocumentOfRightType = details.ContainsKey("ประเภทเอกสารสิทธิ์") ? details["ประเภทเอกสารสิทธิ์"] : string.Empty;
                 re.DocumentOfRightDesc = details.ContainsKey("รายละเอียดเลขที่เอกสารสิทธิ์") ? details["รายละเอียดเลขที่เอกสารสิทธิ์"] : string.Empty;
-                re.Price = details.ContainsKey("ราคาพิเศษ") ? details["ราคาพิเศษ"] : string.Empty;
+                //re.Price = details.ContainsKey("ราคาพิเศษ") ? details["ราคาพิเศษ"] : string.Empty;
                 re.BedRooom = details.ContainsKey("ห้องนอน") ? details["ห้องนอน"] : string.Empty;
                 re.BathRoom = details.ContainsKey("ห้องน้ำ") ? details["ห้องน้ำ"] : string.Empty;
                 re.Map.Desc = details.ContainsKey("ที่ตั้งรหัสทรัพย์") ? details["ที่ตั้งรหัสทรัพย์"] : string.Empty;
@@ -136,7 +142,7 @@ namespace FRES.Source.Transform
                     re.Map.Images.Add(mapImage.GetAttributeValue("href", string.Empty));
                 }
 
-                var propId = HttpUtility.ParseQueryString(objs.Url.Split('?')[1])["propId"];
+                var propId = HttpUtility.ParseQueryString(obj.Url.Split('?')[1])["propId"];
                 var mapUrl = USL_MAPS + propId;
                 var nvc = new List<KeyValuePair<string, string>>();
                 var mapStr = Client.RetrieveHtmlStrPost(mapUrl, nvc).Result;
@@ -148,15 +154,15 @@ namespace FRES.Source.Transform
                     re.Map.Lon = double.Parse(mapObj.poi[0].lon);
                 }
                 
-                var amphur = RegexHelper.GetMatchStr(objs.Data, RegexHelper.REGEX_DISTRICT);
-                re.Map.ParcelNumber = RegexHelper.GetMatchStr(details["เลขที่เอกสารสิทธิ์"], RegexHelper.REGEX_NUMBER).ToArray();
+                //var amphur = RegexHelper.GetMatchStr(obj.Data, RegexHelper.REGEX_DISTRICT);
+                //re.Map.ParcelNumber = RegexHelper.GetMatchStr(details["เลขที่เอกสารสิทธิ์"], RegexHelper.REGEX_NUMBER).ToArray();
 
-                if (amphur.Count > 0)
-                {
-                    re.Map.District = amphur[0].Replace("อำเภอ", string.Empty).Replace("เขต", string.Empty).Trim();
-                }
+                //if (amphur.Count > 0)
+                //{
+                //    re.Map.District = amphur[0].Replace("อำเภอ", string.Empty).Replace("เขต", string.Empty).Trim();
+                //}
 
-                var obj = new RealEstateT
+                var reT = new RealEstateT
                 {
                     Data = JsonHelper.Serialize(re, true),
                     Province = re.Map.Province,
@@ -170,11 +176,11 @@ namespace FRES.Source.Transform
                     Source = "KTB"
                 };
 
-                DataHelper.InsertRealEstateT(obj);
+                DataHelper.InsertRealEstateT(reT);
             }
             catch (Exception ex)
             {
-                File.AppendAllText("D:/RE/T_KTB.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + objs.Url + "," + ex.GetBaseException().Message + "\r\n");
+                File.AppendAllText("D:/RE/T_KTB.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + obj.Url + "," + ex.GetBaseException().Message + "\r\n");
             }
         }
     }

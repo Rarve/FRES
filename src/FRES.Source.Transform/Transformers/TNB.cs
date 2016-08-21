@@ -23,7 +23,7 @@ namespace FRES.Source.Transform
         public override void Transform()
         {
             var objs = DataHelper.GetRealEstateE("TNB")
-                .Where(x => x.Url == "http://www.thanachartnpa.com/assetdetail.asp?code=9B015FA011F41D8F5C993E0EEC1869D760A5BF91E58A2A2E45B96FBEA86E2F22F7D3B5F753424EDB36B60C00C619843CBAB0A8E635715250444370728ECD13F0&p1=85C0B2FFED8E4BCA57CB9C95D4B81C57935D0CA9A88831D58092A1A9732E00FFD95195CE5B0F4E6AE9CD8E0A1FE242E250A710DB2A23C10C4719D6BD756067A2")
+                //.Where(x => x.Url == "http://www.thanachartnpa.com/assetdetail.asp?code=9B015FA011F41D8F5C993E0EEC1869D760A5BF91E58A2A2E45B96FBEA86E2F22F7D3B5F753424EDB36B60C00C619843CBAB0A8E635715250444370728ECD13F0&p1=85C0B2FFED8E4BCA57CB9C95D4B81C57935D0CA9A88831D58092A1A9732E00FFD95195CE5B0F4E6AE9CD8E0A1FE242E250A710DB2A23C10C4719D6BD756067A2")
                 .ToList();
             GetDetails(objs.ToArray());
         }
@@ -48,6 +48,11 @@ namespace FRES.Source.Transform
                 }
 
                 doc.LoadHtml(obj.Data);
+
+                if (string.IsNullOrEmpty(obj.RealEstateJson))
+                    re = new RealEstateObj();
+                else
+                    re = obj.RealEstateJson.Deserialize<RealEstateObj>();
 
                 re.Url = obj.Url;
                 re.Source = SourceName;
@@ -111,7 +116,7 @@ namespace FRES.Source.Transform
                         re.Map.Lane = lane[0].Replace("ซอย", string.Empty).Trim();
                 }
 
-                re.Price = obj.Data.GetMatchStr(@"((<b>)(\d{1,3}(,\d{3})*)?(\.\d+)(<\/b>))").FirstOrDefault().StripHTML();
+                //re.Price = obj.Data.GetMatchStr(@"((<b>)(\d{1,3}(,\d{3})*)?(\.\d+)(<\/b>))").FirstOrDefault().StripHTML();
 
                 var images = RegexHelper.GetMatchStr(obj.Data, "(\\/asset_images\\/(.*?)\")").Distinct().Select(x => URL_MAIN + x.TrimEnd('"')).ToList();
 

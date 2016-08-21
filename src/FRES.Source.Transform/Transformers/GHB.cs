@@ -61,6 +61,11 @@ namespace FRES.Source.Transform
 
                 doc.LoadHtml(obj.Data);
 
+                if (string.IsNullOrEmpty(obj.RealEstateJson))
+                    re = new RealEstateObj();
+                else
+                    re = obj.RealEstateJson.Deserialize<RealEstateObj>();
+
                 re.Url = obj.Url;
                 re.Source = SourceName;
 

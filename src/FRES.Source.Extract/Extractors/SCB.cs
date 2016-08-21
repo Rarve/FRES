@@ -1,5 +1,7 @@
 ﻿using FRES.Common;
 using FRES.Data;
+using FRES.Structure;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,7 +24,7 @@ namespace FRES.Source.Extract
         {
             var total = GetTotalPages(URL_MAIN + URL_PAGE + "1");
             GetUrlsFromPages(total).ToArray();
-            var toProcessItems = DataHelper.GetRealEstateE_NoHTML(SourceName);
+            var toProcessItems = DataHelper.GetRealEstateE_NoHTML(SourceName).ToList();
             GetHtmls(toProcessItems);
         }
 
@@ -50,17 +52,33 @@ namespace FRES.Source.Extract
             try
             {
                 var html = Client.RetrieveHtmlStrGet(pageUrl).Result;
-                urls = RegexHelper.GetMatchStr(html, @"(APropertyDetail.html\?id=[0-9]{0,20})").Distinct().Select(x => URL_MAIN + x).ToList();
+                //urls = RegexHelper.GetMatchStr(html, @"(APropertyDetail.html\?id=[0-9]{0,20})").Distinct().Select(x => URL_MAIN + x).ToList();
+                
+                var doc = new HtmlDocument();
+                doc.LoadHtml(html);
 
-                var res = urls.AsParallel().WithDegreeOfParallelism(ParallismDegree).Select(x =>
-                    new RealEstateE()
+                var tmp = doc.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("SummaryPanel")).Select(x => x.InnerHtml).ToList();
+
+                urls = tmp.Select(x => x.GetMatchStr(@"(APropertyDetail.html\?id=[0-9]{0,20})").Distinct().Select(y => URL_MAIN + y).FirstOrDefault()).ToList();
+                var info = tmp.Select(x => x.SplitTag()).ToList();
+
+                var res = new List<RealEstateE>();
+                for (int i = 0; i < urls.Count; i++)
+                {
+                    var json = new RealEstateObj();
+                    json.Price = info[i][0].Replace("ราคาเริ่มต้น", string.Empty).Replace("บ.", string.Empty).Trim();
+                    json.PropertyType = info[i][1].SplitRemoveEmpty(" ")[0].Trim();
+                    json.Source = this.GetType().Name;
+
+                    res.Add(new RealEstateE()
                     {
-                        Url = x.Trim(),
+                        Url = urls[i].Trim(),
                         State = 0,
                         RecordStatus = 1,
-                        Source = SourceName
-                    }
-                ).ToList();
+                        Source = SourceName,
+                        RealEstateJson = json.Serialize(true)
+                    });
+                }
 
                 DataHelper.InsertRealEstateE(res);
             }

@@ -1,5 +1,7 @@
 ﻿using FRES.Common;
 using FRES.Data;
+using FRES.Structure;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,7 +26,7 @@ namespace FRES.Source.Extract
         {
             var total = GetTotalPages(URL_TOTALPAGE);
             GetUrlsFromPages(total).ToArray();
-            var toProcessItems = DataHelper.GetRealEstateE_NoHTML(SourceName);
+            var toProcessItems = DataHelper.GetRealEstateE_NoHTML(SourceName).ToList();
             GetHtmls(toProcessItems);
         }
 
@@ -50,18 +52,54 @@ namespace FRES.Source.Extract
             var urls = new List<string>();
             try
             {
-                var html = Client.RetrieveHtmlStrGet(pageUrl).Result;
+                var html = Client.RetrieveHtmlStrGet(pageUrl, Encoding.GetEncoding(874)).Result;
                 urls = RegexHelper.GetMatchStr(html, "(assetdetail.asp\\?code=(.*?)\")").Distinct().Select(x => URL_MAIN + x.TrimEnd('"')).ToList();
 
-                var res = urls.AsParallel().WithDegreeOfParallelism(ParallismDegree).Select(x =>
-                    new RealEstateE()
+                var doc = new HtmlDocument();
+                doc.LoadHtml(html);
+
+                var tmp = doc.DocumentNode.Descendants("tr")
+                                 .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("font_normal1"))
+                                 .Select(x => x.InnerHtml.StripHTML())
+                                 .Select(x => x.Replace("\r\n", string.Empty).Trim())
+                                 .ToList();
+
+                var info = tmp.Select(x => x.Split(new string[] { "\t" }, StringSplitOptions.RemoveEmptyEntries)).ToList();
+
+                //var res = urls.AsParallel().WithDegreeOfParallelism(ParallismDegree).Select(x =>
+                //    new RealEstateE()
+                //    {
+                //        Url = x.Trim(),
+                //        State = 0,
+                //        RecordStatus = 1,
+                //        Source = SourceName
+                //    }
+                //).ToList();
+
+                var res = new List<RealEstateE>();
+                for (int i = 0; i < urls.Count; i++)
+                {
+                    var json = new RealEstateObj()
                     {
-                        Url = x.Trim(),
+                        Code = info[i][0],
+                        PropertyType = info[i][1],
+                        Name = info[i][2],
+                        SizeTotalText = info[i][3]
+                    };
+                    json.Map.District = info[i][4];
+                    json.Map.Province = info[i][5];
+                    json.Price = info[i][7];
+                    json.Source = this.GetType().Name;
+
+                    res.Add(new RealEstateE()
+                    {
+                        Url = urls[i].Trim(),
                         State = 0,
                         RecordStatus = 1,
-                        Source = SourceName
-                    }
-                ).ToList();
+                        Source = SourceName,
+                        RealEstateJson = json.Serialize(true)
+                    });
+                }
 
                 DataHelper.InsertRealEstateE(res);
             }

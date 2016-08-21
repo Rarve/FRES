@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FRESDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="FRESDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Address" EntityType="FRESDBModel.Address" />
+    <EntitySet Name="Location" EntityType="FRESDBModel.Location" />
+    <EntitySet Name="RealEstateE" EntityType="FRESDBModel.RealEstateE" />
+    <EntitySet Name="RealEstateT" EntityType="FRESDBModel.RealEstateT" />
+    <EntitySet Name="RealEstateType" EntityType="FRESDBModel.RealEstateType" />
+    <EntitySet Name="Address_bak" EntityType="FRESDBModel.Address_bak" />
+  </EntityContainer>
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="AddressId" />
+    </Key>
+    <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VillageName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="VillageNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="SubDistrict" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="District" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Province" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="LocationId" />
+    </Key>
+    <Property Name="LocationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Province" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Amphur" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ParcelCode" Type="Int32" />
+    <Property Name="Lat" Type="Double" />
+    <Property Name="Lon" Type="Double" />
+  </EntityType>
+  <EntityType Name="RealEstateE">
+    <Key>
+      <PropertyRef Name="RealEstateEId" />
+    </Key>
+    <Property Name="RealEstateEId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Source" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="Url" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="Int32" />
+    <Property Name="Period" Type="Int32" />
+    <Property Name="RecordStatus" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+    <Property Name="RealEstateJson" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="RealEstateT">
+    <Key>
+      <PropertyRef Name="RealEstateTId" />
+    </Key>
+    <Property Name="RealEstateTId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Source" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="Url" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Province" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="District" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ParcelNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Lat" Type="Double" />
+    <Property Name="Lon" Type="Double" />
+    <Property Name="State" Type="Int32" />
+    <Property Name="Period" Type="Int32" />
+    <Property Name="RecordStatus" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+  </EntityType>
+  <EntityType Name="RealEstateType">
+    <Key>
+      <PropertyRef Name="RealEstateTypeId" />
+    </Key>
+    <Property Name="RealEstateTypeId" Type="Int32" Nullable="false" />
+    <Property Name="Name_TH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name_ENG" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Address_bak">
+    <Key>
+      <PropertyRef Name="VillageName" />
+      <PropertyRef Name="VillageNo" />
+      <PropertyRef Name="SubDistrict" />
+      <PropertyRef Name="District" />
+      <PropertyRef Name="Province" />
+    </Key>
+    <Property Name="VillageName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="VillageNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="SubDistrict" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="District" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Province" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

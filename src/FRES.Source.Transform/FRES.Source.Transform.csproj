@@ -50,6 +50,7 @@
     <Compile Include="Transformers\KTB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transformers\SCB.cs" />
+    <Compile Include="Transformers\GSB.cs" />
     <Compile Include="Transformers\TNB.cs" />
   </ItemGroup>
   <ItemGroup>
