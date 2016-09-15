@@ -2,3 +2,8 @@ D:\Dropbox\MyProjects\FRES\src\FRES.Structure\bin\Debug\FRES.Structure.dll
 D:\Dropbox\MyProjects\FRES\src\FRES.Structure\bin\Debug\FRES.Structure.pdb
 D:\Dropbox\MyProjects\FRES\src\FRES.Structure\obj\Debug\FRES.Structure.dll
 D:\Dropbox\MyProjects\FRES\src\FRES.Structure\obj\Debug\FRES.Structure.pdb
+D:\MyProjects\FRES\src\FRES.Structure\bin\Debug\FRES.Structure.dll
+D:\MyProjects\FRES\src\FRES.Structure\bin\Debug\FRES.Structure.pdb
+D:\MyProjects\FRES\src\FRES.Structure\obj\Debug\FRES.Structure.dll
+D:\MyProjects\FRES\src\FRES.Structure\obj\Debug\FRES.Structure.pdb
+D:\MyProjects\FRES\src\FRES.Structure\obj\Debug\FRES.Structure.csprojResolveAssemblyReference.cache

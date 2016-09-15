@@ -84,7 +84,7 @@ namespace FRES.Source.Extract
                     json.SizeTotalText = info[i][7];
                     json.PropertyType = info[i][9];
                     json.Map.ParcelNumber = info[i][11].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    json.Price = info[i][12].RemovePrefix_Currency();
+                    json.Price = info[i][12].RemovePrefix_Currency().ToDecimal();
                     json.ValidUntil = info[i][14];
                     json.Source = this.GetType().Name;
 

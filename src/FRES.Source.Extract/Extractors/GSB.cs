@@ -52,7 +52,7 @@ namespace FRES.Source.Extract
                     json.Code = info[i][1].Trim();
                     json.PropertyType = info[i][2].Trim();
                     json.SizeTotal = info[i][3].Trim();
-                    json.Price = info[i][5].Trim();
+                    json.Price = info[i][5].ToDecimal();
                     json.Source = this.GetType().Name;
 
                     res.Add(new RealEstateE()

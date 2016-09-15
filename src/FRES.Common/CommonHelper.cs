@@ -8,10 +8,15 @@ namespace FRES.Common
 {
     public static class Extension
     {
-        //public static bool IsNumeric(this string s)
-        //{
-        //    float output;
-        //    return float.TryParse(s, out output);
-        //}
+        public static decimal ToDecimal(this string s)
+        {
+            decimal res = 0;
+            if (string.IsNullOrEmpty(s))
+            {
+                return res;
+            }
+            decimal.TryParse(s.Trim(), out res);
+            return res;
+        }
     }
 }

@@ -88,7 +88,7 @@ namespace FRES.Source.Extract
                     };
                     json.Map.District = info[i][4];
                     json.Map.Province = info[i][5];
-                    json.Price = info[i][7];
+                    json.Price = info[i][7].ToDecimal();
                     json.Source = this.GetType().Name;
 
                     res.Add(new RealEstateE()

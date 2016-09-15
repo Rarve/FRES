@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FRES.Source.M")]
+[assembly: AssemblyTitle("FRES.Source.Map")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("FRES.Source.M")]
+[assembly: AssemblyProduct("FRES.Source.Map")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("0cac41ac-f8df-48c7-b3a8-79b258284129")]
+[assembly: Guid("2dde9e09-3c09-4bae-8b66-6deb926821cf")]
 
 // Version information for an assembly consists of the following four values:
 //

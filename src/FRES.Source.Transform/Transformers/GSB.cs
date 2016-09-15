@@ -55,7 +55,15 @@ namespace FRES.Source.Transform
                 re.Url = obj.Url;
                 re.Source = SourceName;
 
-                var html = obj.Data.GetStrBtw("<!--  Start Content -->", "<!--	  request_form.php -->");
+
+                var idxStart = obj.Data.IndexOf("<!--  Start Content -->");
+                var idxEnd = obj.Data.IndexOf("<!--  End Content -->");
+                if (idxStart < 0 || idxEnd < 0)
+                {
+                    obj.Data = Client.RetrieveHtmlStrGet(obj.Url, Encoding.GetEncoding(874)).Result;
+                }
+
+                var html = obj.Data.GetStrBtw("<!--  Start Content -->", "<!--  End Content -->");
                 var info = html.SplitTag();
 
                 re.IsSoldOut = info[7] != "รอการขาย";
@@ -124,7 +132,7 @@ namespace FRES.Source.Transform
             }
             catch (Exception ex)
             {
-                File.AppendAllText("D:/RE/T_TNB.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + obj.Url + "," + ex.GetBaseException().Message + "\r\n");
+                File.AppendAllText("D:/RE/T_GSB.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + obj.Url + "," + ex.GetBaseException().Message + "\r\n");
             }
         }
     }

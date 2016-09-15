@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 
-namespace FRES.Source.M
+namespace FRES.Source.Map
 {
     public static class WebElementExtensions
     {

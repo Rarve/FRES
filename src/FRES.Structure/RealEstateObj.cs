@@ -15,7 +15,7 @@ namespace FRES.Structure
         public string Source { get; set; }
         public string Url { get; set; }
         public string Name { get; set; }
-        public string Price { get; set; }
+        public decimal Price { get; set; }
         public string SizeTotal { get; set; }
         public string SizeTotalUnit { get; set; }
         public string SizeTotalText { get; set; }

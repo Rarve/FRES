@@ -66,7 +66,7 @@ namespace FRES.Source.Extract
                 for (int i = 0; i < urls.Count; i++)
                 {
                     var json = new RealEstateObj();
-                    json.Price = info[i][0].Replace("ราคาเริ่มต้น", string.Empty).Replace("บ.", string.Empty).Trim();
+                    json.Price = info[i][0].Replace("ราคาเริ่มต้น", string.Empty).Replace("บ.", string.Empty).ToDecimal();
                     json.PropertyType = info[i][1].SplitRemoveEmpty(" ")[0].Trim();
                     json.Source = this.GetType().Name;
 

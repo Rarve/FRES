@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0CAC41AC-F8DF-48C7-B3A8-79B258284129}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{2DDE9E09-3C09-4BAE-8B66-6DEB926821CF}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FRES.Source.M</RootNamespace>
-    <AssemblyName>FRES.Source.M</AssemblyName>
+    <RootNamespace>FRES.Source.Map</RootNamespace>
+    <AssemblyName>FRES.Source.Map</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Selenium.WebDriver.PhantomJS.Xplatform.2.45.0.1\lib\net40\Ionic.Zip.dll</HintPath>
       <Private>True</Private>
@@ -45,11 +39,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,38 +52,41 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="WebDriver.Support, Version=2.53.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.Support.2.53.1\lib\net40\WebDriver.Support.dll</HintPath>
+      <HintPath>..\..\packages\Selenium.Support.2.53.1\lib\net40\WebDriver.Support.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="MapRetriever.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebElementExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <Content Include="Drivers\chromedriver.exe" />
+    <Content Include="Drivers\IEDriverServer.exe" />
+    <Content Include="Drivers\phantomjs.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Drivers\chromedriver_win32.zip" />
+    <None Include="Drivers\IEDriverServer_Win32_2.53.0.zip" />
+    <None Include="Drivers\IEDriverServer_Win32_2.53.1.zip" />
+    <None Include="Drivers\IEDriverServer_x64_2.53.0.zip" />
+    <None Include="Drivers\IEDriverServer_x64_2.53.1.zip" />
+    <None Include="Drivers\LATEST_RELEASE" />
+    <None Include="Drivers\phantomjs-2.1.1-windows.zip" />
+    <None Include="Drivers\selenium-dotnet-2.53.0.zip" />
+    <None Include="Drivers\selenium-dotnet-2.53.1.zip" />
+    <None Include="Drivers\selenium-dotnet-strongnamed-2.53.0.zip" />
+    <None Include="Drivers\selenium-dotnet-strongnamed-2.53.1.zip" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Drivers\chromedriver.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FRES.Common\FRES.Common.csproj">
-      <Project>{dc37f8e1-db57-415f-8aef-e57b2080a25e}</Project>
-      <Name>FRES.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FRES.Data\FRES.Data.csproj">
-      <Project>{42c7187d-fb7e-4e83-9423-aad4c0451a11}</Project>
+      <Project>{42C7187D-FB7E-4E83-9423-AAD4C0451A11}</Project>
       <Name>FRES.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\FRES.Structure\FRES.Structure.csproj">
-      <Project>{96f6d461-8a4b-4249-bf88-6d6971e72f37}</Project>
+      <Project>{96F6D461-8A4B-4249-BF88-6D6971E72F37}</Project>
       <Name>FRES.Structure</Name>
     </ProjectReference>
   </ItemGroup>

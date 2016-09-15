@@ -12,3 +12,8 @@ D:\Dropbox\MyProjects\FRES\src\FRES.Common\bin\Debug\FRES.Common.pdb
 D:\Dropbox\MyProjects\FRES\src\FRES.Common\obj\Debug\FRES.Common.dll
 D:\Dropbox\MyProjects\FRES\src\FRES.Common\obj\Debug\FRES.Common.pdb
 D:\Dropbox\MyProjects\FRES\src\FRES.Common\obj\Debug\FRES.Common.csprojResolveAssemblyReference.cache
+D:\MyProjects\FRES\src\FRES.Common\bin\Debug\FRES.Common.dll
+D:\MyProjects\FRES\src\FRES.Common\bin\Debug\FRES.Common.pdb
+D:\MyProjects\FRES\src\FRES.Common\obj\Debug\FRES.Common.dll
+D:\MyProjects\FRES\src\FRES.Common\obj\Debug\FRES.Common.pdb
+D:\MyProjects\FRES\src\FRES.Common\obj\Debug\FRES.Common.csprojResolveAssemblyReference.cache

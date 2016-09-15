@@ -107,11 +107,11 @@ namespace FRES.Source.Transform
                     re.BedRooom = titleDetails[2];
                     re.BathRoom = titleDetails[4];
                     re.ParkingSpace = titleDetails[6];
-                    re.Price = titleDetails[8].GetMatchStr(RegexHelper.REGEX_MONEY).FirstOrDefault();
+                    re.Price = titleDetails[8].GetMatchStr(RegexHelper.REGEX_MONEY).FirstOrDefault().ToDecimal();
                 }
                 else
                 {
-                    re.Price = titleDetails[2].GetMatchStr(RegexHelper.REGEX_MONEY).FirstOrDefault();
+                    re.Price = titleDetails[2].GetMatchStr(RegexHelper.REGEX_MONEY).FirstOrDefault().ToDecimal();
                 }
 
                 var detailTitles = doc.DocumentNode.Descendants("div")

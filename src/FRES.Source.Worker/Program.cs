@@ -1,6 +1,7 @@
 ﻿using FRES.Data;
 using FRES.Source.Extract;
 using FRES.Source.Load;
+using FRES.Source.Map;
 using FRES.Source.Transform;
 using System;
 
@@ -33,8 +34,18 @@ namespace FRES.Source.E
                 foreach (var transformer in transformers)
                     transformer.Transform();
 
+                MapRetriever retriever = new MapRetriever();
+                retriever.GetMap();
+                retriever.GetMap();
+                retriever.GetMap();
+                retriever.GetMap();
+                retriever.GetMap();
+                retriever.GetMap();
+                retriever.GetMap();
+                retriever.GetMap();
+
                 var loader = new Loader();
-                loader.GetStartedDemo().Wait();
+                //loader.GetStartedDemo().Wait();
                 
             }
             catch (Exception ex)
