@@ -1,0 +1,12 @@
+D:\Dropbox\MyProjects\RIP\RIP.Business\bin\Debug\Microsoft.Azure.Documents.ServiceInterop.dll
+D:\Dropbox\MyProjects\RIP\RIP.Business\bin\Debug\DocumentDB.Spatial.Sql.dll
+D:\Dropbox\MyProjects\RIP\RIP.Business\bin\Debug\RIP.Business.dll
+D:\Dropbox\MyProjects\RIP\RIP.Business\bin\Debug\RIP.Business.pdb
+D:\Dropbox\MyProjects\RIP\RIP.Business\bin\Debug\RIP.Data.DocumentDB.dll
+D:\Dropbox\MyProjects\RIP\RIP.Business\bin\Debug\Microsoft.Azure.Documents.Client.dll
+D:\Dropbox\MyProjects\RIP\RIP.Business\bin\Debug\Newtonsoft.Json.dll
+D:\Dropbox\MyProjects\RIP\RIP.Business\bin\Debug\RIP.Data.DocumentDB.pdb
+D:\Dropbox\MyProjects\RIP\RIP.Business\bin\Debug\Microsoft.Azure.Documents.Client.xml
+D:\Dropbox\MyProjects\RIP\RIP.Business\obj\Debug\RIP.Business.csprojResolveAssemblyReference.cache
+D:\Dropbox\MyProjects\RIP\RIP.Business\obj\Debug\RIP.Business.dll
+D:\Dropbox\MyProjects\RIP\RIP.Business\obj\Debug\RIP.Business.pdb

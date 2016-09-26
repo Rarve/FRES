@@ -1,0 +1,14 @@
+D:\MyProjects\FRES\FRES.Web\FRES.Business\bin\Debug\Microsoft.Azure.Documents.ServiceInterop.dll
+D:\MyProjects\FRES\FRES.Web\FRES.Business\bin\Debug\DocumentDB.Spatial.Sql.dll
+D:\MyProjects\FRES\FRES.Web\FRES.Business\bin\Debug\RIP.Business.dll
+D:\MyProjects\FRES\FRES.Web\FRES.Business\bin\Debug\RIP.Business.pdb
+D:\MyProjects\FRES\FRES.Web\FRES.Business\bin\Debug\FRES.Structure.dll
+D:\MyProjects\FRES\FRES.Web\FRES.Business\bin\Debug\RIP.Data.DocumentDB.dll
+D:\MyProjects\FRES\FRES.Web\FRES.Business\bin\Debug\Microsoft.Azure.Documents.Client.dll
+D:\MyProjects\FRES\FRES.Web\FRES.Business\bin\Debug\Newtonsoft.Json.dll
+D:\MyProjects\FRES\FRES.Web\FRES.Business\bin\Debug\FRES.Structure.pdb
+D:\MyProjects\FRES\FRES.Web\FRES.Business\bin\Debug\RIP.Data.DocumentDB.pdb
+D:\MyProjects\FRES\FRES.Web\FRES.Business\bin\Debug\Microsoft.Azure.Documents.Client.xml
+D:\MyProjects\FRES\FRES.Web\FRES.Business\obj\Debug\FRES.Business.csprojResolveAssemblyReference.cache
+D:\MyProjects\FRES\FRES.Web\FRES.Business\obj\Debug\RIP.Business.dll
+D:\MyProjects\FRES\FRES.Web\FRES.Business\obj\Debug\RIP.Business.pdb
