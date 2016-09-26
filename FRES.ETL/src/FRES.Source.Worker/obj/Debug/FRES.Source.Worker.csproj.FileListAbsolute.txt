@@ -84,3 +84,6 @@ D:\MyProjects\FRES\src\FRES.Source.Worker\bin\Debug\Microsoft.Azure.Documents.Cl
 D:\MyProjects\FRES\src\FRES.Source.Worker\obj\Debug\FRES.Source.Worker.csprojResolveAssemblyReference.cache
 D:\MyProjects\FRES\src\FRES.Source.Worker\obj\Debug\FRES.Source.Worker.exe
 D:\MyProjects\FRES\src\FRES.Source.Worker\obj\Debug\FRES.Source.Worker.pdb
+D:\MyProjects\FRES\FRES.ETL\src\FRES.Source.Worker\bin\Debug\FRES.Source.Worker.exe.config
+D:\MyProjects\FRES\FRES.ETL\src\FRES.Source.Worker\obj\Debug\FRES.Source.Worker.exe
+D:\MyProjects\FRES\FRES.ETL\src\FRES.Source.Worker\obj\Debug\FRES.Source.Worker.pdb
