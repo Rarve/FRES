@@ -97,7 +97,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Contracts\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

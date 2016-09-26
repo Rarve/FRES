@@ -1,8 +1,9 @@
 using System.Web.Http;
 using WebActivatorEx;
+using FRES.Web.Host;
 using Swashbuckle.Application;
 
-//[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
+[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
 namespace FRES.Web.Host
 {
