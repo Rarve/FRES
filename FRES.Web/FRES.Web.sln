@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FRES.Data.DocumentDB", "FRES.Data.DocumentDB\FRES.Data.DocumentDB.csproj", "{21D81023-16E5-4D06-8312-ECBA46E1284F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FRES.Business", "FRES.Business\FRES.Business.csproj", "{29F917F6-6A4F-4EE3-8175-02E1E1954D65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FRES.Web.Host", "FRES.Web.Host\FRES.Web.Host.csproj", "{A9DCADE4-EF34-4DAB-A983-A85E037CCE52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FRES.Web", "FRES.Web\FRES.Web.csproj", "{FF19768C-BC2B-436D-A4A2-47558CDD560B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FRES.Structure", "..\FRES.ETL\src\FRES.Structure\FRES.Structure.csproj", "{96F6D461-8A4B-4249-BF88-6D6971E72F37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FRES.Common", "..\FRES.ETL\src\FRES.Common\FRES.Common.csproj", "{DC37F8E1-DB57-415F-8AEF-E57B2080A25E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21D81023-16E5-4D06-8312-ECBA46E1284F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21D81023-16E5-4D06-8312-ECBA46E1284F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21D81023-16E5-4D06-8312-ECBA46E1284F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21D81023-16E5-4D06-8312-ECBA46E1284F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29F917F6-6A4F-4EE3-8175-02E1E1954D65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29F917F6-6A4F-4EE3-8175-02E1E1954D65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29F917F6-6A4F-4EE3-8175-02E1E1954D65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29F917F6-6A4F-4EE3-8175-02E1E1954D65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9DCADE4-EF34-4DAB-A983-A85E037CCE52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9DCADE4-EF34-4DAB-A983-A85E037CCE52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9DCADE4-EF34-4DAB-A983-A85E037CCE52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9DCADE4-EF34-4DAB-A983-A85E037CCE52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF19768C-BC2B-436D-A4A2-47558CDD560B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF19768C-BC2B-436D-A4A2-47558CDD560B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF19768C-BC2B-436D-A4A2-47558CDD560B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF19768C-BC2B-436D-A4A2-47558CDD560B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96F6D461-8A4B-4249-BF88-6D6971E72F37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96F6D461-8A4B-4249-BF88-6D6971E72F37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96F6D461-8A4B-4249-BF88-6D6971E72F37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96F6D461-8A4B-4249-BF88-6D6971E72F37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC37F8E1-DB57-415F-8AEF-E57B2080A25E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC37F8E1-DB57-415F-8AEF-E57B2080A25E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC37F8E1-DB57-415F-8AEF-E57B2080A25E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC37F8E1-DB57-415F-8AEF-E57B2080A25E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
