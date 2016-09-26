@@ -7,3 +7,8 @@ D:\MyProjects\FRES\src\FRES.Structure\bin\Debug\FRES.Structure.pdb
 D:\MyProjects\FRES\src\FRES.Structure\obj\Debug\FRES.Structure.dll
 D:\MyProjects\FRES\src\FRES.Structure\obj\Debug\FRES.Structure.pdb
 D:\MyProjects\FRES\src\FRES.Structure\obj\Debug\FRES.Structure.csprojResolveAssemblyReference.cache
+D:\MyProjects\FRES\FRES.ETL\src\FRES.Structure\bin\Debug\FRES.Structure.dll
+D:\MyProjects\FRES\FRES.ETL\src\FRES.Structure\bin\Debug\FRES.Structure.pdb
+D:\MyProjects\FRES\FRES.ETL\src\FRES.Structure\obj\Debug\FRES.Structure.csprojResolveAssemblyReference.cache
+D:\MyProjects\FRES\FRES.ETL\src\FRES.Structure\obj\Debug\FRES.Structure.dll
+D:\MyProjects\FRES\FRES.ETL\src\FRES.Structure\obj\Debug\FRES.Structure.pdb
