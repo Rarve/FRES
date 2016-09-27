@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FRES.Structure", "..\FRES.E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FRES.Common", "..\FRES.ETL\src\FRES.Common\FRES.Common.csproj", "{DC37F8E1-DB57-415F-8AEF-E57B2080A25E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FRES.Web.UI", "FRES.Web.UI\FRES.Web.UI.csproj", "{8C1DA195-50D3-4801-B9EB-C53E10BD38EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FRES.Web.UI", "FRES.Web.UI\FRES.Web.UI.csproj", "{64CEC90A-3957-4584-8F17-9D868FB13696}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +47,10 @@ Global
 		{DC37F8E1-DB57-415F-8AEF-E57B2080A25E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC37F8E1-DB57-415F-8AEF-E57B2080A25E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC37F8E1-DB57-415F-8AEF-E57B2080A25E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C1DA195-50D3-4801-B9EB-C53E10BD38EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C1DA195-50D3-4801-B9EB-C53E10BD38EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C1DA195-50D3-4801-B9EB-C53E10BD38EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C1DA195-50D3-4801-B9EB-C53E10BD38EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64CEC90A-3957-4584-8F17-9D868FB13696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64CEC90A-3957-4584-8F17-9D868FB13696}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64CEC90A-3957-4584-8F17-9D868FB13696}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64CEC90A-3957-4584-8F17-9D868FB13696}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

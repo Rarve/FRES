@@ -12,8 +12,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FRES.Web.Host</RootNamespace>
-    <AssemblyName>FRES.Web.Host</AssemblyName>
+    <RootNamespace>FRES.Web.Service</RootNamespace>
+    <AssemblyName>FRES.Web.Service</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -120,7 +120,8 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\RealestatesController.cs" />
+    <Compile Include="Contracts\IRealEstateService.cs" />
+    <Compile Include="Controllers\RealEstatesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -143,6 +144,10 @@
       <Project>{96F6D461-8A4B-4249-BF88-6D6971E72F37}</Project>
       <Name>FRES.Structure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FRES.Business\FRES.Business.csproj">
+      <Project>{29f917f6-6a4f-4ee3-8175-02e1e1954d65}</Project>
+      <Name>FRES.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FRES.Web\FRES.Web.csproj">
       <Project>{FF19768C-BC2B-436D-A4A2-47558CDD560B}</Project>
       <Name>FRES.Web</Name>
@@ -164,8 +169,6 @@
           <DevelopmentServerPort>50757</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:50757/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:50757/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

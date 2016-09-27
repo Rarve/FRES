@@ -14,21 +14,21 @@ namespace FRES.Source.E
             try
             {
                 Extractor[] extractors = new Extractor[] {
-                    // new Extract.SCB()
-                    //,new Extract.KTB()
-                    //,new Extract.TNB()
-                    //,new Extract.GSB()
-                    //,new Extract.GHB() 
+                     new Extract.SCB()
+                    ,new Extract.KTB()
+                    ,new Extract.TNB()
+                    ,new Extract.GSB()
+                    //,new Extract.GHB()
                 };
 
                 foreach (var extractor in extractors)
                     extractor.Extract();
 
                 Transformer[] transformers = new Transformer[] {
-                    // new Transform.GSB()
-                    //,new Transform.SCB()
-                    //,new Transform.KTB()
-                    //,new Transform.TNB()
+                     new Transform.SCB()
+                    ,new Transform.KTB()
+                    ,new Transform.TNB()
+                    ,new Transform.GSB()
                 };
 
                 foreach (var transformer in transformers)

@@ -12,12 +12,13 @@ using System.Threading.Tasks;
 namespace FRES.Data.DocumentDB
 {
 
-    public class DocumentUtils
+    public class DocumentDBQuery
     {
         private static readonly string EndPointUrl = ConfigurationManager.AppSettings["EndPointUrl"];
         private static readonly string AuthorizationKey = ConfigurationManager.AppSettings["AuthorizationKey"];
         private static readonly string DatabaseId = ConfigurationManager.AppSettings["DatabaseId"];
         private static readonly string CollectionId = ConfigurationManager.AppSettings["CollectionId"];
+        private static Uri _collectionUri;
         private static DocumentClient _client = null;
         public static DocumentClient Client {
             get
@@ -25,6 +26,7 @@ namespace FRES.Data.DocumentDB
                 if (_client == null)
                 {
                     _client = new DocumentClient(new Uri(EndPointUrl), AuthorizationKey);
+                    _collectionUri = UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId);
                 }
                 return _client;
             }
@@ -33,10 +35,29 @@ namespace FRES.Data.DocumentDB
         public static async Task<List<RealEstateObj>> GetAll()
         {
             var db = await Client.ReadDatabaseAsync(UriFactory.CreateDatabaseUri(DatabaseId));
-            var collectionUri = UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId);
-            var res = Client.CreateDocumentQuery<RealEstateObj>(collectionUri).Take(10).ToList();
+            var res = Client.CreateDocumentQuery<RealEstateObj>(_collectionUri).Take(10).ToList();
             return res;
          }
+
+        public static async Task<List<RealEstateObj>> GetBySource(string source)
+        {
+            var db = await Client.ReadDatabaseAsync(UriFactory.CreateDatabaseUri(DatabaseId));
+            var res = Client.CreateDocumentQuery<RealEstateObj>(_collectionUri).Where(c => c.Source.ToLower() == source.ToLower()).Take(10).ToList();
+            return res;
+        }
+
+        public static async Task<List<RealEstateObj>> GetByQuery(QueryObj query)
+        {
+            var db = await Client.ReadDatabaseAsync(UriFactory.CreateDatabaseUri(DatabaseId));
+            var exp = Client.CreateDocumentQuery<RealEstateObj>(_collectionUri).AsQueryable();
+            
+            exp = string.IsNullOrEmpty(query.Source) ? exp : exp.Where(c => c.Source.ToLower() == query.Source.ToLower());
+            exp = query.PriceMin == 0 ? exp : exp.Where(c => c.Price >= query.PriceMin);
+            exp = query.PriceMax == 0 ? exp : exp.Where(c => c.Price <= query.PriceMax);
+
+            var res = exp.Take(10).ToList();
+            return res;
+        }
 
         private static async Task CreateDocumentCollectionIfNotExists(string databaseName, string collectionName)
         {

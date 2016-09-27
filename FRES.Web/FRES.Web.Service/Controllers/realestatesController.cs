@@ -5,11 +5,24 @@ using Swashbuckle.Swagger.Annotations;
 using FRES.Web;
 using FRES.Structure;
 using FRES.Common;
+using System.Threading.Tasks;
 
 namespace FRES.Web.Host.Controllers
 {
-    public class RealestatesController : RealEstateService
+    public class RealEstatesController : ApiController
     {
+        public async Task<string> GetAll()
+        {
+            var res = await Business.RealEstateBusiness.GetAll();
+            return JsonHelper.Serialize(res);
+        }
+        
+        public async Task<string> Query([FromBody]QueryObj query)
+        {
+            var res = await Business.RealEstateBusiness.GetByQuery(query);
+            return JsonHelper.Serialize(res);
+        }
+
         // GET api/values
         //[SwaggerOperation("GetAll")]
         //public override string GetAll()
@@ -24,7 +37,7 @@ namespace FRES.Web.Host.Controllers
         //[SwaggerOperation("GetById")]
         //[SwaggerResponse(HttpStatusCode.OK)]
         //[SwaggerResponse(HttpStatusCode.NotFound)]
-        //public string Get(int id)
+        //public async Task<string> Get(int id)
         //{
         //    return "value";
         //}

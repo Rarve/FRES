@@ -12,3 +12,4 @@ D:\MyProjects\FRES\FRES.Web\FRES.Business\bin\Debug\Microsoft.Azure.Documents.Cl
 D:\MyProjects\FRES\FRES.Web\FRES.Business\obj\Debug\FRES.Business.csprojResolveAssemblyReference.cache
 D:\MyProjects\FRES\FRES.Web\FRES.Business\obj\Debug\RIP.Business.dll
 D:\MyProjects\FRES\FRES.Web\FRES.Business\obj\Debug\RIP.Business.pdb
+D:\MyProjects\FRES\FRES.Web\FRES.Business\bin\Debug\Newtonsoft.Json.xml
