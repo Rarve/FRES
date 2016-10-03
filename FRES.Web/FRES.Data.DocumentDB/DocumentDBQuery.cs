@@ -35,7 +35,7 @@ namespace FRES.Data.DocumentDB
         public static async Task<List<RealEstateObj>> GetAll()
         {
             var db = await Client.ReadDatabaseAsync(UriFactory.CreateDatabaseUri(DatabaseId));
-            var res = Client.CreateDocumentQuery<RealEstateObj>(_collectionUri).Take(10).ToList();
+            var res = Client.CreateDocumentQuery<RealEstateObj>(_collectionUri).Where(c => c.Source == "SCB").Take(20).ToList();
             return res;
          }
 

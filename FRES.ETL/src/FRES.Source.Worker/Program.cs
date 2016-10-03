@@ -21,8 +21,8 @@ namespace FRES.Source.E
                     //,new Extract.GHB()
                 };
 
-                foreach (var extractor in extractors)
-                    extractor.Extract();
+                //foreach (var extractor in extractors)
+                //    extractor.Extract();
 
                 Transformer[] transformers = new Transformer[] {
                      new Transform.SCB()

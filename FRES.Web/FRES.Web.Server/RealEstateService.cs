@@ -8,6 +8,7 @@ namespace FRES.Web
 {
     public class RealEstateService : Controller, IRealEstateService
     {
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         public async Task<string> GetAll()
         {
             try
@@ -33,7 +34,7 @@ namespace FRES.Web
                 throw;
             }
         }
-
+        
         public async Task<string> Query(QueryObj query)
         {
             try
