@@ -18,13 +18,35 @@ namespace FRES.Data
             return res;
         }
 
-        public static List<SourceObj> GetRealEstateE(string sourceName)
+        //public static List<SourceObj> GetRealEstateE(string sourceName)
+        //{
+        //    var res = new List<SourceObj>();
+
+        //    using (var ctx = new FRESContext())
+        //    {
+        //        res = ctx.RealEstateE.Where(x => x.Source == sourceName).Select(x => new SourceObj() { Data = x.Data, Url = x.Url, RealEstateJson = x.RealEstateJson }).ToList();
+        //    }
+        //    return res;
+        //}
+
+        public static List<SourceObj> GetRealEstateE(string sourceName, int period)
         {
             var res = new List<SourceObj>();
 
             using (var ctx = new FRESContext())
             {
-                res = ctx.RealEstateE.Where(x => x.Source == sourceName).Select(x => new SourceObj() { Data = x.Data, Url = x.Url, RealEstateJson = x.RealEstateJson }).ToList();
+                res = ctx.RealEstateE.Where(x => x.Source == sourceName && x.Period == period).Select(x => new SourceObj() { Data = x.Data, Url = x.Url, RealEstateJson = x.RealEstateJson }).ToList();
+            }
+            return res;
+        }
+
+        public static List<RealEstateT> GetRealEstateT(int period)
+        {
+            var res = new List<RealEstateT>();
+
+            using (var ctx = new FRESContext())
+            {
+                res = ctx.RealEstateT.Where(x => x.Period == period).ToList();
             }
             return res;
         }

@@ -21,3 +21,4 @@ D:\MyProjects\FRES\src\FRES.Source.Map.Worker\bin\Debug\WebDriver.Support.xml
 D:\MyProjects\FRES\src\FRES.Source.Map.Worker\obj\Debug\FRES.Source.Map.Worker.csprojResolveAssemblyReference.cache
 D:\MyProjects\FRES\src\FRES.Source.Map.Worker\obj\Debug\FRES.Source.Map.Worker.exe
 D:\MyProjects\FRES\src\FRES.Source.Map.Worker\obj\Debug\FRES.Source.Map.Worker.pdb
+D:\MyProjects\FRES\FRES.ETL\src\FRES.Source.Map.Worker\obj\Debug\FRES.Source.Map.Worker.csprojResolveAssemblyReference.cache

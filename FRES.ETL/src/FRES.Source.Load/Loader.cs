@@ -20,7 +20,7 @@ namespace FRES.Source.Load
         {
             try
             {
-                var items = DataHelper.GetRealEstateT_NoLocation().Select(x => JsonHelper.Deserialize<RealEstateObj>(x.Data));
+                var items = DataHelper.GetRealEstateT(int.Parse(DateTime.UtcNow.ToString("yyyyMMdd"))).Select(x => JsonHelper.Deserialize<RealEstateObj>(x.Data));
                 this.client = new DocumentClient(new Uri(EndpointUri), PrimaryKey);
                 await this.CreateDatabaseIfNotExists("fresdb");
                 await this.CreateDocumentCollectionIfNotExists("fresdb", "frescollection");

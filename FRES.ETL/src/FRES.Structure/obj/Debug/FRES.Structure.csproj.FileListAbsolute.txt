@@ -15,6 +15,6 @@ D:\MyProjects\FRES\FRES.ETL\src\FRES.Structure\bin\Debug\Microsoft.Azure.Documen
 D:\MyProjects\FRES\FRES.ETL\src\FRES.Structure\bin\Debug\Newtonsoft.Json.dll
 D:\MyProjects\FRES\FRES.ETL\src\FRES.Structure\bin\Debug\Microsoft.Azure.Documents.Client.xml
 D:\MyProjects\FRES\FRES.ETL\src\FRES.Structure\bin\Debug\Newtonsoft.Json.xml
-D:\MyProjects\FRES\FRES.ETL\src\FRES.Structure\obj\Debug\FRES.Structure.csprojResolveAssemblyReference.cache
 D:\MyProjects\FRES\FRES.ETL\src\FRES.Structure\obj\Debug\FRES.Structure.dll
 D:\MyProjects\FRES\FRES.ETL\src\FRES.Structure\obj\Debug\FRES.Structure.pdb
+D:\MyProjects\FRES\FRES.ETL\src\FRES.Structure\obj\Debug\FRES.Structure.csprojResolveAssemblyReference.cache

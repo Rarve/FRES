@@ -1,6 +1,7 @@
 ﻿using FRES.Data;
 using FRES.Source.Map;
 using FRES.Structure;
+using Microsoft.Azure.Documents.Spatial;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -38,12 +39,13 @@ namespace FRES.Source.Map
 
                         if (loc != null && loc.Lat != null && loc.Lon != null)
                         {
-                            jsonObj.Map.Lat = (double)loc.Lat;
-                            jsonObj.Map.Lon = (double)loc.Lon;
+                            //jsonObj.Map.Lat = (double)loc.Lat;
+                            //jsonObj.Map.Lon = (double)loc.Lon;
+                            jsonObj.Map.Coordinate = new Point((double)loc.Lon, (double)loc.Lat);
 
                             item.Data = JsonConvert.SerializeObject(jsonObj, Formatting.Indented);
-                            item.Lat = jsonObj.Map.Lat;
-                            item.Lon = jsonObj.Map.Lon;
+                            item.Lat = (double)loc.Lat;
+                            item.Lon = (double)loc.Lon;
 
                             DataHelper.UpdateRealEstateT_Location(item);
                         }

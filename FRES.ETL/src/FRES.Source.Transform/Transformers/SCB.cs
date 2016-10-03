@@ -2,6 +2,7 @@
 using FRES.Data;
 using FRES.Source.Transform;
 using FRES.Structure;
+using Microsoft.Azure.Documents.Spatial;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -23,7 +24,7 @@ namespace FRES.Source.Transform
 
         public override void Transform()
         {
-            var objs = DataHelper.GetRealEstateE("SCB");
+            var objs = DataHelper.GetRealEstateE("SCB", int.Parse(DateTime.UtcNow.ToString("yyyyMMdd")));
             GetDetails(objs.ToArray());
         }
 
@@ -192,8 +193,9 @@ namespace FRES.Source.Transform
                 if (loc.Contains("พิกัด Latitude(X):"))
                 {
                     var arr = loc.Replace("พิกัด Latitude(X):", string.Empty).Replace("Longitude(Y):", string.Empty).Substring(0, loc.IndexOf("<br>")).Replace("<br>", string.Empty).Trim().Split(',');
-                    re.Map.Lat = double.Parse(arr[0].Trim());
-                    re.Map.Lon = double.Parse(arr[1].Trim());
+                    //re.Map.Lat = double.Parse(arr[0].Trim());
+                    //re.Map.Lon = double.Parse(arr[1].Trim());
+                    re.Map.Coordinate = new Point(double.Parse(arr[1].Trim()), double.Parse(arr[0].Trim()));
                 }
 
                 var mapImg = URL_MAIN + doc.DocumentNode.Descendants("div").Where(x => x.Id == "imagetab").FirstOrDefault().Element("img").GetAttributeValue("src", string.Empty);
@@ -236,8 +238,8 @@ namespace FRES.Source.Transform
                     District = re.Map.District,
                     ParcelNo = JsonHelper.Serialize(re.Map.ParcelNumber),
                     Url = re.Url.Trim(),
-                    Lat = re.Map.Lat,
-                    Lon = re.Map.Lon,
+                    Lat = re.Map.Coordinate.Position.Latitude,
+                    Lon = re.Map.Coordinate.Position.Longitude,
                     State = 0,
                     RecordStatus = 1,
                     Source = "SCB"

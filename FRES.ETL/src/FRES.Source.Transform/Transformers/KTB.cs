@@ -7,6 +7,7 @@ using FRES.Common;
 using FRES.Data;
 using System.Web;
 using FRES.Source.Transform;
+using Microsoft.Azure.Documents.Spatial;
 
 namespace FRES.Source.Transform
 {
@@ -24,7 +25,7 @@ namespace FRES.Source.Transform
 
         public override void Transform()
         {
-            var objs = DataHelper.GetRealEstateE("KTB");
+            var objs = DataHelper.GetRealEstateE("KTB", int.Parse(DateTime.UtcNow.ToString("yyyyMMdd")));
             GetDetails(objs.ToArray());
         }
 
@@ -150,8 +151,9 @@ namespace FRES.Source.Transform
 
                 if (mapObj.poi.Count > 0 && !string.IsNullOrEmpty(mapObj.poi[0].lat) && !string.IsNullOrEmpty(mapObj.poi[0].lon))
                 {
-                    re.Map.Lat = double.Parse(mapObj.poi[0].lat);
-                    re.Map.Lon = double.Parse(mapObj.poi[0].lon);
+                    //re.Map.Lat = double.Parse(mapObj.poi[0].lat);
+                    //re.Map.Lon = double.Parse(mapObj.poi[0].lon);
+                    re.Map.Coordinate = new Point(double.Parse(mapObj.poi[0].lon), double.Parse(mapObj.poi[0].lat));
                 }
                 
                 //var amphur = RegexHelper.GetMatchStr(obj.Data, RegexHelper.REGEX_DISTRICT);
@@ -169,8 +171,8 @@ namespace FRES.Source.Transform
                     District = re.Map.District,
                     ParcelNo = JsonHelper.Serialize(re.Map.ParcelNumber),
                     Url = re.Url.Trim(),
-                    Lat = re.Map.Lat,
-                    Lon = re.Map.Lon,
+                    Lat = re.Map.Coordinate.Position.Latitude,
+                    Lon = re.Map.Coordinate.Position.Longitude,
                     State = 0,
                     RecordStatus = 1,
                     Source = "KTB"

@@ -21,7 +21,7 @@ namespace FRES.Source.Transform
 
         public override void Transform()
         {
-            var objs = DataHelper.GetRealEstateE("GHB");
+            var objs = DataHelper.GetRealEstateE("GHB", int.Parse(DateTime.UtcNow.ToString("yyyyMMdd")));
             GetDetails(objs.ToArray());
 
             //var reObjs = jsons.Select(x => new RealEstateT
@@ -158,8 +158,8 @@ namespace FRES.Source.Transform
                     Province = re.Map.Province,
                     District = re.Map.District,
                     ParcelNo = JsonHelper.Serialize(re.Map.ParcelNumber),
-                    Lat = re.Map.Lat,
-                    Lon = re.Map.Lon,
+                    Lat = re.Map.Coordinate.Position.Latitude,
+                    Lon = re.Map.Coordinate.Position.Longitude,
                     State = 0,
                     RecordStatus = 1,
                     Source = "GHB"
