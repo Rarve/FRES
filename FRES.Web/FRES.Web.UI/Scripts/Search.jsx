@@ -3,7 +3,7 @@ var Images = React.createClass({
     render: function () {
         var images = this.props.images.map(function (image, index) {
             return (
-                <div>{image}</div>
+                <img src={image} />
             );
         });
         return (
@@ -15,20 +15,22 @@ var Images = React.createClass({
 var Product = React.createClass({
     render: function () {
         return (
-        <div>
-            <div>{this.props.product.Code}</div>
-            <div><a href={this.props.product.Url}>{this.props.product.Source}</a></div>
-            <div>{this.props.product.Name}</div>
-            <div>{this.props.product.Price}</div>
-            <div>{this.props.product.SizeTotal}</div>
-            <div>{this.props.product.SizeTotalUnit}</div>
-            <div>{this.props.product.SizeTotalText}</div>
-            <div>{this.props.product.BedRoom}</div>
-            <div>{this.props.product.BathRoom}</div>
-            <div>{this.props.product.Storeys}</div>
-            <div>{this.props.product.ParkingSpace}</div>
-            <div>{this.props.product.Desc}</div>
-            <Images images={this.props.product.Images} />
+        <div className="card">
+            <img src={this.props.product.Images[0]} />
+            <div className="info">
+                <div>{this.props.product.Code}</div>
+                <div><a href={this.props.product.Url}>{this.props.product.Source}</a></div>
+                <div>{this.props.product.Name}</div>
+                <div>{this.props.product.Price}</div>
+                <div>{this.props.product.SizeTotal}</div>
+                <div>{this.props.product.SizeTotalUnit}</div>
+                <div>{this.props.product.SizeTotalText}</div>
+                <div>{this.props.product.BedRoom}</div>
+                <div>{this.props.product.BathRoom}</div>
+                <div>{this.props.product.Storeys}</div>
+                <div>{this.props.product.ParkingSpace}</div>
+                <div>{this.props.product.Desc}</div>
+            </div>
         </div>
     );
     }
@@ -59,7 +61,7 @@ var SearchForm = React.createClass({
     },
     render: function () {
         return (
-         <form className="commentForm" onSubmit={this.handleSubmit}>
+         <form className="searchForm" onSubmit={this.handleSubmit}>
             <input type="text" placeholder="Min Price" ref="priceMin" />
             <input type="text" placeholder="Max Price" ref="priceMax" />
             <input type="submit" value="Post" />
@@ -99,10 +101,10 @@ var SearchBox = React.createClass({
     },
     render: function () {
         return (
-         <form className="searchForm" onSubmit={this.handleSubmit}>
-            <SearchForm onCommentSubmit={this.handleFormSubmit} />
-            <Products products={this.state.data} />
-         </form>
+            <div>
+                <SearchForm onCommentSubmit={this.handleFormSubmit} />
+                <Products products={this.state.data} />
+            </div>
         );
     }
 });
