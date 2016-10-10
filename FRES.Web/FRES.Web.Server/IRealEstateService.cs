@@ -7,7 +7,10 @@ namespace FRES.Web
     public interface IRealEstateService
     {
         [HttpGet]
-        Task<string> GetAll();
+        Task<string> GetAllAsync();
+
+        [HttpGet]
+        string GetAll();
 
         [HttpPost]
         Task<string> GetBySource(string source);

@@ -8,12 +8,25 @@ namespace FRES.Web
 {
     public class RealEstateService : Controller, IRealEstateService
     {
-        [OutputCache(Duration = 86400, VaryByParam = "none")]
-        public async Task<string> GetAll()
+        //[OutputCache(Duration = 86400, VaryByParam = "none")]
+        public async Task<string> GetAllAsync()
         {
             try
             {
                 var res = await Business.RealEstateBusiness.GetAll();
+                return JsonHelper.Serialize(res);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public string GetAll()
+        {
+            try
+            {
+                var res = Business.RealEstateBusiness.GetAll().Result;
                 return JsonHelper.Serialize(res);
             }
             catch (Exception)

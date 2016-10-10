@@ -12,11 +12,12 @@ var Images = React.createClass({
     }
 });
 
+
 var Product = React.createClass({
     render: function () {
         return (
-        <div className="card">
-            <img src={this.props.product.Images[0]} />
+        <div className="col-lg-6 col-xs-6">
+            <div className="card-image"><img src={this.props.product.Images[0] + "a"} /></div>
             <div className="info">
                 <div>{this.props.product.Code}</div>
                 <div><a href={this.props.product.Url}>{this.props.product.Source}</a></div>
@@ -104,6 +105,7 @@ var SearchBox = React.createClass({
             <div>
                 <SearchForm onCommentSubmit={this.handleFormSubmit} />
                 <Products products={this.state.data} />
+                <Card style={{width: '350px' }}></Card>
             </div>
         );
     }
