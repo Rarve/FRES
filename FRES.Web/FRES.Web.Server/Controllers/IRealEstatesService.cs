@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace FRES.Web
+namespace FRES.Web.Server.Controllers
 {
     public interface IRealEstateService
     {
@@ -13,9 +13,15 @@ namespace FRES.Web
         string GetAll();
 
         [HttpPost]
-        Task<string> GetBySource(string source);
+        Task<string> GetBySourceAsync(string source);
 
         [HttpPost]
-        Task<string> Query(QueryObj query);
+        string GetBySource(string source);
+
+        [HttpPost]
+        Task<string> QueryAsync(QueryObj query);
+
+        [HttpPost]
+        string Query(QueryObj query);
     }
 }

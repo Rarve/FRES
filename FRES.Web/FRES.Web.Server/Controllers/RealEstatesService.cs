@@ -4,11 +4,11 @@ using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace FRES.Web
+namespace FRES.Web.Server.Controllers
 {
-    public class RealEstateService : Controller, IRealEstateService
+    public class RealEstatesController : Controller, IRealEstateService
     {
-        //[OutputCache(Duration = 86400, VaryByParam = "none")]
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         public async Task<string> GetAllAsync()
         {
             try
@@ -35,7 +35,7 @@ namespace FRES.Web
             }
         }
 
-        public async Task<string> GetBySource(string source)
+        public async Task<string> GetBySourceAsync(string source)
         {
             try
             {
@@ -47,12 +47,38 @@ namespace FRES.Web
                 throw;
             }
         }
-        
-        public async Task<string> Query(QueryObj query)
+
+        public string GetBySource(string source)
+        {
+            try
+            {
+                var res = Business.RealEstateBusiness.GetBySource(source).Result;
+                return JsonHelper.Serialize(res);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<string> QueryAsync(QueryObj query)
         {
             try
             {
                 var res = await Business.RealEstateBusiness.GetByQuery(query);
+                return JsonHelper.Serialize(res);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public string Query(QueryObj query)
+        {
+            try
+            {
+                var res = Business.RealEstateBusiness.GetByQuery(query).Result;
                 return JsonHelper.Serialize(res);
             }
             catch (Exception)
