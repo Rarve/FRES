@@ -1,0 +1,17 @@
+﻿-- Script Date: 6/5/2017 1:43 PM  - ErikEJ.SqlCeScripting version 3.5.2.64
+SELECT [RealEstateEId]
+      ,[Source]
+      ,[Url]
+      ,[Data]
+      ,[State]
+      ,[Period]
+      ,[RecordStatus]
+      ,[CreatedBy]
+      ,[CreatedDate]
+      ,[ModifiedBy]
+      ,[ModifiedDate]
+      ,[RealEstateJson]
+  FROM [RealEstateE];
+GO
+
+DELETE FROM [RealEstateE]

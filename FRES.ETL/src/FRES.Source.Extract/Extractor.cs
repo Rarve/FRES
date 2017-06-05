@@ -42,7 +42,7 @@ namespace FRES.Source.Extract
             }
             catch (Exception ex)
             {
-                File.AppendAllText("D:/RE/E_" + GetType().Name + ".log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + toProcessItem.Url + "," + ex.GetBaseException().Message + "\r\n");
+                File.AppendAllText("C:/RE/E_" + GetType().Name + ".log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + toProcessItem.Url + "," + ex.GetBaseException().Message + "\r\n");
             }
         }
     }

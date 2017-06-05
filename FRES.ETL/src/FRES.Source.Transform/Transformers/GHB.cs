@@ -158,8 +158,8 @@ namespace FRES.Source.Transform
                     Province = re.Map.Province,
                     District = re.Map.District,
                     ParcelNo = JsonHelper.Serialize(re.Map.ParcelNumber),
-                    Lat = re.Map.Coordinate.Position.Latitude,
-                    Lon = re.Map.Coordinate.Position.Longitude,
+                    Lat = re.Map.Lat,
+                    Lon = re.Map.Lon,
                     State = 0,
                     RecordStatus = 1,
                     Source = "GHB"
@@ -169,7 +169,7 @@ namespace FRES.Source.Transform
             }
             catch (Exception ex)
             {
-                File.AppendAllText("D:/RE/T_GHB.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + obj.Url + "," + ex.GetBaseException().Message + "\r\n");
+                File.AppendAllText("C:/RE/T_GHB.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + obj.Url + "," + ex.GetBaseException().Message + "\r\n");
             }
         }
     }

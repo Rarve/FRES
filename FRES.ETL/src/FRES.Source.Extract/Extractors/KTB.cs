@@ -22,7 +22,7 @@ namespace FRES.Source.Extract
         public override void Extract()
         {
             var total = GetTotalPages(URL_MAIN);
-            GetUrlsFromPages(total).ToArray();
+            GetUrlsFromPages(2).ToArray();
             var toProcessItems = DataHelper.GetRealEstateE_NoHTML(SourceName).ToList();
             GetHtmls(toProcessItems);
         }
@@ -104,7 +104,7 @@ namespace FRES.Source.Extract
             {
                 lock (sync)
                 {
-                    File.AppendAllText("D:/RE/A_" + this.GetType().Name + ".log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + pageUrl + "," + ex.GetBaseException().Message + "\r\n");
+                    File.AppendAllText("C:/RE/A_" + this.GetType().Name + ".log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + pageUrl + "," + ex.GetBaseException().Message + "\r\n");
                 }
             }
             return urls;

@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FRES.Structure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\FRES.Structure.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,10 +49,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\FRES.ETL\src\FRES.Structure\FRES.Structure.csproj">
-      <Project>{96f6d461-8a4b-4249-bf88-6d6971e72f37}</Project>
-      <Name>FRES.Structure</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FRES.Data.DocumentDB\FRES.Data.DocumentDB.csproj">
       <Project>{21D81023-16E5-4D06-8312-ECBA46E1284F}</Project>
       <Name>FRES.Data.DocumentDB</Name>

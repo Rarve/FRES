@@ -5,11 +5,16 @@ namespace FRES.Data
 {
     partial class RealEstateE : SourceObj, IAuditableEntity
     {
-        public int CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public int ModifiedBy { get; set; }
-        public DateTime ModifiedDate { get; set; }
-        public int Period { get; set; }
-        public int RecordStatus { get; set; }
+        int IAuditableEntity.CreatedBy { get; set; }
+
+        DateTime IAuditableEntity.CreatedDate { get; set; }
+
+        int IAuditableEntity.ModifiedBy { get; set; }
+
+        DateTime IAuditableEntity.ModifiedDate { get; set; }
+
+        int IAuditableEntity.Period { get; set; }
+
+        int IAuditableEntity.RecordStatus { get; set; }
     }
 }

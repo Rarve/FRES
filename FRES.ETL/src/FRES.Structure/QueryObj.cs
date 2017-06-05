@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.Documents.Spatial;
+
 namespace FRES.Structure
 {
     public class QueryObj
@@ -8,6 +9,6 @@ namespace FRES.Structure
         public decimal PriceMax { get; set; }
         public decimal Lat { get; set; }
         public decimal Lon { get; set; }
-        public Point Location { get; set; } 
+        public Point Location { get; set; }
     }
 }

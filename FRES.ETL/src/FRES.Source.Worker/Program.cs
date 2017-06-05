@@ -14,15 +14,15 @@ namespace FRES.Source.E
             try
             {
                 Extractor[] extractors = new Extractor[] {
-                     new Extract.SCB()
+                    new Extract.SCB()
                     ,new Extract.KTB()
                     ,new Extract.TNB()
                     ,new Extract.GSB()
                     //,new Extract.GHB()
                 };
 
-                //foreach (var extractor in extractors)
-                //    extractor.Extract();
+                foreach (var extractor in extractors)
+                    extractor.Extract();
 
                 Transformer[] transformers = new Transformer[] {
                      new Transform.SCB()
@@ -34,15 +34,15 @@ namespace FRES.Source.E
                 foreach (var transformer in transformers)
                     transformer.Transform();
 
-                MapRetriever retriever = new MapRetriever();
-                retriever.GetMap();
-                retriever.GetMap();
-                retriever.GetMap();
-                retriever.GetMap();
-                retriever.GetMap();
-                retriever.GetMap();
-                retriever.GetMap();
-                retriever.GetMap();
+                //MapRetriever retriever = new MapRetriever();
+                //retriever.GetMap();
+                //retriever.GetMap();
+                //retriever.GetMap();
+                //retriever.GetMap();
+                //retriever.GetMap();
+                //retriever.GetMap();
+                //retriever.GetMap();
+                //retriever.GetMap();
 
                 var loader = new Loader();
                 //loader.GetStartedDemo().Wait();
@@ -50,7 +50,7 @@ namespace FRES.Source.E
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.GetBaseException().Message);
+                Console.WriteLine(ex.GetBaseException().Message + "\r\n" + ex.StackTrace);
                 Console.ReadKey();
             }
         }

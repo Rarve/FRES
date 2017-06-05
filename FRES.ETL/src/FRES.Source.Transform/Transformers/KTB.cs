@@ -151,9 +151,9 @@ namespace FRES.Source.Transform
 
                 if (mapObj.poi.Count > 0 && !string.IsNullOrEmpty(mapObj.poi[0].lat) && !string.IsNullOrEmpty(mapObj.poi[0].lon))
                 {
-                    //re.Map.Lat = double.Parse(mapObj.poi[0].lat);
-                    //re.Map.Lon = double.Parse(mapObj.poi[0].lon);
-                    re.Map.Coordinate = new Point(double.Parse(mapObj.poi[0].lon), double.Parse(mapObj.poi[0].lat));
+                    re.Map.Lat = double.Parse(mapObj.poi[0].lat);
+                    re.Map.Lon = double.Parse(mapObj.poi[0].lon);
+                    //re.Map.Coordinate = new Point(double.Parse(mapObj.poi[0].lon), double.Parse(mapObj.poi[0].lat));
                 }
                 
                 //var amphur = RegexHelper.GetMatchStr(obj.Data, RegexHelper.REGEX_DISTRICT);
@@ -171,8 +171,8 @@ namespace FRES.Source.Transform
                     District = re.Map.District,
                     ParcelNo = JsonHelper.Serialize(re.Map.ParcelNumber),
                     Url = re.Url.Trim(),
-                    Lat = re.Map.Coordinate.Position.Latitude,
-                    Lon = re.Map.Coordinate.Position.Longitude,
+                    Lat = re.Map.Lat,
+                    Lon = re.Map.Lon,
                     State = 0,
                     RecordStatus = 1,
                     Source = "KTB"
@@ -182,7 +182,7 @@ namespace FRES.Source.Transform
             }
             catch (Exception ex)
             {
-                File.AppendAllText("D:/RE/T_KTB.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + obj.Url + "," + ex.GetBaseException().Message + "\r\n");
+                File.AppendAllText("C:/RE/T_KTB.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + obj.Url + "," + ex.GetBaseException().Message + "\r\n");
             }
         }
     }

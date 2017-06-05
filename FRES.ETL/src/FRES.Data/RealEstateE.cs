@@ -19,6 +19,12 @@ namespace FRES.Data
         public string Url { get; set; }
         public string Data { get; set; }
         public Nullable<int> State { get; set; }
+        public Nullable<int> Period { get; set; }
+        public Nullable<int> RecordStatus { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string RealEstateJson { get; set; }
     }
 }

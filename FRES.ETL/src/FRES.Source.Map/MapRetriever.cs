@@ -39,9 +39,9 @@ namespace FRES.Source.Map
 
                         if (loc != null && loc.Lat != null && loc.Lon != null)
                         {
-                            //jsonObj.Map.Lat = (double)loc.Lat;
-                            //jsonObj.Map.Lon = (double)loc.Lon;
-                            jsonObj.Map.Coordinate = new Point((double)loc.Lon, (double)loc.Lat);
+                            jsonObj.Map.Lat = (double)loc.Lat;
+                            jsonObj.Map.Lon = (double)loc.Lon;
+                            //jsonObj.Map.Coordinate = new Point((double)loc.Lon, (double)loc.Lat);
 
                             item.Data = JsonConvert.SerializeObject(jsonObj, Formatting.Indented);
                             item.Lat = (double)loc.Lat;
@@ -55,7 +55,7 @@ namespace FRES.Source.Map
                 catch (Exception ex)
                 {
                     lock(sync)
-                        File.AppendAllText("D:/RE/M.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + item.Url + "," + ex.GetBaseException().Message + "\r\n");
+                        File.AppendAllText("C:/RE/M.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + item.Url + "," + ex.GetBaseException().Message + "\r\n");
                 }
             }
             );
@@ -172,7 +172,7 @@ namespace FRES.Source.Map
             catch (Exception ex)
             {
                 lock (sync)
-                    File.AppendAllText("D:/RE/M.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + province + "," + district + "," + parcel + "," + urlRe + "," + ex.GetBaseException().Message + "\r\n");
+                    File.AppendAllText("C:/RE/M.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + province + "," + district + "," + parcel + "," + urlRe + "," + ex.GetBaseException().Message + "\r\n");
             }
             finally
             {

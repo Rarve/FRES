@@ -10,10 +10,9 @@ namespace FRES.Data
         public static List<RealEstateE> GetRealEstateE_NoHTML(string sourceName)
         {
             var res = new List<RealEstateE>();
-
             using (var ctx = new FRESContext())
             {
-                res = ctx.RealEstateE.Where(x => x.Source == sourceName && string.IsNullOrEmpty(x.Data)).ToList();
+                res = ctx.RealEstateE.Where(x => x.Source == sourceName && x.Data == null).ToList();
             }
             return res;
         }
@@ -231,6 +230,3 @@ namespace FRES.Data
         }
     }
 }
-
-
-

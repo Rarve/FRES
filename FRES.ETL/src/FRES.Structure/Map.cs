@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Azure.Documents.Spatial;
 
 namespace FRES.Structure
 {
@@ -13,8 +12,10 @@ namespace FRES.Structure
 
         public double Lat { get; set; }
         public double Lon { get; set; }
+
         //public Point Coordinate { get; set; }
         public List<string> Images { get; set; }
+
         public string[] ParcelNumber { get; set; }
         public string Desc { get; set; }
         public string Number { get; set; }

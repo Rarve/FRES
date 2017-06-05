@@ -29,3 +29,12 @@ D:\MyProjects\FRES\FRES.ETL\src\FRES.Common\bin\Debug\RestSharp.xml
 D:\MyProjects\FRES\FRES.ETL\src\FRES.Common\obj\Debug\FRES.Common.dll
 D:\MyProjects\FRES\FRES.ETL\src\FRES.Common\obj\Debug\FRES.Common.pdb
 D:\MyProjects\FRES\FRES.ETL\src\FRES.Common\obj\Debug\FRES.Common.csprojResolveAssemblyReference.cache
+C:\Git\fres\FRES.ETL\src\FRES.Common\bin\Debug\FRES.Common.dll
+C:\Git\fres\FRES.ETL\src\FRES.Common\bin\Debug\FRES.Common.pdb
+C:\Git\fres\FRES.ETL\src\FRES.Common\bin\Debug\HtmlAgilityPack.dll
+C:\Git\fres\FRES.ETL\src\FRES.Common\bin\Debug\Newtonsoft.Json.dll
+C:\Git\fres\FRES.ETL\src\FRES.Common\bin\Debug\HtmlAgilityPack.pdb
+C:\Git\fres\FRES.ETL\src\FRES.Common\bin\Debug\HtmlAgilityPack.xml
+C:\Git\fres\FRES.ETL\src\FRES.Common\bin\Debug\Newtonsoft.Json.xml
+C:\Git\fres\FRES.ETL\src\FRES.Common\obj\Debug\FRES.Common.dll
+C:\Git\fres\FRES.ETL\src\FRES.Common\obj\Debug\FRES.Common.pdb

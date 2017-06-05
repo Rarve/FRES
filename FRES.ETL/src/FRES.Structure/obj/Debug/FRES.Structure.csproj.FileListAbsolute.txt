@@ -19,3 +19,17 @@ D:\MyProjects\FRES\FRES.ETL\src\FRES.Structure\obj\Debug\FRES.Structure.dll
 D:\MyProjects\FRES\FRES.ETL\src\FRES.Structure\obj\Debug\FRES.Structure.pdb
 D:\MyProjects\FRES\FRES.ETL\src\FRES.Structure\bin\Debug\FRES.Structure.dll.config
 D:\MyProjects\FRES\FRES.ETL\src\FRES.Structure\obj\Debug\FRES.Structure.csprojResolveAssemblyReference.cache
+C:\Git\fres\FRES.ETL\src\FRES.Structure\bin\Debug\Microsoft.Azure.Documents.ServiceInterop.dll
+C:\Git\fres\FRES.ETL\src\FRES.Structure\bin\Debug\DocumentDB.Spatial.Sql.dll
+C:\Git\fres\FRES.ETL\src\FRES.Structure\bin\Debug\FRES.Structure.dll.config
+C:\Git\fres\FRES.ETL\src\FRES.Structure\bin\Debug\FRES.Structure.dll
+C:\Git\fres\FRES.ETL\src\FRES.Structure\bin\Debug\FRES.Structure.pdb
+C:\Git\fres\FRES.ETL\src\FRES.Structure\bin\Debug\EntityFramework.dll
+C:\Git\fres\FRES.ETL\src\FRES.Structure\bin\Debug\EntityFramework.SqlServer.dll
+C:\Git\fres\FRES.ETL\src\FRES.Structure\bin\Debug\Microsoft.Azure.Documents.Client.dll
+C:\Git\fres\FRES.ETL\src\FRES.Structure\bin\Debug\EntityFramework.xml
+C:\Git\fres\FRES.ETL\src\FRES.Structure\bin\Debug\EntityFramework.SqlServer.xml
+C:\Git\fres\FRES.ETL\src\FRES.Structure\bin\Debug\Microsoft.Azure.Documents.Client.xml
+C:\Git\fres\FRES.ETL\src\FRES.Structure\obj\Debug\FRES.Structure.csprojResolveAssemblyReference.cache
+C:\Git\fres\FRES.ETL\src\FRES.Structure\obj\Debug\FRES.Structure.dll
+C:\Git\fres\FRES.ETL\src\FRES.Structure\obj\Debug\FRES.Structure.pdb
