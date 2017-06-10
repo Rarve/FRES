@@ -58,7 +58,7 @@ namespace FRES.Source.Extract
                     }
                 ).ToList();
 
-                DataHelper.InsertRealEstateE(res);
+                DataHelper.InsertRealEstateE(res.ToArray());
             }
             catch (Exception ex)
             {

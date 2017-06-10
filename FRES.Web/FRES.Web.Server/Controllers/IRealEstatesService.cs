@@ -1,5 +1,4 @@
-﻿using FRES.Structure;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace FRES.Web.Server.Controllers

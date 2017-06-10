@@ -1,0 +1,40 @@
+v 1.0.0 
+	Released with Angular 2.0 -rc 4;
+
+v 1.1.0 
+	Released with Angular 2.0 final release version from 15.09.2016
+
+v.1.1.01 
+	Readme.txt updated.
+v.1.1.02 
+	Fixed readme.txt inconsistency.
+
+v.1.2.0 
+	Added simple demo service.
+
+v.1.3.0 
+	Moved from TypeScript 1.8 => 2.0
+	Updated NuGet dependencies. 
+	Removed NuGet auto-restoring. [BUG]
+	Readme reworked.
+	Template for app.component moved to the separate file.
+	Css for app.component moved to the separate file.
+
+v.1.3.1
+	Readme.html updated according to the feedbacks.
+
+v.1.4.0
+	Added angular routing.
+	Added webConfig section AngularJS Routes for correctly handling request to SPA.
+
+v.1.4.1
+	Fixed import with extension
+	Fixed studio typescript tool version.
+	Added otherwise routing
+
+v.1.4.2
+	Updated to Angular 2.1.1
+	Dependencies will not longer autoupdated.
+
+v.1.5.0
+	Updated to Angular 4.0.0

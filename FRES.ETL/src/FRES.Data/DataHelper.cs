@@ -36,6 +36,7 @@ namespace FRES.Data
             {
                 res = ctx.RealEstateE.Where(x => x.Source == sourceName && x.Period == period).Select(x => new SourceObj() { Data = x.Data, Url = x.Url, RealEstateJson = x.RealEstateJson }).ToList();
             }
+
             return res;
         }
 
@@ -141,6 +142,15 @@ namespace FRES.Data
         public static int InsertRealEstateT(RealEstateT res)
         {
             var count = 0;
+
+            var now = DateTime.UtcNow;
+            var period = 0;
+            int.TryParse(now.ToString("yyyyMMdd"), out period);
+
+            res.CreatedBy = 1;
+            res.CreatedDate = now;
+            res.Period = period;
+
             using (var ctx = new FRESContext())
             {
                 ctx.RealEstateT.Add(res);
@@ -148,18 +158,29 @@ namespace FRES.Data
                 if (count == 0)
                     throw new Exception("Row affected is 0");
             }
+
             return count;
         }
 
-        public static int InsertRealEstateE(List<RealEstateE> res)
+        public static int InsertRealEstateE(RealEstateE[] res)
         {
             var count = 0;
+            var now = DateTime.UtcNow;
+            var period = 0;
+            int.TryParse(now.ToString("yyyyMMdd"), out period);
+            foreach (var obj in res)
+            {
+                obj.CreatedBy = 1;
+                obj.CreatedDate = now;
+                obj.Period = period;
+            }
+
             using (var ctx = new FRESContext())
             {
                 ctx.RealEstateE.AddRange(res);
                 count = ctx.SaveChanges();
-                if (res.Count != count)
-                    throw new Exception("Row affected is " + count + ", expect " + res.Count);
+                if (res.Length != count)
+                    throw new Exception("Row affected is " + count + ", expect " + res.Length);
             }
             return count;
         }

@@ -25,3 +25,4 @@ C:\Git\fres\FRES.Web\FRES.Data.DocumentDB\bin\Debug\Microsoft.Azure.Documents.Cl
 C:\Git\fres\FRES.Web\FRES.Data.DocumentDB\bin\Debug\Newtonsoft.Json.xml
 C:\Git\fres\FRES.Web\FRES.Data.DocumentDB\obj\Debug\RIP.Data.DocumentDB.dll
 C:\Git\fres\FRES.Web\FRES.Data.DocumentDB\obj\Debug\RIP.Data.DocumentDB.pdb
+C:\Git\fres\FRES.Web\FRES.Data.DocumentDB\obj\Debug\FRES.Data.DocumentDB.csprojResolveAssemblyReference.cache

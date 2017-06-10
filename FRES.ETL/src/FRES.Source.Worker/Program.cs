@@ -13,26 +13,26 @@ namespace FRES.Source.E
         {
             try
             {
-                Extractor[] extractors = new Extractor[] {
-                    new Extract.SCB()
-                    ,new Extract.KTB()
-                    ,new Extract.TNB()
-                    ,new Extract.GSB()
-                    //,new Extract.GHB()
-                };
+                //Extractor[] extractors = new Extractor[] {
+                //    new Extract.SCB()
+                //    ,new Extract.KTB()
+                //    ,new Extract.TNB()
+                //    ,new Extract.GSB()
+                //    //,new Extract.GHB()
+                //};
 
-                foreach (var extractor in extractors)
-                    extractor.Extract();
+                //foreach (var extractor in extractors)
+                //    extractor.Extract();
 
-                Transformer[] transformers = new Transformer[] {
-                     new Transform.SCB()
-                    ,new Transform.KTB()
-                    ,new Transform.TNB()
-                    ,new Transform.GSB()
-                };
+                //Transformer[] transformers = new Transformer[] {
+                //    new Transform.SCB()
+                //    ,new Transform.KTB()
+                //    ,new Transform.TNB()
+                //    ,new Transform.GSB()
+                //};
 
-                foreach (var transformer in transformers)
-                    transformer.Transform();
+                //foreach (var transformer in transformers)
+                //    transformer.Transform();
 
                 //MapRetriever retriever = new MapRetriever();
                 //retriever.GetMap();
@@ -45,7 +45,7 @@ namespace FRES.Source.E
                 //retriever.GetMap();
 
                 var loader = new Loader();
-                //loader.GetStartedDemo().Wait();
+                loader.GetStartedDemo().Wait();
                 
             }
             catch (Exception ex)

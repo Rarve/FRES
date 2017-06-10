@@ -1,17 +1,14 @@
-﻿using FRES.Structure;
-using Microsoft.Azure.Documents;
+﻿using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FRES.Data.DocumentDB
 {
-
     public class DocumentDBQuery
     {
         private static readonly string EndPointUrl = ConfigurationManager.AppSettings["EndPointUrl"];
@@ -20,7 +17,9 @@ namespace FRES.Data.DocumentDB
         private static readonly string CollectionId = ConfigurationManager.AppSettings["CollectionId"];
         private static Uri _collectionUri;
         private static DocumentClient _client = null;
-        public static DocumentClient Client {
+
+        public static DocumentClient Client
+        {
             get
             {
                 if (_client == null)
@@ -32,12 +31,12 @@ namespace FRES.Data.DocumentDB
             }
         }
 
-        public static async Task<List<RealEstateObj>> GetAll()
+        public static async Task<List<RealEstate>> GetAll()
         {
             var db = await Client.ReadDatabaseAsync(UriFactory.CreateDatabaseUri(DatabaseId));
             var res = Client.CreateDocumentQuery<RealEstateObj>(_collectionUri).Where(c => c.Source == "SCB").Take(20).ToList();
             return res;
-         }
+        }
 
         public static async Task<List<RealEstateObj>> GetBySource(string source)
         {
@@ -50,7 +49,7 @@ namespace FRES.Data.DocumentDB
         {
             var db = await Client.ReadDatabaseAsync(UriFactory.CreateDatabaseUri(DatabaseId));
             var exp = Client.CreateDocumentQuery<RealEstateObj>(_collectionUri).AsQueryable();
-            
+
             exp = string.IsNullOrEmpty(query.Source) ? exp : exp.Where(c => c.Source.ToLower() == query.Source.ToLower());
             exp = query.PriceMin == 0 ? exp : exp.Where(c => c.Price >= query.PriceMin);
             exp = query.PriceMax == 0 ? exp : exp.Where(c => c.Price <= query.PriceMax);

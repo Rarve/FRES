@@ -38,3 +38,4 @@ C:\Git\fres\FRES.ETL\src\FRES.Common\bin\Debug\HtmlAgilityPack.xml
 C:\Git\fres\FRES.ETL\src\FRES.Common\bin\Debug\Newtonsoft.Json.xml
 C:\Git\fres\FRES.ETL\src\FRES.Common\obj\Debug\FRES.Common.dll
 C:\Git\fres\FRES.ETL\src\FRES.Common\obj\Debug\FRES.Common.pdb
+C:\Git\fres\FRES.ETL\src\FRES.Common\obj\Debug\FRES.Common.csprojResolveAssemblyReference.cache

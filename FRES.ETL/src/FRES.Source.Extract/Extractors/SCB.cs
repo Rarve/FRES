@@ -23,7 +23,7 @@ namespace FRES.Source.Extract
         public override void Extract()
         {
             var total = GetTotalPages(URL_MAIN + URL_PAGE + "1");
-            GetUrlsFromPages(total).ToArray();
+            GetUrlsFromPages(2).ToArray();
             var toProcessItems = DataHelper.GetRealEstateE_NoHTML(SourceName).ToList();
             GetHtmls(toProcessItems);
         }
@@ -76,11 +76,11 @@ namespace FRES.Source.Extract
                         State = 0,
                         RecordStatus = 1,
                         Source = SourceName,
-                        RealEstateJson = json.Serialize(true)
+                        RealEstateJson = json.Serialize(true),
                     });
                 }
 
-                DataHelper.InsertRealEstateE(res);
+                DataHelper.InsertRealEstateE(res.ToArray());
             }
             catch (Exception ex)
             {

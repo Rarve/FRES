@@ -1,0 +1,26 @@
+
+<h1>List</h1>
+<p *ngIf="!res">
+    <em>Loading...</em>
+</p>
+<div className="col-lg-6 col-xs-6" *ngFor="let re of res">
+    <!--<div className="card-image"><img src="{{re.images[0]}}" /></div>-->
+    <div className="info">
+        <div>{{re.code}}</div>
+        <div>
+            <a href={{re.url}}>{{re.source}}</a>
+        </div>
+        <div>{{re.name}}</div>
+        <div>{{re.price}}</div>
+        <div>{{re.sizeTotal}}</div>
+        <div>{{re.sizeTotalUnit}}</div>
+        <div>{{re.sizeTotalText}}</div>
+        <div>{{re.b
+        <div>{{re.bedRoom}}</div>
+        <div>{{re.bathRoom}}</div>
+        <div>{{re.storeys}}</div>
+        <div>{{re.parkingSpace}}</div>
+        <div>{{re.desc}}</div>
+    </div>
+</div>
+

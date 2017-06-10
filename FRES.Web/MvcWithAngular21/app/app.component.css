@@ -1,0 +1,17 @@
+﻿h1 {
+    text-align:center;
+}
+
+h1:first-letter {
+    color: red;
+}
+
+nav {
+    text-align:center;
+}
+
+    nav > a {
+        font-size:24px;
+        padding:16px;
+    }
+

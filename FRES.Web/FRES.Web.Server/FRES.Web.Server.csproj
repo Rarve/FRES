@@ -108,10 +108,6 @@
       <Project>{DC37F8E1-DB57-415F-8AEF-E57B2080A25E}</Project>
       <Name>FRES.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\FRES.ETL\src\FRES.Structure\FRES.Structure.csproj">
-      <Project>{96f6d461-8a4b-4249-bf88-6d6971e72f37}</Project>
-      <Name>FRES.Structure</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FRES.Business\FRES.Business.csproj">
       <Project>{29f917f6-6a4f-4ee3-8175-02e1e1954d65}</Project>
       <Name>FRES.Business</Name>

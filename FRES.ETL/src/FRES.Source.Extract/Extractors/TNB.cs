@@ -25,7 +25,7 @@ namespace FRES.Source.Extract
         public override void Extract()
         {
             var total = GetTotalPages(URL_TOTALPAGE);
-            GetUrlsFromPages(total).ToArray();
+            GetUrlsFromPages(2).ToArray();
             var toProcessItems = DataHelper.GetRealEstateE_NoHTML(SourceName).ToList();
             GetHtmls(toProcessItems);
         }
@@ -101,7 +101,7 @@ namespace FRES.Source.Extract
                     });
                 }
 
-                DataHelper.InsertRealEstateE(res);
+                DataHelper.InsertRealEstateE(res.ToArray());
             }
             catch (Exception ex)
             {

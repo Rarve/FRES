@@ -13,7 +13,6 @@ D:\MyProjects\FRES\FRES.Web\FRES.Business\obj\Debug\FRES.Business.csprojResolveA
 D:\MyProjects\FRES\FRES.Web\FRES.Business\obj\Debug\RIP.Business.dll
 D:\MyProjects\FRES\FRES.Web\FRES.Business\obj\Debug\RIP.Business.pdb
 D:\MyProjects\FRES\FRES.Web\FRES.Business\bin\Debug\RIP.Business.dll.config
-C:\Git\fres\FRES.Web\FRES.Business\obj\Debug\FRES.Business.csprojResolveAssemblyReference.cache
 C:\Git\fres\FRES.Web\FRES.Business\bin\Debug\Microsoft.Azure.Documents.ServiceInterop.dll
 C:\Git\fres\FRES.Web\FRES.Business\bin\Debug\DocumentDB.Spatial.Sql.dll
 C:\Git\fres\FRES.Web\FRES.Business\bin\Debug\RIP.Business.dll.config
@@ -25,5 +24,6 @@ C:\Git\fres\FRES.Web\FRES.Business\bin\Debug\Microsoft.Azure.Documents.Client.dl
 C:\Git\fres\FRES.Web\FRES.Business\bin\Debug\Newtonsoft.Json.dll
 C:\Git\fres\FRES.Web\FRES.Business\bin\Debug\RIP.Data.DocumentDB.pdb
 C:\Git\fres\FRES.Web\FRES.Business\bin\Debug\Microsoft.Azure.Documents.Client.xml
+C:\Git\fres\FRES.Web\FRES.Business\obj\Debug\FRES.Business.csprojResolveAssemblyReference.cache
 C:\Git\fres\FRES.Web\FRES.Business\obj\Debug\RIP.Business.dll
 C:\Git\fres\FRES.Web\FRES.Business\obj\Debug\RIP.Business.pdb

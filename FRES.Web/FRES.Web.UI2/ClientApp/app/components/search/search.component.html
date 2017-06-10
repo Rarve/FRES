@@ -1,0 +1,130 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="https://use.fontawesome.com/9972af634f.js"></script>
+<style>.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}</style>
+<form #form="ngForm" (ngSubmit)="submit(form.value)" class="form-group row">
+    <div class="col-xs-2">
+        <input type="text" name="PriceMin" ngModel id="PriceMin" placeholder="Min" class="form-control">
+    </div>
+    <div class="col-xs-2">
+        <input type="text" name="PriceMax" ngModel id="PriceMax" placeholder="Max" class="form-control">
+    </div>
+    <div class="col-xs-2">
+        <input type="text" name="Source" ngModel class="form-control" id="Source" placeholder="Source">
+    </div>
+    <!--<div class="col-xs-2">
+        <input type="text" name="Lat" ngModel class="form-control" id="priceMin" placeholder="Lat">
+    </div>
+    <div class="col-xs-2">
+        <input type="text" name="Lon" ngModel class="form-control" id="priceMin" placeholder="Lon">
+    </div>-->
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<div class="col-xs-12 col-lg-6 nopadding" style="border: 1px solid #f1e5e5; margin: 0px 0px -1px -1px;" *ngFor="let re of res; let i = index" [attr.data-index]="i">
+    <div class="w3-display-container">
+        <img src="{{re.images[0]}}" class="img-responsive" style="height:300px;" />
+        <!--<a href={{re.url}}>{{re.source}}</a>-->
+    </div>
+    <div style="height:115px; padding: 15px; margin-top: 5px; border-top: 1px solid #f1e5e5;">
+        <p>&#3647;{{re.price}}</p>
+        <p>{{re.name}}</p>
+        
+        <div>{{re.sizeTotal/4}} sq.m.</div>
+        <!--<div>{{re.code}}</div>
+        <div>{{re.sizeTotalUnit}}</div>
+        <div>{{re.sizeTotalText}}</div>
+        <div>{{re.bedRoom}}</div>
+        <div>{{re.  bathRoom}}</div>
+        <div>{{re.storeys}}</div>
+        <div>{{re.parkingSpace}}</div>
+        <div>{{re.desc}}</div>-->
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<pre>
+{{form.value | json}}
+    </pre>
+
+<pre>
+{{res | json}}
+    </pre>
+<h4>Submitted</h4>
+<pre>
+{{value | json }}
+    </pre>-->

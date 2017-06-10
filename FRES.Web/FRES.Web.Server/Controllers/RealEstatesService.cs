@@ -1,5 +1,4 @@
 ﻿using FRES.Common;
-using FRES.Structure;
 using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;

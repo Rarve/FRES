@@ -16,25 +16,22 @@ namespace FRES.Data
               .Where(p => p.State == EntityState.Modified)
               .Select(p => p.Entity).ToList();
 
-            var asdf = ChangeTracker.Entries<IAuditableEntity>()
-              .Select(p => p.Entity).ToList();
-
             var now = DateTime.UtcNow;
             var period = 0;
             int.TryParse(now.ToString("yyyyMMdd"), out period);
 
-            foreach (var added in addedAuditedEntities)
+            for (int i = 0; i < addedAuditedEntities.Count; i++)
             {
-                added.CreatedBy = 1;
-                added.CreatedDate = now;
-                added.Period = period;
+                addedAuditedEntities[i].CreatedBy = 1;
+                addedAuditedEntities[i].CreatedDate = now;
+                addedAuditedEntities[i].Period = period;
             }
 
-            foreach (var modified in modifiedAuditedEntities)
+            for (int i = 0; i < modifiedAuditedEntities.Count; i++)
             {
-                modified.ModifiedBy = 1;
-                modified.ModifiedDate = now;
-                modified.Period = period;
+                modifiedAuditedEntities[i].ModifiedBy = 1;
+                modifiedAuditedEntities[i].ModifiedDate = now;
+                modifiedAuditedEntities[i].Period = period;
             }
 
             return base.SaveChanges();
