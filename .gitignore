@@ -7,16 +7,17 @@
 *.sln.docstates
 
 # Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-build/
-bld/
-[Bb]in/
-[Oo]bj/
+*/[Dd]ebug/
+*/[Dd]ebugPublic/
+*/[Rr]elease/
+*/[Rr]eleases/
+*/x64/
+*/x86/
+*/build/
+*/bld/
+*/[Bb]in/
+*/[Oo]bj/
+*/wwwroot/Images/Properties/
 
 # Roslyn cache directories
 *.ide/
