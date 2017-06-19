@@ -18,6 +18,7 @@
 */[Bb]in/
 */[Oo]bj/
 */wwwroot/Images/Properties/
+/FRES.ETL/src/FRES.Data/Images/Properties/
 
 # Roslyn cache directories
 *.ide/
