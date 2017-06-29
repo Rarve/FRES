@@ -15,7 +15,7 @@ namespace FRES.Source.Transform
     public class SCB : Transformer
     {
         private const string URL_MAIN = "http://www.buyatsiam.com/";
-        private const int PARALLELISM_DEGREE = 100;
+        private const int PARALLELISM_DEGREE = 5;
 
         public SCB()
         {
@@ -70,7 +70,7 @@ namespace FRES.Source.Transform
                 re.Icon = URL_MAIN + doc.DocumentNode.Descendants("p")
                             .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("Thumb-s"))
                             .FirstOrDefault().ChildNodes["img"].GetAttributeValue("src", string.Empty);
-                
+
                 var html = doc.DocumentNode.Descendants("div").Where(x => x.Id == "Lname").FirstOrDefault().ParentNode.ParentNode.InnerHtml;
                 html = WebUtility.HtmlDecode(html);
                 var titleDetails = RegexHelper.SplitTag(html);
@@ -105,7 +105,7 @@ namespace FRES.Source.Transform
 
                 if (titleDetails.Length > 3)
                 {
-                    re.BedRooom = titleDetails[2];
+                    re.BedRoom = titleDetails[2];
                     re.BathRoom = titleDetails[4];
                     re.ParkingSpace = titleDetails[6];
                     re.Price = titleDetails[8].GetMatchStr(RegexHelper.REGEX_MONEY).FirstOrDefault().ToDecimal();
@@ -160,7 +160,7 @@ namespace FRES.Source.Transform
                 {
                     parcels = details.ContainsKey("อื่นๆเลขที่:") ? RegexHelper.GetMatchStr(details["อื่นๆเลขที่:"], RegexHelper.REGEX_NUMBER).ToArray() : new string[] { };
                 }
-                
+
                 if (parcels.Count() > 0)
                 {
                     re.Map.ParcelNumber = parcels.Select(x => x.Trim()).ToArray();
@@ -168,7 +168,7 @@ namespace FRES.Source.Transform
 
                 //details.Add("price", RegexHelper.StripHTML(price));                
                 //re.Details = details;
-                
+
                 var gallery = doc.DocumentNode.Descendants("ul").Where(x => x.Id == "imageGallery").FirstOrDefault();
 
                 if (gallery != null)
@@ -178,11 +178,11 @@ namespace FRES.Source.Transform
                                 .GetAttributeValue("src", string.Empty)).Where(x => !x.Contains("M0")).ToList();
                 }
 
-                var contact = new Contact();                
+                var contact = new Contact();
                 var contactStr = doc.DocumentNode.Descendants("div")
                             .Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("C_label")).FirstOrDefault()
                             .Element("div").InnerHtml.Trim();
-                var contactTells = RegexHelper.GetMatchStr(contactStr, RegexHelper.REGEX_TELL_NO);                
+                var contactTells = RegexHelper.GetMatchStr(contactStr, RegexHelper.REGEX_TELL_NO);
                 contact.TellNo = contactTells.ToList<string>();
                 contact.Name = details.ContainsKey("สอบถามรายละเอียด:") ? details["สอบถามรายละเอียด:"].CleanNewLine() : string.Empty;
                 re.Contacts.Add(contact);
@@ -201,7 +201,7 @@ namespace FRES.Source.Transform
                 var mapImg = URL_MAIN + doc.DocumentNode.Descendants("div").Where(x => x.Id == "imagetab").FirstOrDefault().Element("img").GetAttributeValue("src", string.Empty);
 
                 re.Map.Images.Add(mapImg);
-                
+
                 var province = RegexHelper.GetMatchStr(details["ที่ตั้งทรัพย์:"], RegexHelper.REGEX_PROVINCE);
                 var district = RegexHelper.GetMatchStr(details["ที่ตั้งทรัพย์:"], RegexHelper.REGEX_DISTRICT);
                 var subProvince = RegexHelper.GetMatchStr(details["ที่ตั้งทรัพย์:"], RegexHelper.REGEX_SUB_DISTRICT);
@@ -231,6 +231,8 @@ namespace FRES.Source.Transform
                 if (lane.Count > 0)
                     re.Map.Lane = lane[0].Replace("ซอย", string.Empty).Trim();
 
+                re = DataHelper.DownloadImage(re);
+
                 var t = new RealEstateT
                 {
                     Data = JsonHelper.Serialize(re, true),
@@ -249,8 +251,12 @@ namespace FRES.Source.Transform
             }
             catch (Exception ex)
             {
-                File.AppendAllText("C:/RE/T_SCB.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + obj.Url + "," + ex.GetBaseException().Message + "\r\n");
+                lock (sync)
+                {
+                    File.AppendAllText("C:/RE/T_SCB.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + obj.Url + "," + ex.GetBaseException().Message + "\r\n");
+                }
             }
         }
+        public static object sync = new object();
     }
 }

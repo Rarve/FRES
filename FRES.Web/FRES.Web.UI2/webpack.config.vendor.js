@@ -32,6 +32,9 @@ module.exports = {
             'es6-promise',
             'jquery',
             'zone.js',
+            'w3-css/w3.css',
+            'font-awesome/css/font-awesome.css',
+            '@ngui/map',
         ]
     },
     output: {

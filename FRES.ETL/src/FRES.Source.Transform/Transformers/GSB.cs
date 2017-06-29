@@ -12,8 +12,8 @@ namespace FRES.Source.Transform
 {
     public class GSB : Transformer
     {
-        private const string URL_MAIN = "http://www.thanachartnpa.com/";
-        private const int PARALLELISM_DEGREE = 1;
+        private const string URL_MAIN = "http://properties.gsb.or.th";
+        private const int PARALLELISM_DEGREE = 5;
 
         public GSB()
         {
@@ -67,8 +67,9 @@ namespace FRES.Source.Transform
                 var info = html.SplitTag();
 
                 re.IsSoldOut = info[7] != "รอการขาย";
-                re.Map.ParcelNumber = info[11].SplitRemoveEmpty(" ");
+                re.Map.ParcelNumber = info[11].Replace("โฉนดที่ดิน", "").Replace(",", "").SplitRemoveEmpty(" ");
                 re.Desc = info[24].StripHTML();
+                re.PropertyType = info[9];
 
                 var province = info[20].GetMatchStr(RegexHelper.REGEX_PROVINCE);
                 var district = info[20].GetMatchStr(RegexHelper.REGEX_DISTRICT);
@@ -105,14 +106,16 @@ namespace FRES.Source.Transform
 
                 if (imageRows.Count > 0)
                 {
-                    var images = imageRows[1].InnerHtml.GetMatchStr(@"(\/upload\/properties\/)[a-zA-z0-9/-]{5,25}.(jpg|JPG)").Distinct().ToList();
+                    var images = imageRows[1].InnerHtml.GetMatchStr(@"(\/upload\/properties\/)[a-zA-z0-9/-]{5,100}.(jpg|JPG)").Distinct().Select(x => URL_MAIN + x).ToList();
                     re.Images = images;
                 }
                 if (imageRows.Count > 1)
                 {
-                    var maps = imageRows[2].InnerHtml.GetMatchStr(@"(\/upload\/properties\/)[a-zA-z0-9/-]{5,25}.(jpg|JPG)").Distinct().ToList();
+                    var maps = imageRows[2].InnerHtml.GetMatchStr(@"(\/upload\/properties\/)[a-zA-z0-9/-]{5,100}.(jpg|JPG)").Distinct().Select(x => URL_MAIN + x).ToList();
                     re.Map.Images = maps;
                 }
+
+                re = DataHelper.DownloadImage(re);
 
                 var t = new RealEstateT
                 {
@@ -128,7 +131,7 @@ namespace FRES.Source.Transform
                     Source = this.GetType().Name
                 };
 
-                DataHelper.InsertRealEstateT(t);
+                //DataHelper.InsertRealEstateT(t);
             }
             catch (Exception ex)
             {

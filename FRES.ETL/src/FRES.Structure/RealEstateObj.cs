@@ -19,7 +19,7 @@ namespace FRES.Structure
         public string SizeTotal { get; set; }
         public string SizeTotalUnit { get; set; }
         public string SizeTotalText { get; set; }
-        public string BedRooom { get; set; }
+        public string BedRoom { get; set; }
         public string BathRoom { get; set; }
         public string Storeys { get; set; }
         public string ParkingSpace { get; set; }

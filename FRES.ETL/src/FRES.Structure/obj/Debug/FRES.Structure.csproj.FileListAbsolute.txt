@@ -33,3 +33,4 @@ C:\Git\fres\FRES.ETL\src\FRES.Structure\bin\Debug\Microsoft.Azure.Documents.Clie
 C:\Git\fres\FRES.ETL\src\FRES.Structure\obj\Debug\FRES.Structure.csprojResolveAssemblyReference.cache
 C:\Git\fres\FRES.ETL\src\FRES.Structure\obj\Debug\FRES.Structure.dll
 C:\Git\fres\FRES.ETL\src\FRES.Structure\obj\Debug\FRES.Structure.pdb
+C:\Git\fres\FRES.ETL\src\FRES.Structure\bin\Debug\Newtonsoft.Json.dll

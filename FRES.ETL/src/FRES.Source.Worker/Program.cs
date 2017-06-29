@@ -13,13 +13,13 @@ namespace FRES.Source.E
         {
             try
             {
-                //Extractor[] extractors = new Extractor[] {
-                //    new Extract.SCB()
-                //    ,new Extract.KTB()
-                //    ,new Extract.TNB()
-                //    ,new Extract.GSB()
-                //    //,new Extract.GHB()
-                //};
+                Extractor[] extractors = new Extractor[] {
+                    //new Extract.SCB()
+                    //,new Extract.KTB()
+                    //,new Extract.TNB()
+                    //,new Extract.GSB()
+                    //,new Extract.GHB()
+                };
 
                 //foreach (var extractor in extractors)
                 //    extractor.Extract();
@@ -29,24 +29,27 @@ namespace FRES.Source.E
                 //    ,new Transform.KTB()
                 //    ,new Transform.TNB()
                 //    ,new Transform.GSB()
+                //    ,new Transform.GHB()
                 //};
 
                 //foreach (var transformer in transformers)
                 //    transformer.Transform();
 
-                //MapRetriever retriever = new MapRetriever();
-                //retriever.GetMap();
-                //retriever.GetMap();
-                //retriever.GetMap();
-                //retriever.GetMap();
-                //retriever.GetMap();
-                //retriever.GetMap();
-                //retriever.GetMap();
-                //retriever.GetMap();
+                //var blob = new Load.Blob();
+                //blob.UploadImage();
 
-                var loader = new Loader();
-                loader.GetStartedDemo().Wait();
-                
+                MapRetriever retriever = new MapRetriever();
+                retriever.GetMap();
+                retriever.GetMap();
+                retriever.GetMap();
+                retriever.GetMap();
+                retriever.GetMap();
+                retriever.GetMap();
+                retriever.GetMap();
+                retriever.GetMap();
+
+                //var loader = new Loader();
+                //loader.Load().Wait();
             }
             catch (Exception ex)
             {

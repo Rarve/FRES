@@ -15,19 +15,22 @@ namespace FRES.Source.Load
         private const string EndpointUri = "https://fresdocumentdb.documents.azure.com:443/";
         private const string PrimaryKey = "JyJIGLvVXWnyZlT10tbjE35UjuVS71zPdyNQvGBis2kJLj9ysTTkbM6Rn5a5OrlwZYP4BbKXfdhIXZAnerNtVg==";
         private DocumentClient client;
-        
-        public async Task GetStartedDemo()
+        private const string databaseName = "fresdb";
+        private const string collectionName = "frescollection";
+
+        public async Task Load()
         {
             try
             {
                 var items = DataHelper.GetRealEstateT(int.Parse(DateTime.UtcNow.ToString("yyyyMMdd"))).Select(x => JsonHelper.Deserialize<RealEstateObj>(x.Data));
                 this.client = new DocumentClient(new Uri(EndpointUri), PrimaryKey);
-                await this.CreateDatabaseIfNotExists("fresdb");
-                await this.CreateDocumentCollectionIfNotExists("fresdb", "frescollection");
+                await this.CreateDatabaseIfNotExists(databaseName);
+                await this.client.DeleteDocumentCollectionAsync(UriFactory.CreateDocumentCollectionUri(databaseName, collectionName));
+                await this.CreateDocumentCollectionIfNotExists(databaseName, collectionName);
 
                 foreach (var item in items)
                 {
-                    await this.CreateRealEstate("fresdb", "frescollection", item);
+                    await this.CreateRealEstate(databaseName, collectionName, item);
                 }
             }
             catch (DocumentClientException de)
@@ -96,11 +99,7 @@ namespace FRES.Source.Load
                     collectionInfo.IndexingPolicy = new IndexingPolicy(new RangeIndex(DataType.String) { Precision = -1 });
 
                     // Here we create a collection with 400 RU/s.
-                    await this.client.CreateDocumentCollectionAsync(
-                        UriFactory.CreateDatabaseUri(databaseName),
-                        collectionInfo,
-                        new RequestOptions { OfferThroughput = 400 });
-
+                    await this.client.CreateDocumentCollectionAsync(UriFactory.CreateDatabaseUri(databaseName),collectionInfo,new RequestOptions { OfferThroughput = 400 });
                     this.WriteToConsoleAndPromptToContinue("Created {0}", collectionName);
                 }
                 else

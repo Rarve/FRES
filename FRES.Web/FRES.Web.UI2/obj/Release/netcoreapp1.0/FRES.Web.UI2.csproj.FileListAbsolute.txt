@@ -1,0 +1,9 @@
+C:\Git\fres\FRES.Web\FRES.Web.UI2\bin\Release\netcoreapp1.0\FRES.Web.UI2.deps.json
+C:\Git\fres\FRES.Web\FRES.Web.UI2\bin\Release\netcoreapp1.0\FRES.Web.UI2.runtimeconfig.json
+C:\Git\fres\FRES.Web\FRES.Web.UI2\bin\Release\netcoreapp1.0\FRES.Web.UI2.runtimeconfig.dev.json
+C:\Git\fres\FRES.Web\FRES.Web.UI2\bin\Release\netcoreapp1.0\FRES.Web.UI2.dll
+C:\Git\fres\FRES.Web\FRES.Web.UI2\bin\Release\netcoreapp1.0\FRES.Web.UI2.pdb
+C:\Git\fres\FRES.Web\FRES.Web.UI2\obj\Release\netcoreapp1.0\FRES.Web.UI2.csprojResolveAssemblyReference.cache
+C:\Git\fres\FRES.Web\FRES.Web.UI2\obj\Release\netcoreapp1.0\FRES.Web.UI2.AssemblyInfo.cs
+C:\Git\fres\FRES.Web\FRES.Web.UI2\obj\Release\netcoreapp1.0\FRES.Web.UI2.dll
+C:\Git\fres\FRES.Web\FRES.Web.UI2\obj\Release\netcoreapp1.0\FRES.Web.UI2.pdb

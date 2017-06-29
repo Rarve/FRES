@@ -16,15 +16,15 @@ namespace FRES.Source.Map
 {
     public class MapRetriever
     {
-        public static int TIMEOUT = 3;
-        public const int DELAY = 100;
+        public static int TIMEOUT = 240;
+        public const int DELAY = 1000;
 
         public object sync = new object();
         public void GetMap()
         {
             var items = DataHelper.GetRealEstateT_NoLocation().ToList();
 
-            Parallel.ForEach(items, new ParallelOptions { MaxDegreeOfParallelism = 5 }, item =>
+            Parallel.ForEach(items, new ParallelOptions { MaxDegreeOfParallelism = 4 }, item =>
             //foreach (var item in items)
             {
                 try
@@ -77,7 +77,7 @@ namespace FRES.Source.Map
 
             if (result != null)
             {
-                loc = parcelNos.Select(x => GetLocation(url, province, district, x)).ToList().Where(x => x.Lat != 0 && x.Lon != 0).FirstOrDefault();
+                loc = parcelNos.Select(x => GetLocation(url, province, district, x)).ToList().Where(x => x?.Lat != 0 && x?.Lon != 0).FirstOrDefault();
             }
 
             return loc;
@@ -112,74 +112,79 @@ namespace FRES.Source.Map
                 return loc;
             }
 
-            string driverPath = @"D:\MyProjects\FRES\src\FRES.Source.Map\Drivers\";
-            IWebDriver driver = new OpenQA.Selenium.PhantomJS.PhantomJSDriver(driverPath);
-            //IWebDriver driver = new OpenQA.Selenium.Chrome.ChromeDriver(driverPath);
+            if (district == "จังหวัด")
+            {
+                return null;
+            }
+
+            //IWebDriver driver = new OpenQA.Selenium.PhantomJS.PhantomJSDriver();
             try
             {
-                var url = "http://dolwms.dol.go.th/tvwebp/";
-                driver.Navigate().GoToUrl(url);
-                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(TIMEOUT));
-
-                Thread.Sleep(DELAY);
-
-                var ddlProvince = driver.FindSelectElementWhenPopulated(By.Name("ddlProvince"), TIMEOUT);
-                ddlProvince.SelectBySubText(province);
-
-                Thread.Sleep(DELAY);
-
-                var ddlAmphur = driver.FindSelectElementWhenPopulated(By.Name("ddlAmphur"), TIMEOUT);
-                ddlAmphur.SelectBySubText(district);
-
-                Thread.Sleep(DELAY);
-
-                var txtPacelNo = new WebDriverWait(driver, TimeSpan.FromSeconds(TIMEOUT)).Until(ExpectedConditions.ElementExists(By.Name("txtPacelNo")));
-                txtPacelNo.SendKeys(pacelNo);
-
-                Thread.Sleep(DELAY);
-
-                var btnFind = driver.FindElement(By.Name("btnFind"));
-                IJavaScriptExecutor js = driver as IJavaScriptExecutor;
-                js.ExecuteScript("arguments[0].click();", btnFind);
-
-                Thread.Sleep(DELAY);
-                //var element = new WebDriverWait(driver, TimeSpan.FromSeconds(3)).Until(ExpectedConditions.TextToBePresentInElement(driver.FindElement(By.Id("ddlAmphur")), "01"));
-                //wait.Until(ExpectedConditions.ElementExists(By.CssSelector("div[style=\"transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 107; width: 100%;\"]")));
-
-                var isExist = wait.Until((d) => { return driver.PageSource.Contains("createMarker( new Array("); });
-
-                if (isExist)
+                using (var driver = new OpenQA.Selenium.Chrome.ChromeDriver())
+                //using (var driver = new OpenQA.Selenium.PhantomJS.PhantomJSDriver())
                 {
-                    var html = driver.PageSource;
-                    html = GetStrBtw(html, "createMarker( new Array(", "));");//.Replace("'", string.Empty);
-                    var dtls = html.Split(',').Select(x => x.Replace("'", "")).ToArray();
-                    result = new Location
+                    var url = "http://dolwms.dol.go.th/tvwebp/";
+                    driver.Navigate().GoToUrl(url);
+                    var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(TIMEOUT));
+
+                    Thread.Sleep(DELAY);
+
+                    var ddlProvince = WebElementExtensions.FindElement(driver, By.Id("ddlProvince"), TIMEOUT);
+                    //var ddlProvince = driver.FindSelectElementWhenPopulated(By.Name("ddlProvince"), TIMEOUT);
+                    ddlProvince.SelectBySubText(province);
+
+                    Thread.Sleep(DELAY);
+
+                    var ddlAmphur = WebElementExtensions.FindElement(driver, By.Id("ddlAmphur"), TIMEOUT);
+                    //var ddlAmphur = driver.FindSelectElementWhenPopulated(By.Name("ddlAmphur"), TIMEOUT);
+                    ddlAmphur.SelectBySubText(district);
+
+                    Thread.Sleep(DELAY);
+
+                    var txtPacelNo = new WebDriverWait(driver, TimeSpan.FromSeconds(TIMEOUT)).Until(ExpectedConditions.ElementExists(By.Name("txtPacelNo")));
+                    txtPacelNo.SendKeys(pacelNo);
+
+                    Thread.Sleep(DELAY);
+
+                    var btnFind = driver.FindElement(By.Id("btnFind"));
+                    IJavaScriptExecutor js = driver as IJavaScriptExecutor;
+                    js.ExecuteScript("arguments[0].click();", btnFind);
+
+                    Thread.Sleep(DELAY);
+                    //var element = new WebDriverWait(driver, TimeSpan.FromSeconds(3)).Until(ExpectedConditions.TextToBePresentInElement(driver.FindElement(By.Id("ddlAmphur")), "01"));
+                    //wait.Until(ExpectedConditions.ElementExists(By.CssSelector("div[style=\"transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 107; width: 100%;\"]")));
+
+                    var isExist = wait.Until((d) => { return driver.PageSource.Contains("createMarker( new Array("); });
+
+                    if (isExist)
                     {
-                        Amphur = district,
-                        Province = province,
-                        ParcelCode = parcel,
-                        Lat = double.Parse(dtls[7]),
-                        Lon = double.Parse(dtls[8])
-                    };
+                        var html = driver.PageSource;
+                        html = GetStrBtw(html, "createMarker( new Array(", "));");//.Replace("'", string.Empty);
+                        var dtls = html.Split(',').Select(x => x.Replace("'", "")).ToArray();
+                        result = new Location
+                        {
+                            Amphur = district,
+                            Province = province,
+                            ParcelCode = parcel,
+                            Lat = double.Parse(dtls[7]),
+                            Lon = double.Parse(dtls[8])
+                        };
 
-                    DataHelper.InsertLocation(result);
-                }
-                else
-                {
-                    throw new Exception("Can't find location");
+                        DataHelper.InsertLocation(result);
+                    }
+                    else
+                    {
+                        throw new Exception("Can't find location");
+                    }
                 }
             }
             catch (Exception ex)
             {
                 lock (sync)
-                    File.AppendAllText("C:/RE/M.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + province + "," + district + "," + parcel + "," + urlRe + "," + ex.GetBaseException().Message + "\r\n");
+                  File.AppendAllText("C:/RE/M.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + province + "," + district + "," + parcel + "," + urlRe + "," + ex.GetBaseException().Message + "\r\n");
             }
             finally
             {
-                //Thread.Sleep(3000);
-                driver.Close();
-                driver.Quit();
-                driver.Dispose();
             }
             return result;
         }

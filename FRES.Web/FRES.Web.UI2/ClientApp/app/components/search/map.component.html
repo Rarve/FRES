@@ -1,0 +1,8 @@
+<ngui-map zoom="14" center="Brampton, Canada">
+    <marker *ngFor="let pos of positions"
+            (click)="showInfoWindow($event)"
+            [position]="pos"></marker>
+</ngui-map>
+<button (click)="showRandomMarkers()">Show Random Markers</button>
+<br />
+<button (click)="addMarker()">Add Marker</button>

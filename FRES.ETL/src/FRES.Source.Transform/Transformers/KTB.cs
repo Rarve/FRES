@@ -41,6 +41,12 @@ namespace FRES.Source.Transform
             var doc = new HtmlAgilityPack.HtmlDocument();
             try
             {
+                if (!obj.Url.Contains("&check=1&p=na"))
+                {
+                    obj.Url = obj.Url + "&check=1&p=na";
+                    obj.Data = Client.RetrieveHtmlStrGet(obj.Url).Result;
+                }
+
                 if (string.IsNullOrEmpty(obj.Data))
                 {
                     obj.Data = Client.RetrieveHtmlStrGet(obj.Url).Result;
@@ -65,6 +71,8 @@ namespace FRES.Source.Transform
                             .Select(x => RegexHelper.StripHTML(x.FirstChild.InnerHtml)).ToList();
 
                 var details = new Dictionary<string, string>();
+
+                re.Map.Province = detailDescs[2];
 
                 for (int i = 0; i < detailTitles.Count(); i++)
                 {
@@ -94,7 +102,7 @@ namespace FRES.Source.Transform
                 re.DocumentOfRightType = details.ContainsKey("ประเภทเอกสารสิทธิ์") ? details["ประเภทเอกสารสิทธิ์"] : string.Empty;
                 re.DocumentOfRightDesc = details.ContainsKey("รายละเอียดเลขที่เอกสารสิทธิ์") ? details["รายละเอียดเลขที่เอกสารสิทธิ์"] : string.Empty;
                 //re.Price = details.ContainsKey("ราคาพิเศษ") ? details["ราคาพิเศษ"] : string.Empty;
-                re.BedRooom = details.ContainsKey("ห้องนอน") ? details["ห้องนอน"] : string.Empty;
+                re.BedRoom = details.ContainsKey("ห้องนอน") ? details["ห้องนอน"] : string.Empty;
                 re.BathRoom = details.ContainsKey("ห้องน้ำ") ? details["ห้องน้ำ"] : string.Empty;
                 re.Map.Desc = details.ContainsKey("ที่ตั้งรหัสทรัพย์") ? details["ที่ตั้งรหัสทรัพย์"] : string.Empty;
 
@@ -155,7 +163,7 @@ namespace FRES.Source.Transform
                     re.Map.Lon = double.Parse(mapObj.poi[0].lon);
                     //re.Map.Coordinate = new Point(double.Parse(mapObj.poi[0].lon), double.Parse(mapObj.poi[0].lat));
                 }
-                
+
                 //var amphur = RegexHelper.GetMatchStr(obj.Data, RegexHelper.REGEX_DISTRICT);
                 //re.Map.ParcelNumber = RegexHelper.GetMatchStr(details["เลขที่เอกสารสิทธิ์"], RegexHelper.REGEX_NUMBER).ToArray();
 
@@ -163,6 +171,8 @@ namespace FRES.Source.Transform
                 //{
                 //    re.Map.District = amphur[0].Replace("อำเภอ", string.Empty).Replace("เขต", string.Empty).Trim();
                 //}
+
+                re = DataHelper.DownloadImage(re);
 
                 var reT = new RealEstateT
                 {

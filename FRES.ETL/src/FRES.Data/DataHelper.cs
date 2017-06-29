@@ -1,7 +1,10 @@
 ﻿using FRES.Structure;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Web;
 
 namespace FRES.Data
 {
@@ -46,7 +49,7 @@ namespace FRES.Data
 
             using (var ctx = new FRESContext())
             {
-                res = ctx.RealEstateT.Where(x => x.Period == period).ToList();
+                res = ctx.RealEstateT.Where(x => x.Period == period && x.Source != "GHB").ToList();
             }
             return res;
         }
@@ -57,7 +60,7 @@ namespace FRES.Data
 
             using (var ctx = new FRESContext())
             {
-                res = ctx.RealEstateT.Where(x => (x.Lon == 0 || x.Lat == 0) && (!string.IsNullOrEmpty(x.Province) && !string.IsNullOrEmpty(x.District))).ToList();
+                res = ctx.RealEstateT.Where(x => (x.Lon == 0 || x.Lat == 0) && (!(x.Province == null) && !(x.District == null)) && x.Source == "SCB").ToList();
             }
             return res;
         }
@@ -160,6 +163,62 @@ namespace FRES.Data
             }
 
             return count;
+        }
+
+        public static RealEstateObj DownloadImage(RealEstateObj re)
+        {
+            var images = re.Images.ToArray();
+            if (images != null && images.Length > 0)
+            {
+                for (int i = 0; i < images.Length; i++)
+                {
+                    var name = GetStringSha256Hash(images[i]);
+                    var ext = Path.GetExtension(images[i]).ToLower();
+                    var localFilePath = $@"C:\Git\fres\FRES.ETL\src\FRES.Data\Images\Properties\{name}{ext}";
+                    if (!File.Exists(localFilePath))
+                    {
+                        using (WebClient client = new WebClient())
+                        {
+                            client.DownloadFile(images[i], localFilePath);
+                        }
+                    }
+                    re.Images[i] = "https://fresstorage.blob.core.windows.net/fresblob/images/properties/" + name + ext;
+                }
+            }
+
+
+            images = re.Map.Images.ToArray();
+            if (images != null && images.Length > 0)
+            {
+                for (int i = 0; i < images.Length; i++)
+                {
+                    var name = GetStringSha256Hash(images[i]);
+                    var ext = Path.GetExtension(images[i]).ToLower();
+                    var localFilePath = $@"C:\Git\fres\FRES.ETL\src\FRES.Data\Images\Properties\{name}{ext}";
+                    if (!File.Exists(localFilePath))
+                    {
+                        using (WebClient client = new WebClient())
+                        {
+                            client.DownloadFile(images[i], localFilePath);
+                        }
+                    }
+                    re.Map.Images[i] = "https://fresstorage.blob.core.windows.net/fresblob/images/properties/" + name + ext;
+                }
+            }
+            return re;
+        }
+        
+        public static string GetStringSha256Hash(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return string.Empty;
+
+            using (var sha = new System.Security.Cryptography.SHA256Managed())
+            {
+                byte[] textData = System.Text.Encoding.UTF8.GetBytes(text);
+                byte[] hash = sha.ComputeHash(textData);
+                return BitConverter.ToString(hash).Replace("-", String.Empty);
+            }
         }
 
         public static int InsertRealEstateE(RealEstateE[] res)

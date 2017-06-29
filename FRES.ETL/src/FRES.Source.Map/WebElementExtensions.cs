@@ -31,6 +31,18 @@ namespace FRES.Source.Map
             });
         }
 
+        public static SelectElement FindElement(this IWebDriver driver, By by, int timeoutInSeconds)
+        {
+            var elem = default(IWebElement);
+            if (timeoutInSeconds > 0)
+            {
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+                elem = wait.Until(drv => drv.FindElement(by));
+            }
+            elem = driver.FindElement(by);
+            return new SelectElement(elem);
+        }
+
         public static string FindHtmlWhenTextPresent(this IWebDriver driver, string text, int delayInSeconds)
         {
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(delayInSeconds));

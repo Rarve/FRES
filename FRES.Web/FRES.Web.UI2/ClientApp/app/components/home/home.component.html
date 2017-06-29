@@ -1,16 +1,38 @@
-<h1>Hello, world!</h1>
-<p>Welcome to your new single-page application, built with:</p>
-<ul>
-    <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-    <li><a href='https://angular.io/'>Angular 2</a> and <a href='http://www.typescriptlang.org/'>TypeScript</a> for client-side code</li>
-    <li><a href='https://webpack.github.io/'>Webpack</a> for building and bundling client-side resources</li>
-    <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-</ul>
-<p>To help you get started, we've also set up:</p>
-<ul>
-    <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-    <li><strong>Server-side prerendering</strong>. For faster initial loading and improved SEO, your Angular 2 app is prerendered on the server. The resulting HTML is then transferred to the browser where a client-side copy of the app takes over.</li>
-    <li><strong>Webpack dev middleware</strong>. In development mode, there's no need to run the <code>webpack</code> build tool. Your client-side resources are dynamically built on demand. Updates are available as soon as you modify any file.</li>
-    <li><strong>Hot module replacement</strong>. In development mode, you don't even need to reload the page after making most changes. Within seconds of saving changes to files, your Angular 2 app will be rebuilt and a new instance injected is into the page.</li>
-    <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and the <code>webpack</code> build tool produces minified static CSS and JavaScript files.</li>
-</ul>
+<div class="home">
+    <h2>FRES</h2>
+    <h4>Welcome to Foreclosure Real Estate Search Engine</h4>
+    <br />
+    <p>This website gather foreclosure properties from various banks in Thailand.</p>
+    <ul>
+        <li><a href='http://www.ghbhomecenter.com/ghb'>Government Housing Bank (GHB)</a></li>
+        <li><a href='http://properties.gsb.or.th/'>Government Savings Bank (GSB)</a></li>
+        <li><a href='http://www.npashowroom.ktb.co.th/WebShowRoom/SearchServlet'>Krung Thai Bank (KTB)</a></li>
+        <li><a href='http://www.buyatsiam.com/'>Siam Commercial Bank (SCB)</a></li>
+        <li><a href='http://www.thanachartnpa.com/'>Thanachart Bank</a></li>
+    </ul>
+    <br />
+    <h4>Technology Used in the website</h4>
+    <ul>
+        <li>.Net Core</li>
+        <li>AngularJS</li>
+        <li>Bootstrap</li>
+        <li>Azure Cosmos DB</li>
+        <li>Azure CDN</li>
+    </ul>
+    <br />
+    <h4>How do I gather all the properties</h4>
+    <p>
+        I basically download content in HTML for mat from each websites.
+        HTML is then transformed into json format.
+        The challenges are that each website has their own navigation system and HTML structure.
+        After that, the locations (lat, lon) is retrieved by selenium from
+        <a href='http://dolwms.dol.go.th/tvwebp/'>landmap</a>
+    </p>
+    <ul>
+        <li>.Net Framework 4.6</li>
+        <li>SQL CE + Entity Framework</li>
+        <li>HTML Agility Pack</li>
+        <li>Selenium</li>
+        <li>Lot of regular expressions</li>
+    </ul>
+</div>

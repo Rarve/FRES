@@ -1,4 +1,5 @@
 ﻿using FRES.Structure;
+using FRES.Web.UI2.Utils;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using System;
@@ -31,9 +32,10 @@ namespace FRES.Web.UI2.Data
         {
             var db = await Client.ReadDatabaseAsync(UriFactory.CreateDatabaseUri(Config.DatabaseId));
             var res = Client.CreateDocumentQuery<RealEstate>(_collectionUri)
-                //.Where(c => c.Source == "SCB")
-                .Take(100).
-                ToArray();
+                //.Where(c => c.Source == "KTB")
+                .Take(5)
+                .ToArray();
+
             return res;
         }
 
@@ -50,10 +52,12 @@ namespace FRES.Web.UI2.Data
             var exp = Client.CreateDocumentQuery<RealEstate>(_collectionUri).AsQueryable();
 
             exp = string.IsNullOrEmpty(query.Source) ? exp : exp.Where(c => c.Source.ToLower() == query.Source.ToLower());
-            exp = query.PriceMin == 0 ? exp : exp.Where(c => c.Price >= query.PriceMin);
-            exp = query.PriceMax == 0 ? exp : exp.Where(c => c.Price <= query.PriceMax);
+            exp = string.IsNullOrEmpty(query.Province) ? exp : exp.Where(c => c.Map.Province.ToLower() == query.Province.ToLower());
+            exp = query.PriceMin.IsNullOrZero() ? exp : exp.Where(c => c.Price >= query.PriceMin);
+            exp = query.PriceMax.IsNullOrZero() ? exp : exp.Where(c => c.Price <= query.PriceMax);
 
-            var res = exp.Take(10).ToArray();
+            var res = exp.Take(20).ToArray();
+
             return res;
         }
 

@@ -28,10 +28,10 @@ namespace FRES.Web.UI2
             // Add framework services.
             services.AddMvc();
 
-            Config.DatabaseId = Configuration["AppSettings:DatabaseId"];
-            Config.EndPointUrl = Configuration["AppSettings:EndPointUrl"];
-            Config.CollectionId = Configuration["AppSettings:CollectionId"];
-            Config.AuthorizationKey = Configuration["AppSettings:AuthorizationKey"];
+            //Config.DatabaseId = Configuration["AppSettings:DatabaseId"];
+            //Config.EndPointUrl = Configuration["AppSettings:EndPointUrl"];
+            //Config.CollectionId = Configuration["AppSettings:CollectionId"];
+            //Config.AuthorizationKey = Configuration["AppSettings:AuthorizationKey"];
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,7 +12,7 @@ namespace FRES.Source.Transform
     public class GHB : Transformer
     {
         private const string URL_MAIN = "http://www.ghbhomecenter.com/";
-        private const int PARALLELISM_DEGREE = 100;
+        private const int PARALLELISM_DEGREE = 5;
 
         public GHB()
         {
@@ -150,6 +150,7 @@ namespace FRES.Source.Transform
                     re.Map.Images.Add(URL_MAIN + mapImageHtml.InnerHtml.GetStrBtw("<img src=\"", "\""));
                 }
 
+                re = DataHelper.DownloadImage(re);
 
                 var t = new RealEstateT
                 {

@@ -13,7 +13,7 @@ namespace FRES.Source.Transform
     public class TNB : Transformer
     {
         private const string URL_MAIN = "http://www.thanachartnpa.com/";
-        private const int PARALLELISM_DEGREE = 1;
+        private const int PARALLELISM_DEGREE = 5;
 
         public TNB()
         {
@@ -130,6 +130,8 @@ namespace FRES.Source.Transform
                 contact.TellNo.Add("0-2260-6100");
                 contact.Email.Add("assetforsales@thanachart.co.th");
                 re.Contacts.Add(contact);
+
+                re = DataHelper.DownloadImage(re);
 
                 var t = new RealEstateT
                 {

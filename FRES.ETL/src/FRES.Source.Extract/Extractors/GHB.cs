@@ -13,7 +13,7 @@ namespace FRES.Source.Extract
         private const string URL_PAGE = "http://www.ghbhomecenter.com/ghb?_keyword=&_promotion_id=&_type=&_ntype=&_mtype=B&_province=&_amphur=&_tumbol=&_pricerange=&_area=&_orderby=&_perpage=100&_page=";
         private const string URL_DTLS = "http://www.ghbhomecenter.com";
 
-        public GHB(int parallelismDegree = 3) : base(parallelismDegree)
+        public GHB(int parallelismDegree = 5) : base(parallelismDegree)
         {
         }
         
