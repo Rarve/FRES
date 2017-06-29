@@ -10,14 +10,14 @@ namespace FRES.Web.UI2.Controllers
     [Route("api/[controller]")]
     public class RealEstateController : Controller
     {
-        [HttpPost("[action]")]
+        [HttpGet("[action]"), ResponseCache(Duration = 3600)]
         public async Task<RealEstate[]> All()
         {
             var res = await DocumentDBService.GetAll();
             return res;
         }
 
-        [HttpPost("[action]")]
+        [HttpPost("[action]"), ResponseCache(Duration = 3600)]
         public async Task<RealEstate[]> Search()
         {
             var res = default(RealEstate[]);

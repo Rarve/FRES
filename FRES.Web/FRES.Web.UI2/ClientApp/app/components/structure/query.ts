@@ -1,4 +1,4 @@
-export interface IQuery {
+export class Query {
     Source: string;
     Province: string;
     PriceMin: number;

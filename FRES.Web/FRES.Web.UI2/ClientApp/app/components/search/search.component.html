@@ -16,12 +16,6 @@
         <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-search"></span></button>
     </form>
 </div>
-
-<!--<div (window:scroll)="onScroll($event)">
-    <h1>Hello Angular2</h1>
-    <h1>Hi</h1><h1>Hi</h1><h1>Hi</h1><h1>Hi</h1><h1>Hi</h1><h1>Hi</h1>
-    <h1>Hi</h1><h1>Hi</h1><h1>Hi</h1><h1>Hi</h1><h1>Hi</h1><h1>Hi</h1>
-</div>-->
 <div (window:scroll)="onScroll($event)">
     <div class="col-xs-12 col-lg-7 re-card" *ngFor="let re of res; let i = index" [attr.data-index]="i">
         <div class="re-image-container col-lg-9 col-md-9">
@@ -67,7 +61,7 @@
                     {{re.parkingSpace}}
                     <i class="fa fa-car" aria-hidden="true"></i>
                 </div>
-                <div>{{log}}</div>
+                <!--<div>{{log}}</div>-->
                 <div class="debug">
                     <button type="button" class="btn btn-default" data-toggle="modal" [attr.data-target]="'#modal-'+ i">
                         <span data-toggle="modal" data-target="#" class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>

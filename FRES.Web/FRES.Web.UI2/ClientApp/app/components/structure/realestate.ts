@@ -1,4 +1,4 @@
-export interface IRealEstate {
+export class RealEstate {
     url: string;
     code: string;
     name: string;

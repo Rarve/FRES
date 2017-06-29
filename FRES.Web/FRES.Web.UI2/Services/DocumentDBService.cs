@@ -33,7 +33,7 @@ namespace FRES.Web.UI2.Data
             var db = await Client.ReadDatabaseAsync(UriFactory.CreateDatabaseUri(Config.DatabaseId));
             var res = Client.CreateDocumentQuery<RealEstate>(_collectionUri)
                 //.Where(c => c.Source == "KTB")
-                .Take(5)
+                //.Take(100)
                 .ToArray();
 
             return res;
