@@ -1,4 +1,5 @@
-﻿using FRES.Data;
+﻿using FRES.Common;
+using FRES.Data;
 using FRES.Source.Map;
 using FRES.Structure;
 using Microsoft.Azure.Documents.Spatial;
@@ -35,13 +36,12 @@ namespace FRES.Source.Map
                     if (item.ParcelNo != null && item.ParcelNo != "null" && item.ParcelNo.Length > 0)
                     {
                         var parcelNos = JsonConvert.DeserializeObject<List<string>>(item.ParcelNo).ToArray();
-                        var loc = GetLocation(item.Url, item.Province, item.District, parcelNos);
+                        var loc = GetLocation(item.Url, item.Province, item.District, jsonObj.Map.SubDistrict, jsonObj.Map.Road, parcelNos);
 
                         if (loc != null && loc.Lat != null && loc.Lon != null)
                         {
                             jsonObj.Map.Lat = (double)loc.Lat;
                             jsonObj.Map.Lon = (double)loc.Lon;
-                            //jsonObj.Map.Coordinate = new Point((double)loc.Lon, (double)loc.Lat);
 
                             item.Data = JsonConvert.SerializeObject(jsonObj, Formatting.Indented);
                             item.Lat = (double)loc.Lat;
@@ -50,11 +50,10 @@ namespace FRES.Source.Map
                             DataHelper.UpdateRealEstateT_Location(item);
                         }
                     }
-
                 }
                 catch (Exception ex)
                 {
-                    lock(sync)
+                    lock (sync)
                         File.AppendAllText("C:/RE/M.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + item.Url + "," + ex.GetBaseException().Message + "\r\n");
                 }
             }
@@ -65,27 +64,27 @@ namespace FRES.Source.Map
             //    .Select(x => GetLocation(x.Map.Province, x.Map.Amphur, x.Map.ParcelNumber));
         }
 
-        public Location GetLocation(string url, string province, string district, string[] parcelNos)
+        public Data.Location GetLocation(string url, string province, string district, string subDistrict, string road, string[] parcelNos)
         {
-            var loc = new Location();
+            var loc = new Data.Location();
             if (parcelNos == null)
             {
                 return null;
             }
 
-            var result = parcelNos.Select(x => GetLocation(url, province, district, x)).Where(x => x.Lat != 0 && x.Lon != 0);
+            var result = parcelNos.Select(x => GetLocation(url, province, district, subDistrict, road, x)).Where(x => x.Lat != 0 && x.Lon != 0);
 
             if (result != null)
             {
-                loc = parcelNos.Select(x => GetLocation(url, province, district, x)).ToList().Where(x => x?.Lat != 0 && x?.Lon != 0).FirstOrDefault();
+                loc = result.Where(x => x?.Lat != 0 && x?.Lon != 0).FirstOrDefault();
             }
 
             return loc;
         }
 
-        public Location GetLocation(string urlRe, string province, string district, string pacelNo)
+        public Data.Location GetLocation(string urlRe, string province, string district, string subDistrict, string road, string pacelNo)
         {
-            var result = new Location();
+            var result = new Data.Location();
             var parcel = 0;
 
             if (string.IsNullOrEmpty(province) || string.IsNullOrEmpty(district) || string.IsNullOrEmpty(pacelNo))
@@ -105,7 +104,7 @@ namespace FRES.Source.Map
                 if (!stat)
                     return result;
             }
-            
+
             var loc = DataHelper.GetLocation(province, district, parcel);
             if (loc != null)
             {
@@ -117,11 +116,10 @@ namespace FRES.Source.Map
                 return null;
             }
 
-            //IWebDriver driver = new OpenQA.Selenium.PhantomJS.PhantomJSDriver();
             try
             {
-                using (var driver = new OpenQA.Selenium.Chrome.ChromeDriver())
-                //using (var driver = new OpenQA.Selenium.PhantomJS.PhantomJSDriver())
+                //using (var driver = new OpenQA.Selenium.Chrome.ChromeDriver())
+                using (var driver = new OpenQA.Selenium.PhantomJS.PhantomJSDriver())
                 {
                     var url = "http://dolwms.dol.go.th/tvwebp/";
                     driver.Navigate().GoToUrl(url);
@@ -161,27 +159,41 @@ namespace FRES.Source.Map
                         var html = driver.PageSource;
                         html = GetStrBtw(html, "createMarker( new Array(", "));");//.Replace("'", string.Empty);
                         var dtls = html.Split(',').Select(x => x.Replace("'", "")).ToArray();
-                        result = new Location
+                        result = new Data.Location
                         {
                             Amphur = district,
                             Province = province,
                             ParcelCode = parcel,
                             Lat = double.Parse(dtls[7]),
-                            Lon = double.Parse(dtls[8])
+                            Lon = double.Parse(dtls[8]),
+                            LocStatus = 1
                         };
 
                         DataHelper.InsertLocation(result);
                     }
                     else
                     {
-                        throw new Exception("Can't find location");
+                        var client = new HttpClientHelper();
+                        var locQuery = "https://maps.googleapis.com/maps/api/geocode/json?address={0},{1},{2},{3}&key=AIzaSyCltV8DymrRcj263Kz4SJphXfDkE8vALwI";
+                        locQuery = string.Format(locQuery, road, subDistrict, district, province);
+                        var str = client.GetStringGet(locQuery).Result;
+                        var obj = str.Deserialize<RootObject>();
+                        result = new Data.Location
+                        {
+                            Amphur = district,
+                            Province = province,
+                            ParcelCode = parcel,
+                            Lat = (double)obj.results[0].geometry.location.lat,
+                            Lon = (double)obj.results[0].geometry.location.lng,
+                            LocStatus = 2
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 lock (sync)
-                  File.AppendAllText("C:/RE/M.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + province + "," + district + "," + parcel + "," + urlRe + "," + ex.GetBaseException().Message + "\r\n");
+                    File.AppendAllText("C:/RE/M.log", DateTime.Now.ToString("yyyyMMdd HH:mm") + "," + province + "," + district + "," + parcel + "," + urlRe + "," + ex.GetBaseException().Message + "\r\n");
             }
             finally
             {

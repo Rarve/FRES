@@ -44,12 +44,12 @@ namespace FRES.Source.Transform
                 if (!obj.Url.Contains("&check=1&p=na"))
                 {
                     obj.Url = obj.Url + "&check=1&p=na";
-                    obj.Data = Client.RetrieveHtmlStrGet(obj.Url).Result;
+                    obj.Data = Client.GetStringGet(obj.Url).Result;
                 }
 
                 if (string.IsNullOrEmpty(obj.Data))
                 {
-                    obj.Data = Client.RetrieveHtmlStrGet(obj.Url).Result;
+                    obj.Data = Client.GetStringGet(obj.Url).Result;
                 }
 
                 doc.LoadHtml(obj.Data);
@@ -154,7 +154,7 @@ namespace FRES.Source.Transform
                 var propId = HttpUtility.ParseQueryString(obj.Url.Split('?')[1])["propId"];
                 var mapUrl = USL_MAPS + propId;
                 var nvc = new List<KeyValuePair<string, string>>();
-                var mapStr = Client.RetrieveHtmlStrPost(mapUrl, nvc).Result;
+                var mapStr = Client.GetStringPost(mapUrl, nvc).Result;
                 var mapObj = JsonHelper.Deserialize<KTBMap>(mapStr);
 
                 if (mapObj.poi.Count > 0 && !string.IsNullOrEmpty(mapObj.poi[0].lat) && !string.IsNullOrEmpty(mapObj.poi[0].lon))

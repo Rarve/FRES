@@ -45,7 +45,7 @@ namespace FRES.Source.Extract
             var urls = new List<string>();
             try
             {
-                var html = Client.RetrieveHtmlStrGet(pageUrl).Result;
+                var html = Client.GetStringGet(pageUrl).Result;
                 urls = RegexHelper.GetMatchStr(html, @"(\/detail-)[0-9]{0,20}").Distinct().Select(x => URL_DTLS + x).ToList();
 
                 var res = urls.AsParallel().WithDegreeOfParallelism(ParallismDegree).Select(x =>
@@ -72,7 +72,7 @@ namespace FRES.Source.Extract
 
         public override int GetTotalPages(string url)
         {
-            var html = Client.RetrieveHtmlStrGet(url).Result;
+            var html = Client.GetStringGet(url).Result;
             var totalStr = RegexHelper.GetStrBtw(html, "<div class=\"txt\">จาก <span>", "</span>");
             int total = 0;
             int.TryParse(totalStr, out total);

@@ -67,9 +67,6 @@
     <Compile Include="Address.cs">
       <DependentUpon>FRESDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Address_bak.cs">
-      <DependentUpon>FRESDBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataHelper.cs" />
     <Compile Include="FRESContext.cs" />
     <Compile Include="FRESDBDataSet.Designer.cs">

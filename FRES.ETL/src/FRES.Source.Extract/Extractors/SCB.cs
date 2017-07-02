@@ -51,7 +51,7 @@ namespace FRES.Source.Extract
             var urls = new List<string>();
             try
             {
-                var html = Client.RetrieveHtmlStrGet(pageUrl).Result;
+                var html = Client.GetStringGet(pageUrl).Result;
                 //urls = RegexHelper.GetMatchStr(html, @"(APropertyDetail.html\?id=[0-9]{0,20})").Distinct().Select(x => URL_MAIN + x).ToList();
                 
                 var doc = new HtmlDocument();

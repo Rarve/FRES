@@ -30,6 +30,5 @@ namespace FRES.Data
         public virtual DbSet<RealEstateE> RealEstateE { get; set; }
         public virtual DbSet<RealEstateT> RealEstateT { get; set; }
         public virtual DbSet<RealEstateType> RealEstateType { get; set; }
-        public virtual DbSet<Address_bak> Address_bak { get; set; }
     }
 }

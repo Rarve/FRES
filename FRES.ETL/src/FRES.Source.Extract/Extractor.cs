@@ -37,7 +37,7 @@ namespace FRES.Source.Extract
             var html = string.Empty;
             try
             {
-                toProcessItem.Data = Client.RetrieveHtmlStrGet(toProcessItem.Url).Result.Trim();
+                toProcessItem.Data = Client.GetStringGet(toProcessItem.Url).Result.Trim();
                 DataHelper.UpdateRealEstateE(toProcessItem);
             }
             catch (Exception ex)

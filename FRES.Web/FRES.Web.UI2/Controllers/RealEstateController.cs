@@ -20,10 +20,17 @@ namespace FRES.Web.UI2.Controllers
         [HttpPost("[action]"), ResponseCache(Duration = 3600)]
         public async Task<RealEstate[]> Search()
         {
-            var res = default(RealEstate[]);
-            var query = Request.ReadBody<Query>();
-            res = await DocumentDBService.Search(query);
-            return res;
+            try
+            {
+                var res = default(RealEstate[]);
+                var query = Request.ReadBody<Query>();
+                res = await DocumentDBService.Search(query);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }    
 }

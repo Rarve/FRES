@@ -40,16 +40,16 @@ namespace FRES.Source.E
 
                 MapRetriever retriever = new MapRetriever();
                 retriever.GetMap();
-                retriever.GetMap();
-                retriever.GetMap();
-                retriever.GetMap();
-                retriever.GetMap();
-                retriever.GetMap();
-                retriever.GetMap();
-                retriever.GetMap();
+                //retriever.GetMap();
+                //retriever.GetMap();
+                //retriever.GetMap();
+                //retriever.GetMap();
+                //retriever.GetMap();
+                //retriever.GetMap();
+                //retriever.GetMap();
 
-                //var loader = new Loader();
-                //loader.Load().Wait();
+                var loader = new Loader();
+                loader.Load().Wait();
             }
             catch (Exception ex)
             {

@@ -32,7 +32,7 @@ namespace FRES.Source.Extract
             var urls = new List<string>();
             try
             {
-                var html = Client.RetrieveHtmlStrGet(URL_TOTALPAGES).Result;
+                var html = Client.GetStringGet(URL_TOTALPAGES).Result;
                 var doc = new HtmlDocument();
                 doc.LoadHtml(html);
 

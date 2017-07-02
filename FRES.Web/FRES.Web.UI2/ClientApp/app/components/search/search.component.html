@@ -1,19 +1,20 @@
-﻿
-<div class="row">
-    <form #form="ngForm" (ngSubmit)="submit(form.value)" class="form-group row re-search-form ">
-        <div class="col-xs-1 col-lg12 nopadding">
+﻿<div class="row">
+    <form #form="ngForm" (ngSubmit)="submit(form.value)" class="col-xs-12 col-lg-7 form-group re-search-form ">
+        <div class="col-xs-2 col-lg1 nopadding">
             <input type="text" name="PriceMin" ngModel id="PriceMin" placeholder="Min" class="form-control">
         </div>
-        <div class="col-xs-1 col-lg12 nopadding">
+        <div class="col-xs-2 col-lg1 nopadding">
             <input type="text" name="PriceMax" ng-init="0" ngModel id="PriceMax" placeholder="Max" class="form-control">
         </div>
-        <div class="col-xs-2 col-lg12 nopadding">
+        <div class="col-xs-2 col-lg2 nopadding">
             <ddl-bank name="Source" ngModel id="Source" ngDefaultControl></ddl-bank>
         </div>
-        <div class="col-xs-2 col-lg12 nopadding">
+        <div class="col-xs-2 col-lg2 nopadding">
             <ddl-province name="Province" ngModel id="Province" ngDefaultControl></ddl-province>
         </div>
-        <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-search"></span></button>
+        <div class="col-xs-1 col-lg1 nopadding">
+            <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-search"></span></button>
+        </div>
     </form>
 </div>
 <div (window:scroll)="onScroll($event)">
@@ -61,10 +62,9 @@
                     {{re.parkingSpace}}
                     <i class="fa fa-car" aria-hidden="true"></i>
                 </div>
-                <!--<div>{{log}}</div>-->
-                <div class="debug">
+                <div *ngIf="re.map.lat != 0 && re.map.lon != 0" class="map">
                     <button type="button" class="btn btn-default" data-toggle="modal" [attr.data-target]="'#modal-'+ i">
-                        <span data-toggle="modal" data-target="#" class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+                        <span data-toggle="modal" data-target="#" class="fa fa-map-marker" aria-hidden="true"></span>
                     </button>
                 </div>
             </div>
@@ -75,12 +75,16 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body">
-                            <div class="col-lg-3 col-md-12 col-xs-12"><pre style="text-align:left; font-size:0.8em;">{{re | json }}</pre></div>
-                            <!--<pre [attr.pretty-json]="{{re}}"></pre>-->
+                            <ngui-map class="modal-map" zoom="12" center=[{{re.map.lat}},{{re.map.lon}}]>
+                                <marker (click)="showInfoWindow($event)" [position]=[re.map.lat,re.map.lon]></marker>
+                            </ngui-map>
+                            <!--<div class="row">
+                                <pre style="text-align:left; font-size:0.8em;">{{re | json }}</pre>
+                            </div>-->
                         </div>
-                        <div class="modal-footer">
+                        <!--<div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>

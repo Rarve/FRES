@@ -98,6 +98,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FRES.Common\FRES.Common.csproj">
+      <Project>{DC37F8E1-DB57-415F-8AEF-E57B2080A25E}</Project>
+      <Name>FRES.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FRES.Data\FRES.Data.csproj">
       <Project>{42C7187D-FB7E-4E83-9423-AAD4C0451A11}</Project>
       <Name>FRES.Data</Name>

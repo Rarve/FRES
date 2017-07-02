@@ -63,3 +63,8 @@ C:\Git\fres\FRES.ETL\src\FRES.Source.Map\bin\Debug\WebDriver.Support.xml
 C:\Git\fres\FRES.ETL\src\FRES.Source.Map\obj\Debug\FRES.Source.Map.csprojResolveAssemblyReference.cache
 C:\Git\fres\FRES.ETL\src\FRES.Source.Map\obj\Debug\FRES.Source.Map.dll
 C:\Git\fres\FRES.ETL\src\FRES.Source.Map\obj\Debug\FRES.Source.Map.pdb
+C:\Git\fres\FRES.ETL\src\FRES.Source.Map\bin\Debug\FRES.Common.dll
+C:\Git\fres\FRES.ETL\src\FRES.Source.Map\bin\Debug\HtmlAgilityPack.dll
+C:\Git\fres\FRES.ETL\src\FRES.Source.Map\bin\Debug\FRES.Common.pdb
+C:\Git\fres\FRES.ETL\src\FRES.Source.Map\bin\Debug\HtmlAgilityPack.pdb
+C:\Git\fres\FRES.ETL\src\FRES.Source.Map\bin\Debug\HtmlAgilityPack.xml

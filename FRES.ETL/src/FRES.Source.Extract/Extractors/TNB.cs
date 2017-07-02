@@ -52,7 +52,7 @@ namespace FRES.Source.Extract
             var urls = new List<string>();
             try
             {
-                var html = Client.RetrieveHtmlStrGet(pageUrl, Encoding.GetEncoding(874)).Result;
+                var html = Client.GetStringGet(pageUrl, Encoding.GetEncoding(874)).Result;
                 urls = RegexHelper.GetMatchStr(html, "(assetdetail.asp\\?code=(.*?)\")").Distinct().Select(x => URL_MAIN + x.TrimEnd('"')).ToList();
 
                 var doc = new HtmlDocument();
@@ -117,7 +117,7 @@ namespace FRES.Source.Extract
         {
             var totalPages = 0;
             var pages = new string[0];
-            var html = Client.RetrieveHtmlStrGet(url, Encoding.GetEncoding(874)).Result;
+            var html = Client.GetStringGet(url, Encoding.GetEncoding(874)).Result;
             var totalStr = html.GetStrBtw("มีทั้งหมด", "หน้า");
             int.TryParse(totalStr.Trim(), out totalPages);
             return totalPages;
@@ -128,7 +128,7 @@ namespace FRES.Source.Extract
             var html = string.Empty;
             try
             {
-                toProcessItem.Data = Client.RetrieveHtmlStrGet(toProcessItem.Url, Encoding.GetEncoding(874)).Result.Trim();
+                toProcessItem.Data = Client.GetStringGet(toProcessItem.Url, Encoding.GetEncoding(874)).Result.Trim();
                 DataHelper.UpdateRealEstateE(toProcessItem);
             }
             catch (Exception ex)

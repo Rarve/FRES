@@ -3,6 +3,9 @@
             (click)="showInfoWindow($event)"
             [position]="pos"></marker>
 </ngui-map>
+
+
+<div *ngFor="let pos of positions">asdfasdf{{pos}}</div>
 <button (click)="showRandomMarkers()">Show Random Markers</button>
 <br />
 <button (click)="addMarker()">Add Marker</button>

@@ -60,7 +60,11 @@ namespace FRES.Data
 
             using (var ctx = new FRESContext())
             {
-                res = ctx.RealEstateT.Where(x => (x.Lon == 0 || x.Lat == 0) && (!(x.Province == null) && !(x.District == null)) && x.Source == "SCB").ToList();
+                res = ctx.RealEstateT.Where(x => 
+                    (x.Lon == 0 || x.Lat == 0)
+                    && (!(x.Province == null) && !(x.District == null))
+                    //&& x.Source == "SCB"
+                ).ToList();
             }
             return res;
         }
@@ -269,44 +273,6 @@ namespace FRES.Data
                 ctx.SaveChanges();
             }
             return count;
-        }
-
-        public static int MigrateAddress()
-        {
-            var count = 0;
-            using (var ctx = new FRESContext())
-            {
-                var items = ctx.Address_bak.ToList();
-
-                //foreach (var item in items)
-                items.AsParallel().WithDegreeOfParallelism(1).ForAll(item =>
-                {
-                    try
-                    {
-                        var villages = item.VillageName.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                        foreach (var village in villages)
-                        {
-                            ctx.Address.Add(new Address()
-                            {
-                                District = item.District.Trim(),
-                                Province = item.Province.Trim(),
-                                SubDistrict = item.SubDistrict.Trim(),
-                                VillageName = village.Trim(),
-                                VillageNo = item.VillageNo.Trim()
-                            });
-                            Console.WriteLine(item.Province + "  " + item.District + "  " + item.SubDistrict + "  " + item.VillageNo + "  " + village);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                        Console.ReadKey();
-                    }
-                }
-                );
-                ctx.SaveChanges();
-            }
-            return count;
-        }
+        }        
     }
 }

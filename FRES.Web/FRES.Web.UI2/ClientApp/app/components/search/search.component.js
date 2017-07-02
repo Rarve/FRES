@@ -19,8 +19,8 @@ var SearchComponent = (function () {
         this.paging = new paging_1.Paging();
         this.http = http;
         this.sanitizer = sanitizer;
-        this.paging.pageNumber = 10;
-        this.paging.itemPerPage = 1;
+        this.paging.pageNumber = 1;
+        this.paging.itemPerPage = 10;
         this.http.get('/api/realestate/all').subscribe(function (result) {
             if (result === undefined || result === null) {
                 console.log("documentdb return null");
@@ -65,6 +65,8 @@ var SearchComponent = (function () {
         this.params = value;
         this.params.PriceMax = (this.params.PriceMax === undefined || this.params.PriceMax == null) ? 0 : this.params.PriceMax;
         this.params.PriceMin = (this.params.PriceMin === undefined || this.params.PriceMin == null) ? 0 : this.params.PriceMin;
+        this.params.PageNumber = this.paging.pageNumber;
+        this.params.ItemPerPage = this.paging.itemPerPage;
         var body = JSON.stringify(this.params);
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });

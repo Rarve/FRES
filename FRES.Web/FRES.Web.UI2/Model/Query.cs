@@ -4,6 +4,8 @@ namespace FRES.Structure
 {
     public class Query
     {
+        public int PageNumber { get; set; }
+        public int ItemPerPage { get; set; }
         public string Source { get; set; }
         public string Province { get; set; }
         

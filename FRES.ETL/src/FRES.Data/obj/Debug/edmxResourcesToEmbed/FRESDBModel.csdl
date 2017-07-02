@@ -6,7 +6,6 @@
     <EntitySet Name="RealEstateE" EntityType="FRESDBModel.RealEstateE" />
     <EntitySet Name="RealEstateT" EntityType="FRESDBModel.RealEstateT" />
     <EntitySet Name="RealEstateType" EntityType="FRESDBModel.RealEstateType" />
-    <EntitySet Name="Address_bak" EntityType="FRESDBModel.Address_bak" />
   </EntityContainer>
   <EntityType Name="Address">
     <Key>
@@ -29,6 +28,7 @@
     <Property Name="ParcelCode" Type="Int32" />
     <Property Name="Lat" Type="Double" />
     <Property Name="Lon" Type="Double" />
+    <Property Name="LocStatus" Type="Int32" />
   </EntityType>
   <EntityType Name="RealEstateE">
     <Key>
@@ -42,9 +42,9 @@
     <Property Name="Period" Type="Int32" />
     <Property Name="RecordStatus" Type="Int32" />
     <Property Name="CreatedBy" Type="Int32" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="ModifiedBy" Type="Int32" />
-    <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="RealEstateJson" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="RealEstateT">
@@ -64,9 +64,9 @@
     <Property Name="Period" Type="Int32" />
     <Property Name="RecordStatus" Type="Int32" />
     <Property Name="CreatedBy" Type="Int32" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="ModifiedBy" Type="Int32" />
-    <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="RealEstateType">
     <Key>
@@ -75,19 +75,5 @@
     <Property Name="RealEstateTypeId" Type="Int32" Nullable="false" />
     <Property Name="Name_TH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Name_ENG" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="Address_bak">
-    <Key>
-      <PropertyRef Name="VillageName" />
-      <PropertyRef Name="VillageNo" />
-      <PropertyRef Name="SubDistrict" />
-      <PropertyRef Name="District" />
-      <PropertyRef Name="Province" />
-    </Key>
-    <Property Name="VillageName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="VillageNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="SubDistrict" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="District" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="Province" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>

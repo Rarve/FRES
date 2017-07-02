@@ -33,7 +33,7 @@ namespace FRES.Web.UI2.Data
             var db = await Client.ReadDatabaseAsync(UriFactory.CreateDatabaseUri(Config.DatabaseId));
             var res = Client.CreateDocumentQuery<RealEstate>(_collectionUri)
                 //.Where(c => c.Source == "KTB")
-                //.Take(100)
+                .Take(100)
                 .ToArray();
 
             return res;
@@ -56,7 +56,7 @@ namespace FRES.Web.UI2.Data
             exp = query.PriceMin.IsNullOrZero() ? exp : exp.Where(c => c.Price >= query.PriceMin);
             exp = query.PriceMax.IsNullOrZero() ? exp : exp.Where(c => c.Price <= query.PriceMax);
 
-            var res = exp.Take(20).ToArray();
+            var res = exp.Take(query.ItemPerPage).ToArray();
 
             return res;
         }

@@ -4,98 +4,84 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FRESDBModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="FRESDBModelStoreContainer">
-    <EntitySet Name="Address" EntityType="FRESDBModel.Store.Address" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Location" EntityType="FRESDBModel.Store.Location" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="RealEstateE" EntityType="FRESDBModel.Store.RealEstateE" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="RealEstateT" EntityType="FRESDBModel.Store.RealEstateT" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="RealEstateType" EntityType="FRESDBModel.Store.RealEstateType" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Address_bak" EntityType="FRESDBModel.Store.Address_bak" store:Type="Tables" Schema="dbo" />
-  </EntityContainer>
-  <EntityType Name="Address">
-    <Key>
-      <PropertyRef Name="AddressId" />
-    </Key>
-    <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="VillageName" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="VillageNo" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="SubDistrict" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="District" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="Province" Type="nvarchar" Nullable="false" MaxLength="100" />
-  </EntityType>
-  <EntityType Name="Location">
-    <Key>
-      <PropertyRef Name="LocationId" />
-    </Key>
-    <Property Name="LocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Province" Type="nvarchar" Nullable="false" MaxLength="50" />
-    <Property Name="Amphur" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="ParcelCode" Type="int" Nullable="true" />
-    <Property Name="Lat" Type="float" Nullable="true" />
-    <Property Name="Lon" Type="float" Nullable="true" />
-  </EntityType>
-  <EntityType Name="RealEstateE">
-    <Key>
-      <PropertyRef Name="RealEstateEId" />
-    </Key>
-    <Property Name="RealEstateEId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Source" Type="nvarchar" Nullable="true" MaxLength="3" />
-    <Property Name="Url" Type="nvarchar" Nullable="true" MaxLength="4000" />
-    <Property Name="Data" Type="ntext" Nullable="true" />
-    <Property Name="State" Type="int" Nullable="true" />
-    <Property Name="Period" Type="int" Nullable="true" />
-    <Property Name="RecordStatus" Type="int" Nullable="true" />
-    <Property Name="CreatedBy" Type="int" Nullable="true" />
-    <Property Name="CreatedDate" Type="datetime" Nullable="true" />
-    <Property Name="ModifiedBy" Type="int" Nullable="true" />
-    <Property Name="ModifiedDate" Type="datetime" Nullable="true" />
-    <Property Name="RealEstateJson" Type="ntext" Nullable="true" />
-  </EntityType>
-  <EntityType Name="RealEstateT">
-    <Key>
-      <PropertyRef Name="RealEstateTId" />
-    </Key>
-    <Property Name="RealEstateTId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Source" Type="nvarchar" Nullable="true" MaxLength="3" />
-    <Property Name="Url" Type="nvarchar" Nullable="true" MaxLength="4000" />
-    <Property Name="Data" Type="ntext" Nullable="true" />
-    <Property Name="Province" Type="ntext" Nullable="true" />
-    <Property Name="District" Type="ntext" Nullable="true" />
-    <Property Name="ParcelNo" Type="ntext" Nullable="true" />
-    <Property Name="Lat" Type="float" Nullable="true" />
-    <Property Name="Lon" Type="float" Nullable="true" />
-    <Property Name="State" Type="int" Nullable="true" />
-    <Property Name="Period" Type="int" Nullable="true" />
-    <Property Name="RecordStatus" Type="int" Nullable="true" />
-    <Property Name="CreatedBy" Type="int" Nullable="true" />
-    <Property Name="CreatedDate" Type="datetime" Nullable="true" />
-    <Property Name="ModifiedBy" Type="int" Nullable="true" />
-    <Property Name="ModifiedDate" Type="datetime" Nullable="true" />
-  </EntityType>
-  <EntityType Name="RealEstateType">
-    <Key>
-      <PropertyRef Name="RealEstateTypeId" />
-    </Key>
-    <Property Name="RealEstateTypeId" Type="int" Nullable="false" />
-    <Property Name="Name_TH" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="Name_ENG" Type="nvarchar" Nullable="true" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="Address_bak">
-    <Key>
-      <PropertyRef Name="VillageName" />
-      <PropertyRef Name="VillageNo" />
-      <PropertyRef Name="SubDistrict" />
-      <PropertyRef Name="District" />
-      <PropertyRef Name="Province" />
-    </Key>
-    <Property Name="VillageName" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="VillageNo" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="SubDistrict" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="District" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="Province" Type="nvarchar" Nullable="false" MaxLength="100" />
-  </EntityType>
-</Schema></edmx:StorageModels>
+    <Schema Namespace="FRESDBModel.Store" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VillageName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="VillageNo" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SubDistrict" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="District" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Province" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationId" />
+          </Key>
+          <Property Name="LocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Province" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Amphur" Type="nvarchar" MaxLength="50" />
+          <Property Name="ParcelCode" Type="int" />
+          <Property Name="Lat" Type="float" />
+          <Property Name="Lon" Type="float" />
+          <Property Name="LocStatus" Type="int" />
+        </EntityType>
+        <EntityType Name="RealEstateE">
+          <Key>
+            <PropertyRef Name="RealEstateEId" />
+          </Key>
+          <Property Name="RealEstateEId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Source" Type="nvarchar" MaxLength="3" />
+          <Property Name="Url" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Data" Type="ntext" />
+          <Property Name="State" Type="int" />
+          <Property Name="Period" Type="int" />
+          <Property Name="RecordStatus" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="RealEstateJson" Type="ntext" />
+        </EntityType>
+        <EntityType Name="RealEstateT">
+          <Key>
+            <PropertyRef Name="RealEstateTId" />
+          </Key>
+          <Property Name="RealEstateTId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Source" Type="nvarchar" MaxLength="3" />
+          <Property Name="Url" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Data" Type="ntext" />
+          <Property Name="Province" Type="ntext" />
+          <Property Name="District" Type="ntext" />
+          <Property Name="ParcelNo" Type="ntext" />
+          <Property Name="Lat" Type="float" />
+          <Property Name="Lon" Type="float" />
+          <Property Name="State" Type="int" />
+          <Property Name="Period" Type="int" />
+          <Property Name="RecordStatus" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="RealEstateType">
+          <Key>
+            <PropertyRef Name="RealEstateTypeId" />
+          </Key>
+          <Property Name="RealEstateTypeId" Type="int" Nullable="false" />
+          <Property Name="Name_TH" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name_ENG" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityContainer Name="FRESDBModelStoreContainer">
+          <EntitySet Name="Address" EntityType="Self.Address" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" store:Type="Tables" />
+          <EntitySet Name="RealEstateE" EntityType="Self.RealEstateE" store:Type="Tables" />
+          <EntitySet Name="RealEstateT" EntityType="Self.RealEstateT" store:Type="Tables" />
+          <EntitySet Name="RealEstateType" EntityType="Self.RealEstateType" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FRESDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -105,7 +91,6 @@
           <EntitySet Name="RealEstateE" EntityType="FRESDBModel.RealEstateE" />
           <EntitySet Name="RealEstateT" EntityType="FRESDBModel.RealEstateT" />
           <EntitySet Name="RealEstateType" EntityType="FRESDBModel.RealEstateType" />
-          <EntitySet Name="Address_bak" EntityType="FRESDBModel.Address_bak" />
         </EntityContainer>
         <EntityType Name="Address">
           <Key>
@@ -128,6 +113,7 @@
           <Property Name="ParcelCode" Type="Int32" />
           <Property Name="Lat" Type="Double" />
           <Property Name="Lon" Type="Double" />
+          <Property Name="LocStatus" Type="Int32" />
         </EntityType>
         <EntityType Name="RealEstateE">
           <Key>
@@ -141,9 +127,9 @@
           <Property Name="Period" Type="Int32" />
           <Property Name="RecordStatus" Type="Int32" />
           <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="RealEstateJson" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="RealEstateT">
@@ -163,9 +149,9 @@
           <Property Name="Period" Type="Int32" />
           <Property Name="RecordStatus" Type="Int32" />
           <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="RealEstateType">
           <Key>
@@ -175,111 +161,87 @@
           <Property Name="Name_TH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Name_ENG" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="Address_bak">
-          <Key>
-            <PropertyRef Name="VillageName" />
-            <PropertyRef Name="VillageNo" />
-            <PropertyRef Name="SubDistrict" />
-            <PropertyRef Name="District" />
-            <PropertyRef Name="Province" />
-          </Key>
-          <Property Name="VillageName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="VillageNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="SubDistrict" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="District" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Province" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="FRESDBModelStoreContainer" CdmEntityContainer="FRESDBEntities">
-    <EntitySetMapping Name="Address">
-      <EntityTypeMapping TypeName="IsTypeOf(FRESDBModel.Address)">
-        <MappingFragment StoreEntitySet="Address">
-          <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-          <ScalarProperty Name="VillageName" ColumnName="VillageName" />
-          <ScalarProperty Name="VillageNo" ColumnName="VillageNo" />
-          <ScalarProperty Name="SubDistrict" ColumnName="SubDistrict" />
-          <ScalarProperty Name="District" ColumnName="District" />
-          <ScalarProperty Name="Province" ColumnName="Province" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Location">
-      <EntityTypeMapping TypeName="IsTypeOf(FRESDBModel.Location)">
-        <MappingFragment StoreEntitySet="Location">
-          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
-          <ScalarProperty Name="Province" ColumnName="Province" />
-          <ScalarProperty Name="Amphur" ColumnName="Amphur" />
-          <ScalarProperty Name="ParcelCode" ColumnName="ParcelCode" />
-          <ScalarProperty Name="Lat" ColumnName="Lat" />
-          <ScalarProperty Name="Lon" ColumnName="Lon" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="RealEstateE">
-      <EntityTypeMapping TypeName="IsTypeOf(FRESDBModel.RealEstateE)">
-        <MappingFragment StoreEntitySet="RealEstateE">
-          <ScalarProperty Name="RealEstateEId" ColumnName="RealEstateEId" />
-          <ScalarProperty Name="Source" ColumnName="Source" />
-          <ScalarProperty Name="Url" ColumnName="Url" />
-          <ScalarProperty Name="Data" ColumnName="Data" />
-          <ScalarProperty Name="State" ColumnName="State" />
-          <ScalarProperty Name="Period" ColumnName="Period" />
-          <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-          <ScalarProperty Name="RealEstateJson" ColumnName="RealEstateJson" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="RealEstateT">
-      <EntityTypeMapping TypeName="IsTypeOf(FRESDBModel.RealEstateT)">
-        <MappingFragment StoreEntitySet="RealEstateT">
-          <ScalarProperty Name="RealEstateTId" ColumnName="RealEstateTId" />
-          <ScalarProperty Name="Source" ColumnName="Source" />
-          <ScalarProperty Name="Url" ColumnName="Url" />
-          <ScalarProperty Name="Data" ColumnName="Data" />
-          <ScalarProperty Name="Province" ColumnName="Province" />
-          <ScalarProperty Name="District" ColumnName="District" />
-          <ScalarProperty Name="ParcelNo" ColumnName="ParcelNo" />
-          <ScalarProperty Name="Lat" ColumnName="Lat" />
-          <ScalarProperty Name="Lon" ColumnName="Lon" />
-          <ScalarProperty Name="State" ColumnName="State" />
-          <ScalarProperty Name="Period" ColumnName="Period" />
-          <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="RealEstateType">
-      <EntityTypeMapping TypeName="IsTypeOf(FRESDBModel.RealEstateType)">
-        <MappingFragment StoreEntitySet="RealEstateType">
-          <ScalarProperty Name="RealEstateTypeId" ColumnName="RealEstateTypeId" />
-          <ScalarProperty Name="Name_TH" ColumnName="Name_TH" />
-          <ScalarProperty Name="Name_ENG" ColumnName="Name_ENG" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Address_bak">
-      <EntityTypeMapping TypeName="IsTypeOf(FRESDBModel.Address_bak)">
-        <MappingFragment StoreEntitySet="Address_bak">
-          <ScalarProperty Name="VillageName" ColumnName="VillageName" />
-          <ScalarProperty Name="VillageNo" ColumnName="VillageNo" />
-          <ScalarProperty Name="SubDistrict" ColumnName="SubDistrict" />
-          <ScalarProperty Name="District" ColumnName="District" />
-          <ScalarProperty Name="Province" ColumnName="Province" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-  </EntityContainerMapping>
+          <EntitySetMapping Name="Address">
+            <EntityTypeMapping TypeName="FRESDBModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="SubDistrict" ColumnName="SubDistrict" />
+                <ScalarProperty Name="VillageNo" ColumnName="VillageNo" />
+                <ScalarProperty Name="VillageName" ColumnName="VillageName" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Location">
+            <EntityTypeMapping TypeName="FRESDBModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="LocStatus" ColumnName="LocStatus" />
+                <ScalarProperty Name="Lon" ColumnName="Lon" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="ParcelCode" ColumnName="ParcelCode" />
+                <ScalarProperty Name="Amphur" ColumnName="Amphur" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RealEstateE">
+            <EntityTypeMapping TypeName="FRESDBModel.RealEstateE">
+              <MappingFragment StoreEntitySet="RealEstateE">
+                <ScalarProperty Name="RealEstateJson" ColumnName="RealEstateJson" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="RealEstateEId" ColumnName="RealEstateEId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RealEstateT">
+            <EntityTypeMapping TypeName="FRESDBModel.RealEstateT">
+              <MappingFragment StoreEntitySet="RealEstateT">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Lon" ColumnName="Lon" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="ParcelNo" ColumnName="ParcelNo" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="RealEstateTId" ColumnName="RealEstateTId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RealEstateType">
+            <EntityTypeMapping TypeName="FRESDBModel.RealEstateType">
+              <MappingFragment StoreEntitySet="RealEstateType">
+                <ScalarProperty Name="Name_ENG" ColumnName="Name_ENG" />
+                <ScalarProperty Name="Name_TH" ColumnName="Name_TH" />
+                <ScalarProperty Name="RealEstateTypeId" ColumnName="RealEstateTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->

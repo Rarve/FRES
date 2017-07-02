@@ -44,7 +44,7 @@ namespace FRES.Source.Transform
             {
                 if (string.IsNullOrEmpty(obj.Data))
                 {
-                    obj.Data = Client.RetrieveHtmlStrGet(obj.Url, Encoding.GetEncoding(874)).Result;
+                    obj.Data = Client.GetStringGet(obj.Url, Encoding.GetEncoding(874)).Result;
                 }
 
                 doc.LoadHtml(obj.Data);

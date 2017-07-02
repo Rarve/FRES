@@ -56,7 +56,7 @@ namespace FRES.Source.Transform
             {
                 if (string.IsNullOrEmpty(obj.Data))
                 {
-                    obj.Data = Client.RetrieveHtmlStrGet(obj.Url).Result;
+                    obj.Data = Client.GetStringGet(obj.Url).Result;
                 }
 
                 doc.LoadHtml(obj.Data);

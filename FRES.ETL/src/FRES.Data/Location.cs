@@ -20,5 +20,6 @@ namespace FRES.Data
         public Nullable<int> ParcelCode { get; set; }
         public Nullable<double> Lat { get; set; }
         public Nullable<double> Lon { get; set; }
+        public Nullable<int> LocStatus { get; set; }
     }
 }

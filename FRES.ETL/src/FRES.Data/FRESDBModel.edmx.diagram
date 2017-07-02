@@ -4,13 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8db41d327f9848c692918e71a6e1e7ce" Name="Diagram1">
+      <Diagram DiagramId="8db41d327f9848c692918e71a6e1e7ce" Name="Diagram1" ZoomLevel="114">
         <EntityTypeShape EntityType="FRESDBModel.Address" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="FRESDBModel.Location" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="FRESDBModel.RealEstateE" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="FRESDBModel.RealEstateT" Width="1.5" PointX="2.75" PointY="3.75" />
-        <EntityTypeShape EntityType="FRESDBModel.RealEstateType" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="FRESDBModel.Address_bak" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="FRESDBModel.RealEstateE" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="FRESDBModel.RealEstateT" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="FRESDBModel.RealEstateType" Width="1.5" PointX="2.75" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -32,7 +32,7 @@ namespace FRES.Common
             }
         }        
 
-        public async Task<string> RetrieveHtmlStrGet(string url, Encoding enc = null)
+        public async Task<string> GetStringGet(string url, Encoding enc = null)
         {
             Console.WriteLine("GET  " + url);
             var html = string.Empty;
@@ -71,13 +71,13 @@ namespace FRES.Common
 
         public async Task<HtmlAgilityPack.HtmlDocument> RetrieveHtmlGet(string url)
         {
-            var html = await RetrieveHtmlStrGet(url);
+            var html = await GetStringGet(url);
             var htmlDoc = new HtmlAgilityPack.HtmlDocument();
             htmlDoc.LoadHtml(html);
             return htmlDoc;
         }
 
-        public async Task<string> RetrieveHtmlStrPost(string url, IEnumerable<KeyValuePair<string, string>> kvp)
+        public async Task<string> GetStringPost(string url, IEnumerable<KeyValuePair<string, string>> kvp)
         {
             if (kvp.Count() > 0)
             {
@@ -108,7 +108,7 @@ namespace FRES.Common
 
         public async Task<HtmlAgilityPack.HtmlDocument> RetrieveHtmlPost(string url, IEnumerable<KeyValuePair<string, string>> kvp)
         {
-            var html = await RetrieveHtmlStrPost(url, kvp);
+            var html = await GetStringPost(url, kvp);
             var htmlDoc = new HtmlAgilityPack.HtmlDocument();
             htmlDoc.LoadHtml(html);
             return htmlDoc;

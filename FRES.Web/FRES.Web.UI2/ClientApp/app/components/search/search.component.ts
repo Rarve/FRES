@@ -4,7 +4,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { RealEstate } from '../structure/realestate';
 import { Query } from '../structure/query';
 import { Paging } from '../structure/paging';
-import { MapComponent } from './map.component';
 import { DDLProvinceComponent } from './province.component';
 import { DDLBankComponent } from './bank.component';
 
@@ -24,9 +23,8 @@ export class SearchComponent {
     constructor(http: Http, sanitizer: DomSanitizer) {
         this.http = http;
         this.sanitizer = sanitizer;
-        this.paging.pageNumber = 10;
-        this.paging.itemPerPage = 1;
-
+        this.paging.pageNumber = 1;
+        this.paging.itemPerPage = 10;
         this.http.get('/api/realestate/all').subscribe(result => {
             if (result === undefined || result === null) {
                 console.log("documentdb return null");
@@ -69,6 +67,8 @@ export class SearchComponent {
         this.params = value;
         this.params.PriceMax = (this.params.PriceMax === undefined || this.params.PriceMax == null) ? 0 : this.params.PriceMax;
         this.params.PriceMin = (this.params.PriceMin === undefined || this.params.PriceMin == null) ? 0 : this.params.PriceMin;
+        this.params.PageNumber = this.paging.pageNumber;
+        this.params.ItemPerPage = this.paging.itemPerPage;
         let body = JSON.stringify(this.params);
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
