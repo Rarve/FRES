@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FRES.Web.UI", "FRES.Web.UI\FRES.Web.UI.csproj", "{4431901B-6382-4A30-9F9F-0EDE43E3345C}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{28D04979-F94A-4898-A5A7-EED3BB71435F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FRES.Web.Test.Unit", "FRES.Web.Test.Unit\FRES.Web.Test.Unit.csproj", "{B24F2172-5B8E-4973-A037-4FA7BEB4EF5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NgApp1", "NgApp1\NgApp1.csproj", "{52E734FC-8F07-4648-8B22-D7E8BC9C18F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{B24F2172-5B8E-4973-A037-4FA7BEB4EF5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B24F2172-5B8E-4973-A037-4FA7BEB4EF5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B24F2172-5B8E-4973-A037-4FA7BEB4EF5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52E734FC-8F07-4648-8B22-D7E8BC9C18F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52E734FC-8F07-4648-8B22-D7E8BC9C18F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52E734FC-8F07-4648-8B22-D7E8BC9C18F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52E734FC-8F07-4648-8B22-D7E8BC9C18F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
