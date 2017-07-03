@@ -1,9 +1,0 @@
-C:\Git\fres\FRES.Web\FRES.Web.Test.Unit\bin\Debug\netcoreapp1.1\FRES.Web.Test.Unit.deps.json
-C:\Git\fres\FRES.Web\FRES.Web.Test.Unit\bin\Debug\netcoreapp1.1\FRES.Web.Test.Unit.runtimeconfig.json
-C:\Git\fres\FRES.Web\FRES.Web.Test.Unit\bin\Debug\netcoreapp1.1\FRES.Web.Test.Unit.runtimeconfig.dev.json
-C:\Git\fres\FRES.Web\FRES.Web.Test.Unit\bin\Debug\netcoreapp1.1\FRES.Web.Test.Unit.dll
-C:\Git\fres\FRES.Web\FRES.Web.Test.Unit\bin\Debug\netcoreapp1.1\FRES.Web.Test.Unit.pdb
-C:\Git\fres\FRES.Web\FRES.Web.Test.Unit\obj\Debug\netcoreapp1.1\FRES.Web.Test.Unit.csprojResolveAssemblyReference.cache
-C:\Git\fres\FRES.Web\FRES.Web.Test.Unit\obj\Debug\netcoreapp1.1\FRES.Web.Test.Unit.AssemblyInfo.cs
-C:\Git\fres\FRES.Web\FRES.Web.Test.Unit\obj\Debug\netcoreapp1.1\FRES.Web.Test.Unit.dll
-C:\Git\fres\FRES.Web\FRES.Web.Test.Unit\obj\Debug\netcoreapp1.1\FRES.Web.Test.Unit.pdb

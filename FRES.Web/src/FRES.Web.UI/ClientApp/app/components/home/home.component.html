@@ -1,0 +1,42 @@
+<div class="home">
+    <h2>Foreclosure Real Estate Search Engine (Work in Prgress)</h2>
+    <h4>Created by Rawitas Krungkaew - <a href="https://www.linkedin.com/in/rawitas-krungkaew/">https://www.linkedin.com/in/rawitas-krungkaew/</a></h4>
+    <br />
+    <p>This website gathers foreclosure properties from various banks in Thailand. 
+    I build it for my own usage (no UI of course) when I was searching for a cheap house in Thailand</p>
+    <br/>
+    <h4>Data Source</h4>
+    <ul>
+        <li><a href='http://www.ghbhomecenter.com/ghb'>Government Housing Bank (GHB)</a></li>
+        <li><a href='http://properties.gsb.or.th/'>Government Savings Bank (GSB)</a></li>
+        <li><a href='http://www.npashowroom.ktb.co.th/WebShowRoom/SearchServlet'>Krung Thai Bank (KTB)</a></li>
+        <li><a href='http://www.buyatsiam.com/'>Siam Commercial Bank (SCB)</a></li>
+        <li><a href='http://www.thanachartnpa.com/'>Thanachart Bank</a></li>
+    </ul>
+    <br />
+    <h4>Website</h4>
+    <ul>
+        <li>.Net Core</li>
+        <li>AngularJS</li>
+        <li>Bootstrap</li>
+        <li>Azure Cosmos DB</li>
+        <li>Azure CDN</li>
+    </ul>
+    <br />
+    <h4>Backend and ETL Process</h4>
+    <p>
+        I basically download content in HTML for mat from each websites.
+        HTML is then transformed into json format. The upload them to Cosmo DB.
+        After that, the locations (lat, lon) is retrieved by selenium from
+        <a href='http://dolwms.dol.go.th/tvwebp/'>landmap website</a>
+    </p>
+    <ul>
+        <li>.Net Framework 4.6</li>
+        <li>SQL CE + Entity Framework</li>
+        <li>HTML Agility Pack</li>
+        <li>Selenium</li>
+        <li>Lot of regular expressions</li>
+    </ul>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+</div>

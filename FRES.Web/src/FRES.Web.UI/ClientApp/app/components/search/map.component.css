@@ -1,0 +1,50 @@
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.re-search-form
+{
+    margin:15px;
+}
+.re-card {
+    border: 1px solid #e0e0e0;
+    margin: 0px 0px -1px -1px;
+    text-align: center;
+    background-color: white;
+}
+
+.re-card-details {
+    height: 115px;
+    padding: 5px;
+    margin-top: 5px;
+    border-top: 1px solid #f0f0f0;
+    text-align: left;
+}
+.re-card-glyp {
+    border-top: 0px solid #e0e0e0;
+    margin: 10px 0px 0px 0px;
+    text-align: left;
+    background-color: white;
+    color:#8c8c8c;
+}
+
+#myModal {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.modal-body {
+    width: 100% !important;
+    height: 90% !important;
+}
+
+.modal-content {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.modal-dialog {
+    margin: 0px 0px 0px 0px;
+    width: 100% !important;
+    height: 100% !important;
+}

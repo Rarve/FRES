@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <parameter name="IIS Web Application Name" description="" value="FRESWeb" tags="IisApp">
-    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Git\\fres\\FRES\.Web\\FRES\.Web\.UI2\\obj\\Release\\netcoreapp1\.0\\PubTmp\\Out\\$" />
-  </parameter>
-</parameters>

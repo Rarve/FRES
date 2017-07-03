@@ -1,17 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FRES.Web.UI", "FRES.Web.UI\FRES.Web.UI.csproj", "{4431901B-6382-4A30-9F9F-0EDE43E3345C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1F7254E8-78D5-4BF7-8FBC-06CA9C038078}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FRES.Web.UI2", "FRES.Web.UI2\FRES.Web.UI2.csproj", "{D0A75B28-AF2A-4A63-A60A-858768E650EB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B0BB704D-05DF-4656-AC42-498074E01511}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{28D04979-F94A-4898-A5A7-EED3BB71435F}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FRES.Web.UI", "src\FRES.Web.UI\FRES.Web.UI.xproj", "{5C431FF6-72B0-4794-84BB-1E35FC1EE6F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FRES.Web.Test.Unit", "FRES.Web.Test.Unit\FRES.Web.Test.Unit.csproj", "{B24F2172-5B8E-4973-A037-4FA7BEB4EF5C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NgApp1", "NgApp1\NgApp1.csproj", "{52E734FC-8F07-4648-8B22-D7E8BC9C18F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FRES.Web.UI2", "FRES.Web.UI2\FRES.Web.UI2.csproj", "{1C123DDC-17FC-4704-85CF-8BC2BB243A07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,28 +20,20 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4431901B-6382-4A30-9F9F-0EDE43E3345C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4431901B-6382-4A30-9F9F-0EDE43E3345C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4431901B-6382-4A30-9F9F-0EDE43E3345C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4431901B-6382-4A30-9F9F-0EDE43E3345C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D0A75B28-AF2A-4A63-A60A-858768E650EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D0A75B28-AF2A-4A63-A60A-858768E650EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D0A75B28-AF2A-4A63-A60A-858768E650EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D0A75B28-AF2A-4A63-A60A-858768E650EB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{28D04979-F94A-4898-A5A7-EED3BB71435F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{28D04979-F94A-4898-A5A7-EED3BB71435F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{28D04979-F94A-4898-A5A7-EED3BB71435F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{28D04979-F94A-4898-A5A7-EED3BB71435F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B24F2172-5B8E-4973-A037-4FA7BEB4EF5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B24F2172-5B8E-4973-A037-4FA7BEB4EF5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B24F2172-5B8E-4973-A037-4FA7BEB4EF5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B24F2172-5B8E-4973-A037-4FA7BEB4EF5C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{52E734FC-8F07-4648-8B22-D7E8BC9C18F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{52E734FC-8F07-4648-8B22-D7E8BC9C18F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{52E734FC-8F07-4648-8B22-D7E8BC9C18F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{52E734FC-8F07-4648-8B22-D7E8BC9C18F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C431FF6-72B0-4794-84BB-1E35FC1EE6F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C431FF6-72B0-4794-84BB-1E35FC1EE6F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C431FF6-72B0-4794-84BB-1E35FC1EE6F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C431FF6-72B0-4794-84BB-1E35FC1EE6F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C123DDC-17FC-4704-85CF-8BC2BB243A07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C123DDC-17FC-4704-85CF-8BC2BB243A07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C123DDC-17FC-4704-85CF-8BC2BB243A07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C123DDC-17FC-4704-85CF-8BC2BB243A07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5C431FF6-72B0-4794-84BB-1E35FC1EE6F5} = {1F7254E8-78D5-4BF7-8FBC-06CA9C038078}
+		{1C123DDC-17FC-4704-85CF-8BC2BB243A07} = {1F7254E8-78D5-4BF7-8FBC-06CA9C038078}
 	EndGlobalSection
 EndGlobal
